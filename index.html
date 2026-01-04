@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngaru Anglican Church</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="logo">
+        <span class="ngaru">Ngaru</span>
+        <span class="anglican">Anglican</span>
+        <span class="church">Church</span>
+    </div>
+
+    <!-- Hamburger -->
+    <div class="menu-toggle" id="menuToggle">
+        ☰
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#ministries">Ministries</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Mobile Menu Script -->
+<script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+</script>
+
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="glass-card">
+            <h1>Welcome to Ngaru Anglican Church</h1>
+            <p class="slogan">Rooted in Christ, Serving in Love.</p>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="identity">
+        <h2>Who We Are</h2>
+        <p>
+            Ngaru Anglican Church is a Christ-centered congregation committed to
+            biblical teaching, faithful worship, and compassionate service.
+        </p>
+        <p>
+            We are a community of faith, hope, and love, standing firm in faith
+            and growing together in God’s grace.
+        </p>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission">
+        <h2>Our Mission</h2>
+        <p>
+            To proclaim the Gospel of Jesus Christ, nurture believers in faith,
+            and serve our community through love and good works.
+        </p>
+
+        <h2>Our Vision</h2>
+        <p>
+            To be a vibrant Anglican church where lives are transformed by Christ
+            and generations are built in faith.
+        </p>
+    </section>
+
+    <!-- Core Values -->
+    <section class="values">
+        <h2>Our Core Values</h2>
+        <p>Faithfulness to Scripture and Anglican doctrine</p>
+        <p>Reverent worship and prayer</p>
+        <p>Love, unity, and service to all</p>
+        <p>Spiritual growth for every generation</p>
+    </section>
+
+    <!-- Service Times -->
+    <section id="services" class="services">
+        <h2>Service Times</h2>
+        <p><strong>Sunday Main Service:</strong> 9:00 AM – 11:30 AM</p>
+        <p><strong>Midweek Fellowship:</strong> Wednesday, 5:30 PM</p>
+        <p><strong>Youth Fellowship:</strong> Friday, 4:00 PM</p>
+    </section>
+
+    <!-- Ministries -->
+    <section id="ministries" class="ministries">
+        <h2>Our Ministries</h2>
+        <p>Children & Sunday School Ministry</p>
+        <p>Youth and Young Adults Fellowship</p>
+        <p>Women’s and Men’s Fellowships</p>
+        <p>Choir and Worship Ministry</p>
+        <p>Community Outreach and Missions</p>
+    </section>
+
+    <!-- Invitation / Call to Action -->
+    <section class="invitation">
+        <h2>Join Us</h2>
+        <p>
+            Come and worship with us as we grow together in faith,
+            serve one another in love, and glorify God in all we do.
+        </p>
+        <a href="signup.html" class="btn">Become a Member</a>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
+        <p>Ngaru Parish • Anglican Church of Kenya</p>
+        <p>
+            “Let us consider how we may spur one another on toward love and good deeds.”
+            — Hebrews 10:24
+        </p>
+    </footer>
+
+</body>
+</html>
+
