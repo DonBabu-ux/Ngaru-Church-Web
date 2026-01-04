@@ -1,0 +1,15 @@
+{
+  "admins": {
+    "uid_admin12345": true
+  },
+  "users": {
+    "uid_admin12345": {
+      "name": "Ngaru Admin",
+      "email": "admin@ngaru.church",
+      "ministry": "Administration",
+      "role": "admin"
+    }
+  },
+  "announcements": {},
+  "posts": {}
+}

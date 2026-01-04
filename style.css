@@ -1,0 +1,103 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3b82f6, #22c55e, #a855f7);
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+  color: #fff;
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Logo */
+.logo span {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.ngaru {
+  color: #fde047;
+}
+
+.anglican {
+  color: #93c5fd;
+}
+
+.church {
+  color: #fca5a5;
+}
+
+/* Nav Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #fde047;
+}
+
+/* Hero Section */
+.hero {
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Glass Card */
+.glass-card {
+  max-width: 700px;
+  padding: 3rem;
+  text-align: center;
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Heading */
+.glass-card h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Slogan */
+.slogan {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #fef9c3;
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard | Ngaru Anglican Church</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="ngaru">Ngaru</span>
+      <span class="anglican">Anglican</span>
+      <span class="church">Church</span>
+    </div>
+
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#announcements">Announcements</a></li>
+      <li><a href="#user-feed">Post Feed</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="glass-card">
+      <h1>Member Dashboard</h1>
+      <p class="slogan">Welcome to your church community space</p>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <section id="profile">
+    <h2>Your Profile</h2>
+    <div class="glass-card profile-card">
+      <p><strong>Name:</strong> <span id="userName">John Doe</span></p>
+      <p><strong>Email:</strong> <span id="userEmail">john@example.com</span></p>
+      <p><strong>Ministry:</strong> <span id="userMinistry">None</span></p>
+
+      <h3>Update Profile</h3>
+      <form id="updateProfileForm">
+        <input type="text" id="nameInput" placeholder="Full Name" required>
+        <input type="email" id="emailInput" placeholder="Email Address" required>
+        <button type="submit" class="btn">Update Profile</button>
+      </form>
+
+      <h3>Join a Ministry</h3>
+      <form id="joinMinistryForm">
+        <select id="ministrySelect" required>
+          <option value="" disabled selected>Select Ministry</option>
+          <option value="Youth Fellowship">Youth Fellowship</option>
+          <option value="Women’s Fellowship">Women’s Fellowship</option>
+          <option value="Men’s Fellowship">Men’s Fellowship</option>
+          <option value="Choir & Worship">Choir & Worship</option>
+          <option value="Outreach & Missions">Outreach & Missions</option>
+        </select>
+        <button type="submit" class="btn">Join Ministry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Activities Section -->
+  <section id="activities">
+    <h2>Church Activities</h2>
+    <div class="glass-card">
+      <p>Sunday Main Service — 9:00 AM</p>
+      <p>Midweek Fellowship — Wednesday 5:30 PM</p>
+      <p>Youth Fellowship — Friday 4:00 PM</p>
+    </div>
+  </section>
+
+  <!-- Announcements Section -->
+  <section id="announcements">
+    <h2>Church Announcements</h2>
+    <div class="glass-card announcements-card">
+      <!-- Admin posts will appear here -->
+      <div id="announcementFeed">
+        <!-- Example Announcement -->
+        <div class="announcement-item">
+          <p><strong>Admin:</strong> Sunday service will start at 9:30 AM next week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Post Feed -->
+  <section id="user-feed">
+    <h2>Your Post Feed</h2>
+    <div class="glass-card user-feed-card">
+      <form id="userPostForm">
+        <input type="text" id="postInput" placeholder="Write a post..." required>
+        <button type="submit" class="btn">Post</button>
+      </form>
+      <div id="userPosts">
+        <!-- User posts appear here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section id="location">
+    <h2>Our Location</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.1234567890!2d36.7890!3d-1.2345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1234567890ab%3A0xc123456789abcdef!2sNgaru%20Anglican%20Church!5e0!3m2!1sen!2ske!4v1699999999999!5m2!1sen!2ske"
+        width="100%" height="350" style="border:0; border-radius:16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- WhatsApp Contact -->
+  <section id="contact">
+    <h2>Contact Us via WhatsApp</h2>
+    <p>Click the button below to send us a message directly:</p>
+    <a href="https://wa.me/254700123456" target="_blank" class="btn">Message Us on WhatsApp</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Ngaru Anglican Church</p>
+    <p>Member Dashboard • Anglican Church of Kenya</p>
+    <p>“Let us consider how we may spur one another on toward love and good deeds.” — Hebrews 10:24</p>
+  </footer>
+
+  <!-- Mobile Menu Script -->
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+
+    // ======= Interactive JS for User Dashboard =======
+
+    // Profile update
+    const updateProfileForm = document.getElementById("updateProfileForm");
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
+    const nameInput = document.getElementById("nameInput");
+    const emailInput = document.getElementById("emailInput");
+
+    updateProfileForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      userName.textContent = nameInput.value;
+      userEmail.textContent = emailInput.value;
+      alert("Profile updated successfully!");
+      updateProfileForm.reset();
+      // Here you can add Firebase update call
+    });
+
+    // Join ministry
+    const joinMinistryForm = document.getElementById("joinMinistryForm");
+    const ministrySelect = document.getElementById("ministrySelect");
+    const userMinistry = document.getElementById("userMinistry");
+
+    joinMinistryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      userMinistry.textContent = ministrySelect.value;
+      alert(`You joined ${ministrySelect.value} ministry!`);
+      joinMinistryForm.reset();
+      // Here you can add Firebase ministry update
+    });
+
+    // User post feed
+    const userPostForm = document.getElementById("userPostForm");
+    const postInput = document.getElementById("postInput");
+    const userPosts = document.getElementById("userPosts");
+
+    userPostForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const postText = postInput.value;
+      const postDiv = document.createElement("div");
+      postDiv.classList.add("user-post-item");
+      postDiv.innerHTML = `
+        <p>${postText}</p>
+        <button class="delete-btn">Delete</button>
+      `;
+      userPosts.prepend(postDiv);
+
+      // Delete post
+      postDiv.querySelector(".delete-btn").addEventListener("click", () => {
+        postDiv.remove();
+      });
+
+      postInput.value = "";
+      // Here you can add Firebase post write call
+    });
+
+    // Admin announcements (simulate)
+    const announcementFeed = document.getElementById("announcementFeed");
+    // Example: Add admin announcement dynamically
+    const adminAnnouncements = [
+      "Next Sunday service will start at 9:30 AM.",
+      "Bible Study resumes Wednesday evening."
+    ];
+
+    adminAnnouncements.forEach(msg => {
+      const annDiv = document.createElement("div");
+      annDiv.classList.add("announcement-item");
+      annDiv.innerHTML = `<p><strong>Admin:</strong> ${msg}</p>`;
+      announcementFeed.prepend(annDiv);
+    });
+  </script>
+
+</body>
+<script src="dashboard.js"></script>
+</html>
+
