@@ -4,13 +4,14 @@ import { getDatabase, ref, set, push, onChildAdded, remove, get } from "https://
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "YOUR_APP_ID"
+   apiKey: "AIzaSyAkMFYizmJ4dd8G8oJ9uw1JdgzwhtmsENU",
+  authDomain: "mywebapp-bb780.firebaseapp.com",
+  databaseURL: "https://mywebapp-bb780-default-rtdb.firebaseio.com",
+  projectId: "mywebapp-bb780",
+  storageBucket: "mywebapp-bb780.firebasestorage.app",
+  messagingSenderId: "1020137155241",
+  appId: "1:1020137155241:web:7f3b26f9f680ee01d897b8",
+  measurementId: "G-G6FB4E3W
 };
 
 const app = initializeApp(firebaseConfig);
@@ -120,3 +121,4 @@ export function logout(){
     window.location.href = "login.html";
   });
 }
+
