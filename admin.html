@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Ngaru Anglican Church</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="ngaru">Ngaru</span>
+      <span class="anglican">Anglican</span>
+      <span class="church">Church</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#admin-announcements">Announcements</a></li>
+      <li><a href="#user-posts">User Posts</a></li>
+      <li><a href="#members">Members</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="glass-card">
+      <h1>Admin Dashboard</h1>
+      <p class="slogan">Manage announcements, members, and user posts</p>
+    </div>
+  </header>
+
+  <!-- Admin Announcements -->
+  <section id="admin-announcements">
+    <h2>Post Announcement</h2>
+    <div class="glass-card">
+      <form id="adminAnnouncementForm">
+        <input type="text" id="announcementInput" placeholder="Write announcement..." required>
+        <button type="submit" class="btn">Post Announcement</button>
+      </form>
+      <div id="announcementFeed">
+        <!-- Admin announcements appear here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- User Posts -->
+  <section id="user-posts">
+    <h2>User Posts</h2>
+    <div class="glass-card" id="allUserPosts">
+      <!-- All user posts dynamically -->
+    </div>
+  </section>
+
+  <!-- Members List -->
+  <section id="members">
+    <h2>Members</h2>
+    <div class="glass-card" id="membersList">
+      <!-- Member info -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Ngaru Anglican Church</p>
+    <p>Admin Dashboard • Anglican Church of Kenya</p>
+  </footer>
+
+  <!-- Admin JS -->
+  <script type="module" src="admin.js"></script>
+
+</body>
+</html>
