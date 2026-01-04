@@ -1,103 +1,324 @@
-/* Global Reset */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #3b82f6, #22c55e, #a855f7);
+  background: linear-gradient(135deg, #2563eb, #16a34a, #7c3aed);
   background-size: 300% 300%;
-  animation: gradientMove 12s ease infinite;
-  color: #fff;
+  animation: gradientFlow 14s ease infinite;
+  color: #ffffff;
+  line-height: 1.6;
 }
 
-/* Gradient Animation */
-@keyframes gradientMove {
+/* Animated Background */
+@keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Navbar */
+/* Navigation Bar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  backdrop-filter: blur(12px);
+  padding: 1rem 2.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(14px);
   background: rgba(255, 255, 255, 0.15);
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Logo */
 .logo span {
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-.ngaru {
-  color: #fde047;
-}
+.ngaru { color: #fde047; }
+.anglican { color: #93c5fd; }
+.church { color: #fca5a5; }
 
-.anglican {
-  color: #93c5fd;
-}
-
-.church {
-  color: #fca5a5;
-}
-
-/* Nav Links */
+/* Navigation Links */
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
+  gap: 1.6rem;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover {
   color: #fde047;
+  text-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
 }
 
 /* Hero Section */
 .hero {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+}
+
+/* Glass Card */
+.glass-card {
+  max-width: 720px;
+  padding: 3.5rem;
+  text-align: center;
+  border-radius: 22px;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.glass-card h1 {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+.slogan {
+  font-size: 1.45rem;
+  font-style: italic;
+  color: #fef9c3;
+}
+
+/* Content Sections */
+section {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #fde047;
+}
+
+section p {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.8rem 2.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #1e293b;
+  background: linear-gradient(135deg, #fde047, #facc15);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(253, 224, 71, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .glass-card h1 {
+    font-size: 2rem;
+  }
+}
+
+
+/* Auth Pages */
+.auth-container {
+  min-height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
 }
 
-/* Glass Card */
-.glass-card {
-  max-width: 700px;
-  padding: 3rem;
+.glass-form {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.8rem;
   text-align: center;
   border-radius: 20px;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Heading */
-.glass-card h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.glass-form h2 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
 }
 
-/* Slogan */
-.slogan {
-  font-size: 1.4rem;
-  font-style: italic;
+.form-subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.6rem;
   color: #fef9c3;
+}
+
+.glass-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.glass-form input {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.glass-form input::placeholder {
+  color: #64748b;
+}
+
+.form-footer {
+  margin-top: 1.4rem;
+  font-size: 0.95rem;
+}
+
+.form-footer a {
+  color: #fde047;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #fde047;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+/* =======================
+   MOBILE RESPONSIVENESS
+   ======================= */
+
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 220px;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* Hero */
+  .glass-card {
+    padding: 2.2rem;
+  }
+
+  .glass-card h1 {
+    font-size: 1.9rem;
+  }
+
+  .slogan {
+    font-size: 1.2rem;
+  }
+
+  /* Sections */
+  section {
+    margin: 2.5rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  section h2 {
+    font-size: 1.6rem;
+  }
+
+  section p {
+    font-size: 1rem;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.95rem;
+  }
+}
+
+
+
+/* Map Container */
+.map-container {
+  margin: 1.5rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+/* WhatsApp Button */
+#contact .btn {
+  background: #25D366; /* WhatsApp green */
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+#contact .btn:hover {
+  background: #1ebe57;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
