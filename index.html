@@ -3,129 +3,1164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngaru Anglican Church</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ngaru Anglican Church - Rooted in Christ, Serving in Love</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5c2c; /* Deep green - faith, growth */
+            --secondary: #d4af37; /* Gold - divinity, value */
+            --accent: #8b4513; /* Saddle brown - earthiness, stability */
+            --light: #f8f5f0; /* Off-white - purity, peace */
+            --dark: #1a331a; /* Dark green - depth, tradition */
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title-center h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .logo .ngaru {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo .anglican {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .logo .church {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            left: 0;
+            bottom: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 92, 44, 0.85), rgba(26, 51, 26, 0.9)), url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 70px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 3rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .slogan {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+            border: 2px solid var(--secondary);
+        }
+        
+        .hero-btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        /* Image Carousel Section */
+        .carousel-section {
+            background-color: white;
+            padding: 4rem 0;
+            overflow: hidden;
+        }
+        
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .carousel-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .carousel-title h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.8s ease-in-out;
+            will-change: transform;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            height: 500px;
+            position: relative;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 2rem;
+        }
+        
+        .slide-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .slide-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .carousel-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            pointer-events: none;
+        }
+        
+        .carousel-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            pointer-events: all;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .carousel-btn:hover {
+            background-color: white;
+            transform: scale(1.1);
+        }
+        
+        .carousel-btn i {
+            font-size: 1.5rem;
+        }
+        
+        /* Identity Section */
+        .identity {
+            background-color: white;
+            text-align: center;
+        }
+        
+        .identity p {
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        /* Mission & Vision */
+        .mission {
+            background-color: #f5f9f5;
+        }
+        
+        .mission-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .mission-card {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mission-card h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .mission-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Values Section */
+        .values {
+            background-color: white;
+        }
+        
+        .values-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .value-item {
+            background-color: #f5f9f5;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .value-item p {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        /* Services Section */
+        .services {
+            background-color: #f5f9f5;
+            text-align: center;
+        }
+        
+        .service-times {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .service-item:last-child {
+            border-bottom: none;
+        }
+        
+        .service-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .service-time {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        /* Ministries */
+        .ministries {
+            background-color: white;
+        }
+        
+        .ministries-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .ministry-card {
+            background-color: #f5f9f5;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+            border-top: 5px solid var(--accent);
+        }
+        
+        .ministry-card:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .ministry-card:hover p {
+            color: white;
+        }
+        
+        .ministry-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .ministry-card:hover .ministry-icon {
+            color: var(--secondary);
+        }
+        
+        /* Invitation Section */
+        .invitation {
+            background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.9)), url('https://images.unsplash.com/photo-1551884170-09fb70b3d97b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        
+        .invitation h2 {
+            color: white;
+        }
+        
+        .invitation h2:after {
+            background-color: var(--secondary);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .invitation p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.3rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            transition: var(--transition);
+            border: 2px solid var(--secondary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        
+        .footer-logo .anglican {
+            color: var(--secondary);
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-verse {
+            font-style: italic;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .carousel-slide {
+                height: 450px;
+            }
+            
+            .mission-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .slogan {
+                font-size: 1.3rem;
+            }
+            
+            .hero-content {
+                margin: 0 1rem;
+                padding: 2rem;
+            }
+            
+            .carousel-slide {
+                height: 400px;
+            }
+            
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .slide-content {
+                padding: 1.5rem;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .hero {
+                height: 80vh;
+            }
+            
+            .carousel-slide {
+                height: 350px;
+            }
+            
+            .carousel-controls {
+                display: none;
+            }
+            
+            .slide-title {
+                font-size: 1.3rem;
+            }
+            
+            .slide-description {
+                font-size: 1rem;
+            }
+            
+            .mission-card, .value-item, .ministry-card {
+                padding: 1.5rem;
+            }
+            
+            .service-times {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
+    <!-- Navigation -->
     <nav class="navbar">
-    <div class="logo">
-        <span class="ngaru">Ngaru</span>
-        <span class="anglican">Anglican</span>
-        <span class="church">Church</span>
-    </div>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </div>
 
-    <!-- Hamburger -->
-    <div class="menu-toggle" id="menuToggle">
-        ☰
-    </div>
+            <!-- Hamburger -->
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
 
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#">Home</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#ministries">Ministries</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
-
-<!-- Mobile Menu Script -->
-<script>
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-
-    menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-    });
-</script>
-
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#ministries">Ministries</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="signup.html" class="btn-nav">Sign Up</a></li>
+                <li><a href="login.html" class="btn-nav">Login</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <div class="glass-card">
+    <header class="hero" id="home">
+        <div class="hero-content">
             <h1>Welcome to Ngaru Anglican Church</h1>
             <p class="slogan">Rooted in Christ, Serving in Love.</p>
+            <p>Join us as we grow in faith, serve in love, and worship in spirit and truth.</p>
+            <a href="#about" class="hero-btn">Discover Our Community</a>
         </div>
     </header>
 
+    <!-- Image Carousel Section -->
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-title">
+                <h2>Our Church Life</h2>
+                <p>Experience the vibrant community of Ngaru Anglican Church</p>
+            </div>
+            
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Sunday Worship Service">
+                        <div class="slide-content">
+                            <h3 class="slide-title">Sunday Worship</h3>
+                            <p class="slide-description">Join our vibrant Sunday services where we gather to worship, pray, and hear God's Word together as a community of faith.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Community Outreach">
+                        <div class="slide-content">
+                            <h3 class="slide-title">Community Outreach</h3>
+                            <p class="slide-description">We serve our local community through various outreach programs, sharing Christ's love through practical help and support.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1566457147339-1d202c21b052?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Youth Ministry">
+                        <div class="slide-content">
+                            <h3 class="slide-title">Youth Ministry</h3>
+                            <p class="slide-description">Our youth programs help young people grow in faith, build meaningful relationships, and discover their purpose in Christ.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Church Building">
+                        <div class="slide-content">
+                            <h3 class="slide-title">Our Church Home</h3>
+                            <p class="slide-description">Our beautiful church building stands as a beacon of hope and faith in the Ngaru community, welcoming all who seek God.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5 -->
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Fellowship">
+                        <div class="slide-content">
+                            <h3 class="slide-title">Fellowship & Connection</h3>
+                            <p class="slide-description">We believe in building strong relationships through small groups, fellowship meals, and shared experiences of faith.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="carousel-nav" id="carouselNav">
+                <!-- Navigation dots will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
-    <section id="about" class="identity">
-        <h2>Who We Are</h2>
-        <p>
-            Ngaru Anglican Church is a Christ-centered congregation committed to
-            biblical teaching, faithful worship, and compassionate service.
-        </p>
-        <p>
-            We are a community of faith, hope, and love, standing firm in faith
-            and growing together in God’s grace.
-        </p>
+    <section id="about" class="identity section-title-center">
+        <div class="container">
+            <h2>Who We Are</h2>
+            <p>
+                Ngaru Anglican Church is a Christ-centered congregation deeply committed to
+                biblical teaching, reverent worship, and compassionate service. As part of the
+                Anglican Church of Kenya, we uphold the rich traditions of the Anglican faith
+                while engaging dynamically with our contemporary context.
+            </p>
+            <p>
+                We are a diverse community of believers united by our faith in Jesus Christ,
+                standing firm in God's truth, and growing together in His grace and love.
+            </p>
+        </div>
     </section>
 
     <!-- Mission & Vision -->
     <section class="mission">
-        <h2>Our Mission</h2>
-        <p>
-            To proclaim the Gospel of Jesus Christ, nurture believers in faith,
-            and serve our community through love and good works.
-        </p>
-
-        <h2>Our Vision</h2>
-        <p>
-            To be a vibrant Anglican church where lives are transformed by Christ
-            and generations are built in faith.
-        </p>
+        <div class="container">
+            <h2 class="section-title-center">Our Mission & Vision</h2>
+            <div class="mission-container">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-cross"></i>
+                    </div>
+                    <h2>Our Mission</h2>
+                    <p>
+                        To proclaim the Gospel of Jesus Christ faithfully, nurture believers 
+                        in spiritual maturity, and serve our community through Christ-like 
+                        love and compassionate action.
+                    </p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h2>Our Vision</h2>
+                    <p>
+                        To be a vibrant, growing Anglican community where lives are 
+                        transformed by Christ's love, disciples are multiplied, and 
+                        generations are built up in faith, hope, and love.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Core Values -->
-    <section class="values">
-        <h2>Our Core Values</h2>
-        <p>Faithfulness to Scripture and Anglican doctrine</p>
-        <p>Reverent worship and prayer</p>
-        <p>Love, unity, and service to all</p>
-        <p>Spiritual growth for every generation</p>
+    <section class="values section-title-center">
+        <div class="container">
+            <h2>Our Core Values</h2>
+            <div class="values-container">
+                <div class="value-item">
+                    <p><i class="fas fa-bible"></i> Faithfulness to Scripture and Anglican doctrine</p>
+                </div>
+                <div class="value-item">
+                    <p><i class="fas fa-hands-praying"></i> Reverent worship and prayer</p>
+                </div>
+                <div class="value-item">
+                    <p><i class="fas fa-heart"></i> Love, unity, and service to all</p>
+                </div>
+                <div class="value-item">
+                    <p><i class="fas fa-seedling"></i> Spiritual growth for every generation</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Service Times -->
-    <section id="services" class="services">
-        <h2>Service Times</h2>
-        <p><strong>Sunday Main Service:</strong> 9:00 AM – 11:30 AM</p>
-        <p><strong>Midweek Fellowship:</strong> Wednesday, 5:30 PM</p>
-        <p><strong>Youth Fellowship:</strong> Friday, 4:00 PM</p>
+    <section id="services" class="services section-title-center">
+        <div class="container">
+            <h2>Service Times</h2>
+            <p>Join us for worship and fellowship throughout the week</p>
+            
+            <div class="service-times">
+                <div class="service-item">
+                    <div class="service-name">Sunday Main Service</div>
+                    <div class="service-time">9:00 AM – 11:30 AM</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-name">Sunday School</div>
+                    <div class="service-time">9:30 AM – 11:00 AM</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-name">Midweek Fellowship</div>
+                    <div class="service-time">Wednesday, 5:30 PM</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-name">Youth Fellowship</div>
+                    <div class="service-time">Friday, 4:00 PM</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-name">Prayer Meeting</div>
+                    <div class="service-time">Saturday, 8:00 AM</div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Ministries -->
-    <section id="ministries" class="ministries">
-        <h2>Our Ministries</h2>
-        <p>Children & Sunday School Ministry</p>
-        <p>Youth and Young Adults Fellowship</p>
-        <p>Women’s and Men’s Fellowships</p>
-        <p>Choir and Worship Ministry</p>
-        <p>Community Outreach and Missions</p>
+    <section id="ministries" class="ministries section-title-center">
+        <div class="container">
+            <h2>Our Ministries</h2>
+            <p>Engage, serve, and grow with our diverse ministry groups</p>
+            
+            <div class="ministries-container">
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <p>Children & Sunday School Ministry</p>
+                </div>
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <p>Youth and Young Adults Fellowship</p>
+                </div>
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-people-group"></i>
+                    </div>
+                    <p>Women's and Men's Fellowships</p>
+                </div>
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <p>Choir and Worship Ministry</p>
+                </div>
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <p>Community Outreach and Missions</p>
+                </div>
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-book-bible"></i>
+                    </div>
+                    <p>Bible Study and Discipleship</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Invitation / Call to Action -->
     <section class="invitation">
-        <h2>Join Us</h2>
-        <p>
-            Come and worship with us as we grow together in faith,
-            serve one another in love, and glorify God in all we do.
-        </p>
-        <a href="signup.html" class="btn">Become a Member</a>
+        <div class="container">
+            <h2>Come Worship With Us</h2>
+            <p>
+                We invite you to join our community as we grow together in faith,
+                serve one another in love, and glorify God in all we do. Whether
+                you're exploring faith or looking for a church home, there's a place
+                for you at Ngaru Anglican Church.
+            </p>
+            <a href="signup.html" class="btn">Become a Member</a>
+            <a href="#contact" class="btn" style="background-color: transparent; margin-left: 1rem;">Visit Us</a>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer id="contact" class="footer">
-        <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
-        <p>Ngaru Parish • Anglican Church of Kenya</p>
-        <p>
-            “Let us consider how we may spur one another on toward love and good deeds.”
-            — Hebrews 10:24
-        </p>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </div>
+            
+            <p>Ngaru Parish • Anglican Church of Kenya</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ngaru Town,Chinga, Kenya</p>
+            <p><i class="fas fa-phone"></i> +254 117 23 4064</p>
+            <p><i class="fas fa-envelope"></i> info@ngaruchurch@gmail.com</p>
+            
+            <div class="footer-verse">
+                <p>“Let us consider how we may spur one another on toward love and good deeds.”</p>
+                <p>— Hebrews 10:24</p>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
 
+    <script>
+        // Mobile Menu Script
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.7rem 0';
+                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.padding = '1rem 0';
+                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Image Carousel Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const carouselTrack = document.getElementById('carouselTrack');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const carouselNav = document.getElementById('carouselNav');
+            
+            let currentSlide = 0;
+            let slideInterval;
+            const slideCount = slides.length;
+            
+            // Create navigation dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                carouselNav.appendChild(dot);
+            });
+            
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            // Function to move to a specific slide
+            function goToSlide(n) {
+                currentSlide = (n + slideCount) % slideCount;
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+                
+                // Reset auto-scroll timer
+                resetInterval();
+            }
+            
+            // Next slide function
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+            
+            // Previous slide function
+            function prevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+            
+            // Auto-scroll function
+            function startInterval() {
+                slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+            }
+            
+            // Reset interval timer
+            function resetInterval() {
+                clearInterval(slideInterval);
+                startInterval();
+            }
+            
+            // Event listeners for buttons
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Pause auto-scroll on hover
+            carouselTrack.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            carouselTrack.addEventListener('mouseleave', startInterval);
+            
+            // Touch/swipe support for mobile
+            let startX = 0;
+            let endX = 0;
+            
+            carouselTrack.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                clearInterval(slideInterval);
+            });
+            
+            carouselTrack.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+            
+            carouselTrack.addEventListener('touchend', () => {
+                if (startX - endX > 50) {
+                    // Swipe left - next slide
+                    nextSlide();
+                } else if (endX - startX > 50) {
+                    // Swipe right - previous slide
+                    prevSlide();
+                }
+                startInterval();
+            });
+            
+            // Start auto-scroll
+            startInterval();
+        });
+    </script>
 </body>
 </html>
-
