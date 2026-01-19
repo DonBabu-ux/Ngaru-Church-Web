@@ -969,13 +969,20 @@
                 // Show success message
                 document.getElementById('successMessage').classList.add('show');
                 
-                // In a real application, you would redirect to dashboard here
-        
-                setTimeout(() => {
-                    alert( redirecting to the member dashboard. Welcome back!');
-                    window.location.href = 'dashboard.html'; 
-                }, 2000);
-                
+             // Show success message
+document.getElementById('successMessage').querySelector('p').textContent = 'Login successful! Redirecting...';
+document.getElementById('successMessage').classList.add('show');
+
+// In a real application, you would redirect to dashboard here
+setTimeout(() => {
+    // Add fade out effect
+    document.body.style.opacity = '0.8';
+    document.body.style.transition = 'opacity 0.5s';
+    
+    setTimeout(() => {
+        window.location.href = 'dashboard.html';
+    }, 500);
+}, 2000);
                 // Clear form
                 this.reset();
             } else {
@@ -1044,4 +1051,5 @@
     </script>
 </body>
 </html>
+
 
