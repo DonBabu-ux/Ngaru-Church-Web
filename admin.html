@@ -1,76 +1,2043 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard | Ngaru Anglican Church</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Ngaru Anglican Church</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5c2c; /* Deep green - faith, growth */
+            --secondary: #d4af37; /* Gold - divinity, value */
+            --accent: #8b4513; /* Saddle brown - earthiness, stability */
+            --light: #f8f5f0; /* Off-white - purity, peace */
+            --dark: #1a331a; /* Dark green - depth, tradition */
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --success: #3a7d34; /* Green for success */
+            --warning: #e67e22; /* Orange for warnings */
+            --error: #c0392b; /* Red for errors */
+            --info: #3498db; /* Blue for info */
+            --admin: #8e44ad; /* Purple for admin */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f0f5f0;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--primary);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+        }
+        
+        .logo .ngaru {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo .anglican {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .logo .church {
+            font-size: 1.5rem;
+        }
+        
+        .admin-badge {
+            background-color: var(--admin);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+        
+        .sidebar-nav {
+            padding: 1.5rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-section-title {
+            padding: 0 1.5rem 0.8rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: var(--secondary);
+        }
+        
+        .nav-item i {
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-item span {
+            font-weight: 500;
+        }
+        
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--primary);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .user-info h4 {
+            color: white;
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        
+        .user-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: var(--transition);
+        }
+        
+        /* Top Header */
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+        
+        .page-title h1 {
+            margin-bottom: 0.2rem;
+            font-size: 1.8rem;
+        }
+        
+        .page-title p {
+            margin-bottom: 0;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .notification-icon {
+            position: relative;
+            color: var(--text);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--error);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Content Area */
+        .content-area {
+            padding: 2rem;
+        }
+        
+        /* Admin Stats */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .stat-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .stat-info p {
+            margin-bottom: 0;
+            color: var(--text-light);
+        }
+        
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header h3 {
+            margin-bottom: 0;
+            font-size: 1.3rem;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: rgba(44, 92, 44, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        
+        .data-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+        }
+        
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .required {
+            color: var(--error);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 92, 44, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+        
+        .btn-admin {
+            background-color: var(--admin);
+            color: white;
+            border-color: var(--admin);
+        }
+        
+        .btn-admin:hover {
+            background-color: transparent;
+            color: var(--admin);
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Announcements */
+        .announcement-form {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .media-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .media-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(44, 92, 44, 0.02);
+        }
+        
+        .media-upload i {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .media-upload p {
+            margin-bottom: 1rem;
+        }
+        
+        .media-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .media-item {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-media {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Announcement Feed */
+        .announcement-feed {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .announcement-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--admin);
+        }
+        
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .announcement-info h4 {
+            margin-bottom: 0.3rem;
+            color: var(--admin);
+        }
+        
+        .announcement-info p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            color: var(--text-light);
+        }
+        
+        .announcement-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .announcement-content {
+            margin-bottom: 1rem;
+        }
+        
+        .announcement-media {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .announcement-media img,
+        .announcement-media video {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        
+        /* Members List */
+        .members-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .member-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-right: 1rem;
+        }
+        
+        .member-info h4 {
+            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+        }
+        
+        .member-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .member-details {
+            margin-bottom: 1rem;
+        }
+        
+        .member-details p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .member-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        /* Messages */
+        .message {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .message-success {
+            background-color: rgba(58, 125, 52, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+        
+        .message-error {
+            background-color: rgba(192, 57, 43, 0.1);
+            border-left: 4px solid var(--error);
+            color: var(--error);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar .nav-item span,
+            .sidebar .logo .anglican,
+            .sidebar .logo .church,
+            .sidebar .user-info,
+            .sidebar .admin-badge,
+            .sidebar .nav-section-title {
+                display: none;
+            }
+            
+            .sidebar .logo .ngaru {
+                font-size: 1.5rem;
+            }
+            
+            .sidebar .nav-item {
+                justify-content: center;
+                padding: 1rem;
+            }
+            
+            .sidebar .nav-item i {
+                margin-right: 0;
+                font-size: 1.3rem;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .members-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .top-header {
+                padding: 1rem;
+            }
+            
+            .content-area {
+                padding: 1.5rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .members-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .sidebar .nav-item span,
+            .sidebar .logo .anglican,
+            .sidebar .logo .church,
+            .sidebar .user-info,
+            .sidebar .admin-badge,
+            .sidebar .nav-section-title {
+                display: block;
+            }
+            
+            .sidebar .nav-item {
+                justify-content: flex-start;
+                padding: 1rem 1.5rem;
+            }
+            
+            .sidebar .nav-item i {
+                margin-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-right {
+                gap: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
+
 <body>
-
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="logo">
-      <span class="ngaru">Ngaru</span>
-      <span class="anglican">Anglican</span>
-      <span class="church">Church</span>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="ngaru">Ngaru</span>
+                    <span class="anglican">Anglican</span>
+                    <span class="church">Church</span>
+                    <div class="admin-badge">ADMIN PANEL</div>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Dashboard</div>
+                    <a href="#admin.html" class="nav-item active" data-tab="admin-dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Admin Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Content Management</div>
+                    <a href="#announcements" class="nav-item" data-tab="announcements">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Announcements</span>
+                    </a>
+                    <a href="#events" class="nav-item" data-tab="events">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                    </a>
+                    <a href="#media" class="nav-item" data-tab="media">
+                        <i class="fas fa-photo-video"></i>
+                        <span>Media Library</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Member Management</div>
+                    <a href="#members" class="nav-item" data-tab="members">
+                        <i class="fas fa-users"></i>
+                        <span>All Members</span>
+                    </a>
+                    <a href="#add-member" class="nav-item" data-tab="add-member">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add New Member</span>
+                    </a>
+                    <a href="#groups" class="nav-item" data-tab="groups">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Manage Groups</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Financial Management</div>
+                    <a href="#finances" class="nav-item" data-tab="finances">
+                        <i class="fas fa-donate"></i>
+                        <span>Financial Dashboard</span>
+                    </a>
+                    <a href="#transactions" class="nav-item" data-tab="transactions">
+                        <i class="fas fa-receipt"></i>
+                        <span>All Transactions</span>
+                    </a>
+                    <a href="#reports" class="nav-item" data-tab="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Financial Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System Settings</div>
+                    <a href="#settings" class="nav-item" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>System Settings</span>
+                    </a>
+                    <a href="#users" class="nav-item" data-tab="users">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin Users</span>
+                    </a>
+                    <a href="#backup" class="nav-item" data-tab="backup">
+                        <i class="fas fa-database"></i>
+                        <span>Backup & Restore</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">AM</div>
+                    <div class="user-info">
+                        <h4>Admin Manager</h4>
+                        <p>Super Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="page-title">
+                        <h1>Admin Dashboard</h1>
+                        <p>Manage Ngaru Anglican Church System</p>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </div>
+                    <a href="dashboard.html" class="btn btn-primary">Member View</a>
+                    <a href="index.html" class="btn">Logout</a>
+                </div>
+            </header>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Messages -->
+                <div id="successMessage" class="message message-success">
+                    <h3><i class="fas fa-check-circle"></i> Success!</h3>
+                    <p id="successText">Operation completed successfully.</p>
+                </div>
+                
+                <div id="errorMessage" class="message message-error">
+                    <h3><i class="fas fa-exclamation-circle"></i> Error</h3>
+                    <p id="errorText">Something went wrong. Please try again.</p>
+                </div>
+                
+                <!-- Admin Dashboard Tab -->
+                <div id="admin-dashboard" class="tab-content active">
+                    <h2>Admin Dashboard Overview</h2>
+                    
+                    <!-- Admin Stats -->
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(44, 92, 44, 0.1); color: var(--primary);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>247</h3>
+                                <p>Total Members</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(212, 175, 55, 0.1); color: var(--secondary);">
+                                <i class="fas fa-donate"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Ksh 124,500</h3>
+                                <p>This Month's Giving</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(142, 68, 173, 0.1); color: var(--admin);">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>12</h3>
+                                <p>Upcoming Events</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(52, 152, 219, 0.1); color: var(--info);">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>8</h3>
+                                <p>Unread Messages</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(231, 126, 34, 0.1); color: var(--warning);">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>3</h3>
+                                <p>Pending Approvals</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: rgba(58, 125, 52, 0.1); color: var(--success);">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>15</h3>
+                                <p>New Members This Month</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Quick Actions</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                            </div>
+                            <div class="quick-actions" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                <button class="btn btn-admin btn-block" data-tab="announcements">
+                                    <i class="fas fa-bullhorn"></i> Create Announcement
+                                </button>
+                                <button class="btn btn-primary btn-block" data-tab="add-member">
+                                    <i class="fas fa-user-plus"></i> Add New Member
+                                </button>
+                                <button class="btn btn-admin btn-block" data-tab="events">
+                                    <i class="fas fa-calendar-plus"></i> Create Event
+                                </button>
+                                <button class="btn btn-primary btn-block" data-tab="finances">
+                                    <i class="fas fa-chart-line"></i> View Financial Report
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Recent Activities</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                            </div>
+                            <div class="activity-feed" style="max-height: 300px; overflow-y: auto;">
+                                <div class="activity-item" style="padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <p style="margin-bottom: 0.3rem;"><i class="fas fa-user-plus" style="color: var(--success); margin-right: 0.5rem;"></i> <strong>John Kamau</strong> registered as a new member</p>
+                                    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-light);">2 hours ago</p>
+                                </div>
+                                <div class="activity-item" style="padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <p style="margin-bottom: 0.3rem;"><i class="fas fa-donate" style="color: var(--secondary); margin-right: 0.5rem;"></i> <strong>Mary Wanjiku</strong> gave Ksh 5,000 tithe</p>
+                                    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-light);">5 hours ago</p>
+                                </div>
+                                <div class="activity-item" style="padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <p style="margin-bottom: 0.3rem;"><i class="fas fa-users" style="color: var(--info); margin-right: 0.5rem;"></i> <strong>Youth Fellowship</strong> group created</p>
+                                    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-light);">Yesterday</p>
+                                </div>
+                                <div class="activity-item" style="padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <p style="margin-bottom: 0.3rem;"><i class="fas fa-bullhorn" style="color: var(--admin); margin-right: 0.5rem;"></i> New announcement posted: "Easter Sunday Service"</p>
+                                    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-light);">2 days ago</p>
+                                </div>
+                                <div class="activity-item" style="padding: 0.8rem 0;">
+                                    <p style="margin-bottom: 0.3rem;"><i class="fas fa-calendar-plus" style="color: var(--primary); margin-right: 0.5rem;"></i> New event created: "Church Cleanup Day"</p>
+                                    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-light);">3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>System Status</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                            </div>
+                            <div class="system-status">
+                                <div class="status-item" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <span>Database</span>
+                                    <span style="color: var(--success); font-weight: 600;">Online</span>
+                                </div>
+                                <div class="status-item" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <span>Payment Gateway</span>
+                                    <span style="color: var(--success); font-weight: 600;">Active</span>
+                                </div>
+                                <div class="status-item" style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #eee;">
+                                    <span>Storage Usage</span>
+                                    <span style="color: var(--warning); font-weight: 600;">65%</span>
+                                </div>
+                                <div class="status-item" style="display: flex; justify-content: space-between; padding: 0.8rem 0;">
+                                    <span>Last Backup</span>
+                                    <span style="color: var(--info); font-weight: 600;">24 hours ago</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block" style="margin-top: 1.5rem;" data-tab="backup">
+                                <i class="fas fa-database"></i> Run Backup Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Announcements Tab -->
+                <div id="announcements" class="tab-content">
+                    <h2>Manage Announcements</h2>
+                    
+                    <!-- Create Announcement Form -->
+                    <div class="announcement-form">
+                        <h3>Create New Announcement</h3>
+                        <form id="createAnnouncementForm">
+                            <div class="form-group">
+                                <label for="announcementTitle">Title <span class="required">*</span></label>
+                                <input type="text" id="announcementTitle" class="form-control" placeholder="Enter announcement title" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="announcementContent">Content <span class="required">*</span></label>
+                                <textarea id="announcementContent" class="form-control" placeholder="Type your announcement here..." required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="announcementType">Announcement Type</label>
+                                    <select id="announcementType" class="form-control">
+                                        <option value="general">General Announcement</option>
+                                        <option value="urgent">Urgent Announcement</option>
+                                        <option value="event">Event Announcement</option>
+                                        <option value="prayer">Prayer Request</option>
+                                        <option value="news">Church News</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="announcementAudience">Target Audience</label>
+                                    <select id="announcementAudience" class="form-control">
+                                        <option value="all">All Members</option>
+                                        <option value="youth">Youth Only</option>
+                                        <option value="choir">Choir Only</option>
+                                        <option value="sunday-school">Sunday School</option>
+                                        <option value="leaders">Church Leaders</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Media Upload -->
+                            <div class="form-group">
+                                <label>Add Media (Photos/Videos)</label>
+                                <div class="media-upload" id="mediaUploadArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Drag & drop photos or videos here, or click to browse</p>
+                                    <input type="file" id="mediaUpload" multiple style="display: none;" accept="image/*,video/*">
+                                    <button type="button" class="btn btn-small" onclick="document.getElementById('mediaUpload').click()">Browse Files</button>
+                                </div>
+                                <div class="media-preview" id="mediaPreview">
+                                    <!-- Media previews will appear here -->
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="sendNotification">
+                                    <label for="sendNotification">Send push notification to all members</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="pinAnnouncement">
+                                    <label for="pinAnnouncement">Pin this announcement to top</label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-admin">Publish Announcement</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Existing Announcements -->
+                    <h3>Existing Announcements</h3>
+                    <div class="announcement-feed" id="announcementFeed">
+                        <!-- Announcements will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Members Management Tab -->
+                <div id="members" class="tab-content">
+                    <h2>Member Management</h2>
+                    
+                    <!-- Search and Filters -->
+                    <div class="dashboard-card" style="margin-bottom: 1.5rem;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="searchMembers">Search Members</label>
+                                <input type="text" id="searchMembers" class="form-control" placeholder="Search by name, email, or phone...">
+                            </div>
+                            <div class="form-group">
+                                <label for="filterMinistry">Filter by Ministry</label>
+                                <select id="filterMinistry" class="form-control">
+                                    <option value="">All Ministries</option>
+                                    <option value="choir">Choir & Worship</option>
+                                    <option value="youth">Youth Ministry</option>
+                                    <option value="sunday-school">Sunday School</option>
+                                    <option value="outreach">Outreach</option>
+                                    <option value="prayer">Prayer Ministry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filterStatus">Filter by Status</label>
+                                <select id="filterStatus" class="form-control">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="new">New</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Members List -->
+                    <div class="members-list" id="membersList">
+                        <!-- Member cards will be loaded here -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                        <div class="pagination">
+                            <button class="btn btn-small">Previous</button>
+                            <button class="btn btn-small btn-primary">1</button>
+                            <button class="btn btn-small">2</button>
+                            <button class="btn btn-small">3</button>
+                            <button class="btn btn-small">Next</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add Member Tab -->
+                <div id="add-member" class="tab-content">
+                    <h2>Add New Member</h2>
+                    
+                    <div class="dashboard-card">
+                        <form id="addMemberForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newMemberFirstName">First Name <span class="required">*</span></label>
+                                    <input type="text" id="newMemberFirstName" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newMemberLastName">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="newMemberLastName" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newMemberEmail">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="newMemberEmail" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newMemberPhone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="newMemberPhone" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newMemberDOB">Date of Birth</label>
+                                    <input type="date" id="newMemberDOB" class="form-control">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newMemberGender">Gender</label>
+                                    <select id="newMemberGender" class="form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newMemberAddress">Address</label>
+                                <textarea id="newMemberAddress" class="form-control" rows="2"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newMemberMinistries">Assign to Ministries</label>
+                                <select id="newMemberMinistries" class="form-control" multiple style="height: 120px;">
+                                    <option value="choir">Choir & Worship</option>
+                                    <option value="youth">Youth Ministry</option>
+                                    <option value="sunday-school">Sunday School</option>
+                                    <option value="outreach">Outreach</option>
+                                    <option value="prayer">Prayer Ministry</option>
+                                    <option value="hospitality">Hospitality Team</option>
+                                    <option value="media">Media Team</option>
+                                </select>
+                                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Hold Ctrl/Cmd to select multiple ministries</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newMemberGroups">Add to Groups</label>
+                                <select id="newMemberGroups" class="form-control" multiple style="height: 100px;">
+                                    <option value="bible-study">Bible Study Group</option>
+                                    <option value="mens-fellowship">Men's Fellowship</option>
+                                    <option value="womens-fellowship">Women's Fellowship</option>
+                                    <option value="young-adults">Young Adults</option>
+                                    <option value="seniors">Seniors Group</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newMemberRole">Member Role</label>
+                                    <select id="newMemberRole" class="form-control">
+                                        <option value="member">Regular Member</option>
+                                        <option value="leader">Group Leader</option>
+                                        <option value="deacon">Deacon</option>
+                                        <option value="elder">Elder</option>
+                                        <option value="pastor">Pastor</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newMemberStatus">Account Status</label>
+                                    <select id="newMemberStatus" class="form-control">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="pending">Pending Approval</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="sendWelcomeEmail">
+                                    <label for="sendWelcomeEmail">Send welcome email with login credentials</label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-admin">Add Member</button>
+                            <button type="button" class="btn" onclick="document.getElementById('addMemberForm').reset()">Clear Form</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Other tabs would continue here (Events, Media, Groups, Finances, etc.) -->
+                
+            </div>
+        </main>
+    </div>
+    
+    <!-- Edit Member Modal -->
+    <div class="modal" id="editMemberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Member</h3>
+                <button class="modal-close" onclick="closeModal('editMemberModal')">&times;</button>
+            </div>
+            <div id="editMemberFormContainer">
+                <!-- Edit form will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Deletion</h3>
+                <button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+            </div>
+            <div>
+                <p id="deleteMessage">Are you sure you want to delete this item?</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button class="btn btn-admin" id="confirmDelete">Yes, Delete</button>
+                    <button class="btn" onclick="closeModal('deleteModal')">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#admin-announcements">Announcements</a></li>
-      <li><a href="#user-posts">User Posts</a></li>
-      <li><a href="#members">Members</a></li>
-      <li><a href="index.html">Logout</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero">
-    <div class="glass-card">
-      <h1>Admin Dashboard</h1>
-      <p class="slogan">Manage announcements, members, and user posts</p>
-    </div>
-  </header>
-
-  <!-- Admin Announcements -->
-  <section id="admin-announcements">
-    <h2>Post Announcement</h2>
-    <div class="glass-card">
-      <form id="adminAnnouncementForm">
-        <input type="text" id="announcementInput" placeholder="Write announcement..." required>
-        <button type="submit" class="btn">Post Announcement</button>
-      </form>
-      <div id="announcementFeed">
-        <!-- Admin announcements appear here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- User Posts -->
-  <section id="user-posts">
-    <h2>User Posts</h2>
-    <div class="glass-card" id="allUserPosts">
-      <!-- All user posts dynamically -->
-    </div>
-  </section>
-
-  <!-- Members List -->
-  <section id="members">
-    <h2>Members</h2>
-    <div class="glass-card" id="membersList">
-      <!-- Member info -->
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2026 Ngaru Anglican Church</p>
-    <p>Admin Dashboard • Anglican Church of Kenya</p>
-  </footer>
-
-  <!-- Admin JS -->
-  <script type="module" src="admin.js"></script>
-
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+        
+        // Tab Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update page title
+                const tabName = this.querySelector('span').textContent;
+                document.querySelector('.page-title h1').textContent = tabName;
+            });
+        });
+        
+        // Quick Action Buttons
+        document.querySelectorAll('.quick-actions button, .btn[data-tab]').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                if (!tabId) return;
+                
+                // Switch to the appropriate tab
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                    if (nav.getAttribute('data-tab') === tabId) {
+                        nav.classList.add('active');
+                    }
+                });
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update page title
+                const tabName = document.querySelector(`[data-tab="${tabId}"] span`)?.textContent || tabId;
+                document.querySelector('.page-title h1').textContent = tabName;
+            });
+        });
+        
+        // Media Upload Functionality
+        const mediaUpload = document.getElementById('mediaUpload');
+        const mediaPreview = document.getElementById('mediaPreview');
+        
+        mediaUpload.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            
+            files.forEach(file => {
+                if (!file.type.match('image.*') && !file.type.match('video.*')) {
+                    showMessage('error', 'Only images and videos are allowed');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const mediaItem = document.createElement('div');
+                    mediaItem.className = 'media-item';
+                    
+                    if (file.type.match('image.*')) {
+                        mediaItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button class="remove-media" onclick="removeMedia(this)">&times;</button>
+                        `;
+                    } else if (file.type.match('video.*')) {
+                        mediaItem.innerHTML = `
+                            <video controls>
+                                <source src="${e.target.result}" type="${file.type}">
+                            </video>
+                            <button class="remove-media" onclick="removeMedia(this)">&times;</button>
+                        `;
+                    }
+                    
+                    mediaPreview.appendChild(mediaItem);
+                };
+                
+                reader.readAsDataURL(file);
+            });
+            
+            // Reset file input
+            mediaUpload.value = '';
+        });
+        
+        // Drag and drop for media upload
+        const mediaUploadArea = document.getElementById('mediaUploadArea');
+        
+        mediaUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = va(--primary);
+            this.style.backgroundColor = 'rgba(44, 92, 44, 0.05)';
+        });
+        
+        mediaUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+            this.style.backgroundColor = 'rgba(44, 92, 44, 0.02)';
+        });
+        
+        mediaUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+            this.style.backgroundColor = 'rgba(44, 92, 44, 0.02)';
+            
+            const files = Array.from(e.dataTransfer.files);
+            
+            files.forEach(file => {
+                if (!file.type.match('image.*') && !file.type.match('video.*')) {
+                    showMessage('error', 'Only images and videos are allowed');
+                    return;
+                }
+                
+                // Create a new FileList for the input
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                mediaUpload.files = dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                mediaUpload.dispatchEvent(event);
+            });
+        });
+        
+        // Remove media function
+        window.removeMedia = function(button) {
+            button.parentElement.remove();
+        };
+        
+        // Create Announcement Form
+        document.getElementById('createAnnouncementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('announcementTitle').value;
+            const content = document.getElementById('announcementContent').value;
+            const type = document.getElementById('announcementType').value;
+            const audience = document.getElementById('announcementAudience').value;
+            
+            if (!title || !content) {
+                showMessage('error', 'Please fill in all required fields');
+                return;
+            }
+            
+            // Get media previews
+            const mediaItems = document.querySelectorAll('.media-item img, .media-item video');
+            const mediaCount = mediaItems.length;
+            
+            // Add announcement to feed
+            const feed = document.getElementById('announcementFeed');
+            const announcementDiv = document.createElement('div');
+            announcementDiv.className = 'announcement-item';
+            
+            let mediaHTML = '';
+            if (mediaCount > 0) {
+                mediaHTML = '<div class="announcement-media">';
+                mediaItems.forEach(item => {
+                    if (item.tagName === 'IMG') {
+                        mediaHTML += `<img src="${item.src}" alt="Announcement Media">`;
+                    } else if (item.tagName === 'VIDEO') {
+                        mediaHTML += `<video controls><source src="${item.querySelector('source').src}" type="video/mp4"></video>`;
+                    }
+                });
+                mediaHTML += '</div>';
+            }
+            
+            announcementDiv.innerHTML = `
+                <div class="announcement-header">
+                    <div class="announcement-info">
+                        <h4>${title}</h4>
+                        <p>Posted by Admin • Just now • ${type} • For: ${audience}</p>
+                    </div>
+                    <div class="announcement-actions">
+                        <button class="btn btn-small" onclick="editAnnouncement(this)">Edit</button>
+                        <button class="btn btn-small" onclick="deleteAnnouncement(this)">Delete</button>
+                    </div>
+                </div>
+                <div class="announcement-content">
+                    <p>${content}</p>
+                    ${mediaHTML}
+                </div>
+            `;
+            
+            feed.prepend(announcementDiv);
+            
+            // Reset form
+            this.reset();
+            mediaPreview.innerHTML = '';
+            
+            showMessage('success', 'Announcement published successfully!');
+            
+            // Send notification if checked
+            if (document.getElementById('sendNotification').checked) {
+                showMessage('info', 'Push notification sent to all members');
+            }
+        });
+        
+        // Add Member Form
+        document.getElementById('addMemberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('newMemberFirstName').value;
+            const lastName = document.getElementById('newMemberLastName').value;
+            const email = document.getElementById('newMemberEmail').value;
+            const phone = document.getElementById('newMemberPhone').value;
+            
+            if (!firstName || !lastName || !email || !phone) {
+                showMessage('error', 'Please fill in all required fields');
+                return;
+            }
+            
+            // Add member to members list
+            const membersList = document.getElementById('membersList');
+            const memberCard = document.createElement('div');
+            memberCard.className = 'member-card';
+            
+            const initials = (firstName[0] + lastName[0]).toUpperCase();
+            const fullName = `${firstName} ${lastName}`;
+            
+            memberCard.innerHTML = `
+                <div class="member-header">
+                    <div class="member-avatar">${initials}</div>
+                    <div class="member-info">
+                        <h4>${fullName}</h4>
+                        <p>${email}</p>
+                    </div>
+                </div>
+                <div class="member-details">
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Role:</strong> ${document.getElementById('newMemberRole').value}</p>
+                    <p><strong>Status:</strong> <span style="color: var(--success);">Active</span></p>
+                </div>
+                <div class="member-actions">
+                    <button class="btn btn-small" onclick="viewMember(this)">View</button>
+                    <button class="btn btn-small btn-primary" onclick="editMember(this)">Edit</button>
+                    <button class="btn btn-small" onclick="deleteMember(this)">Delete</button>
+                    <button class="btn btn-small btn-admin" onclick="messageMember(this)">Message</button>
+                </div>
+            `;
+            
+            membersList.prepend(memberCard);
+            
+            // Reset form
+            this.reset();
+            
+            showMessage('success', `Member ${fullName} added successfully!`);
+            
+            // Send welcome email if checked
+            if (document.getElementById('sendWelcomeEmail').checked) {
+                showMessage('info', `Welcome email sent to ${email}`);
+            }
+        });
+        
+        // Member Actions
+        window.viewMember = function(button) {
+            const card = button.closest('.member-card');
+            const name = card.querySelector('h4').textContent;
+            showMessage('info', `Viewing details for ${name}`);
+        };
+        
+        window.editMember = function(button) {
+            const card = button.closest('.member-card');
+            const name = card.querySelector('h4').textContent;
+            const email = card.querySelector('.member-info p').textContent;
+            
+            // Load edit form into modal
+            document.getElementById('editMemberFormContainer').innerHTML = `
+                <form id="editMemberForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" value="${name}">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" value="${email}">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-control">
+                            <option>Member</option>
+                            <option>Leader</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                            <option>Suspended</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-admin">Save Changes</button>
+                </form>
+            `;
+            
+            // Handle edit form submission
+            document.getElementById('editMemberForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showMessage('success', `Member ${name} updated successfully!`);
+                closeModal('editMemberModal');
+            });
+            
+            openModal('editMemberModal');
+        };
+        
+        window.deleteMember = function(button) {
+            const card = button.closest('.member-card');
+            const name = card.querySelector('h4').textContent;
+            
+            document.getElementById('deleteMessage').textContent = `Are you sure you want to delete ${name}? This action cannot be undone.`;
+            
+            document.getElementById('confirmDelete').onclick = function() {
+                card.remove();
+                showMessage('success', `Member ${name} deleted successfully!`);
+                closeModal('deleteModal');
+            };
+            
+            openModal('deleteModal');
+        };
+        
+        window.messageMember = function(button) {
+            const card = button.closest('.member-card');
+            const name = card.querySelector('h4').textContent;
+            showMessage('info', `Messaging feature for ${name} would open here`);
+        };
+        
+        // Announcement Actions
+        window.editAnnouncement = function(button) {
+            const announcement = button.closest('.announcement-item');
+            const title = announcement.querySelector('h4').textContent;
+            showMessage('info', `Editing announcement: ${title}`);
+        };
+        
+        window.deleteAnnouncement = function(button) {
+            const announcement = button.closest('.announcement-item');
+            const title = announcement.querySelector('h4').textContent;
+            
+            document.getElementById('deleteMessage').textContent = `Are you sure you want to delete announcement: "${title}"?`;
+            
+            document.getElementById('confirmDelete').onclick = function() {
+                announcement.remove();
+                showMessage('success', `Announcement "${title}" deleted successfully!`);
+                closeModal('deleteModal');
+            };
+            
+            openModal('deleteModal');
+        };
+        
+        // Modal Functions
+        window.openModal = function(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        };
+        
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        };
+        
+        // Show Message Function
+        function showMessage(type, text) {
+            const messageEl = type === 'success' ? document.getElementById('successMessage') : 
+                             type === 'error' ? document.getElementById('errorMessage') : null;
+            
+            if (messageEl) {
+                messageEl.querySelector('p').textContent = text;
+                messageEl.classList.add('show');
+                
+                setTimeout(() => {
+                    messageEl.classList.remove('show');
+                }, 5000);
+            }
+        }
+        
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample announcements
+            const sampleAnnouncements = [
+                {
+                    title: 'Easter Sunday Service',
+                    content: 'Join us this Easter Sunday for a special celebration service at 9:00 AM. We will have special music, communion, and a message of hope. All are welcome!',
+                    type: 'event',
+                    audience: 'all',
+                    time: '2 days ago',
+                    media: 2
+                },
+                {
+                    title: 'Prayer for the Nation',
+                    content: 'This Friday we will have a special prayer night for our nation. Please join us as we intercede for Kenya and our leaders.',
+                    type: 'prayer',
+                    audience: 'all',
+                    time: '1 week ago',
+                    media: 0
+                },
+                {
+                    title: 'Youth Camp Registration',
+                    content: 'Registration for the annual youth camp is now open! Limited spaces available. See Pastor Mark for details.',
+                    type: 'urgent',
+                    audience: 'youth',
+                    time: '2 weeks ago',
+                    media: 1
+                }
+            ];
+            
+            const announcementFeed = document.getElementById('announcementFeed');
+            sampleAnnouncements.forEach(announcement => {
+                const announcementDiv = document.createElement('div');
+                announcementDiv.className = 'announcement-item';
+                
+                let mediaHTML = '';
+                if (announcement.media > 0) {
+                    mediaHTML = '<div class="announcement-media">';
+                    for (let i = 0; i < announcement.media; i++) {
+                        mediaHTML += `<img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Church Image">`;
+                    }
+                    mediaHTML += '</div>';
+                }
+                
+                announcementDiv.innerHTML = `
+                    <div class="announcement-header">
+                        <div class="announcement-info">
+                            <h4>${announcement.title}</h4>
+                            <p>Posted by Admin • ${announcement.time} • ${announcement.type} • For: ${announcement.audience}</p>
+                        </div>
+                        <div class="announcement-actions">
+                            <button class="btn btn-small" onclick="editAnnouncement(this)">Edit</button>
+                            <button class="btn btn-small" onclick="deleteAnnouncement(this)">Delete</button>
+                        </div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>${announcement.content}</p>
+                        ${mediaHTML}
+                    </div>
+                `;
+                
+                announcementFeed.appendChild(announcementDiv);
+            });
+            
+            // Sample members
+            const sampleMembers = [
+                { firstName: 'John', lastName: 'Kamau', email: 'john.kamau@example.com', phone: '+254 712 345 678', role: 'Member', status: 'active' },
+                { firstName: 'Mary', lastName: 'Wanjiku', email: 'mary.w@example.com', phone: '+254 723 456 789', role: 'Leader', status: 'active' },
+                { firstName: 'David', lastName: 'Ochieng', email: 'david.o@example.com', phone: '+254 734 567 890', role: 'Deacon', status: 'active' },
+                { firstName: 'Sarah', lastName: 'Muthoni', email: 'sarah.m@example.com', phone: '+254 745 678 901', role: 'Member', status: 'inactive' },
+                { firstName: 'Peter', lastName: 'Mwangi', email: 'peter.m@example.com', phone: '+254 756 789 012', role: 'Elder', status: 'active' },
+                { firstName: 'Grace', lastName: 'Akinyi', email: 'grace.a@example.com', phone: '+254 767 890 123', role: 'Member', status: 'pending' }
+            ];
+            
+            const membersList = document.getElementById('membersList');
+            sampleMembers.forEach(member => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+                
+                const initials = (member.firstName[0] + member.lastName[0]).toUpperCase();
+                const fullName = `${member.firstName} ${member.lastName}`;
+                const statusColor = member.status === 'active' ? 'var(--success)' : 
+                                   member.status === 'inactive' ? 'var(--warning)' : 'var(--info)';
+                
+                memberCard.innerHTML = `
+                    <div class="member-header">
+                        <div class="member-avatar">${initials}</div>
+                        <div class="member-info">
+                            <h4>${fullName}</h4>
+                            <p>${member.email}</p>
+                        </div>
+                    </div>
+                    <div class="member-details">
+                        <p><strong>Phone:</strong> ${member.phone}</p>
+                        <p><strong>Role:</strong> ${member.role}</p>
+                        <p><strong>Status:</strong> <span style="color: ${statusColor};">${member.status.charAt(0).toUpperCase() + member.status.slice(1)}</span></p>
+                    </div>
+                    <div class="member-actions">
+                        <button class="btn btn-small" onclick="viewMember(this)">View</button>
+                        <button class="btn btn-small btn-primary" onclick="editMember(this)">Edit</button>
+                        <button class="btn btn-small" onclick="deleteMember(this)">Delete</button>
+                        <button class="btn btn-small btn-admin" onclick="messageMember(this)">Message</button>
+                    </div>
+                `;
+                
+                membersList.appendChild(memberCard);
+            });
+        });
+    </script>
 </body>
 </html>
