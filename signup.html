@@ -3,41 +3,930 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up | Ngaru Anglican Church</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Join Ngaru Anglican Church - Become a Member</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5c2c; /* Deep green - faith, growth */
+            --secondary: #d4af37; /* Gold - divinity, value */
+            --accent: #8b4513; /* Saddle brown - earthiness, stability */
+            --light: #f8f5f0; /* Off-white - purity, peace */
+            --dark: #1a331a; /* Dark green - depth, tradition */
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --success: #3a7d34; /* Green for success messages */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+        }
+        
+        .logo .ngaru {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo .anglican {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .logo .church {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            left: 0;
+            bottom: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        /* Signup Page Hero */
+        .signup-hero {
+            background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95)), url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 0 4rem;
+        }
+        
+        .signup-hero h1 {
+            color: white;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .signup-hero h2:after {
+            background-color: var(--secondary);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .signup-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 4rem 0;
+        }
+        
+        .signup-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+        
+        .signup-form-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .signup-info {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f5f9f5;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        .signup-info h3 {
+            color: var(--primary);
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+        
+        .signup-info h3:first-child {
+            margin-top: 0;
+        }
+        
+        .signup-info ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .signup-info li {
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .info-icon {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+        
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .required {
+            color: #c0392b;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 92, 44, 0.1);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232c5c2c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+            padding-right: 2.5rem;
+        }
+        
+        .form-text {
+            display: block;
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox-group input {
+            margin-top: 0.3rem;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-group label {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        
+        .form-section {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section-icon {
+            color: var(--secondary);
+            margin-right: 0.8rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-secondary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .footer-logo .anglican {
+            color: var(--secondary);
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-verse {
+            font-style: italic;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Success Message */
+        .success-message {
+            background-color: rgba(58, 125, 52, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .success-message h3 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .signup-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .signup-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .signup-hero {
+                padding: 5rem 0 3rem;
+            }
+            
+            .signup-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .signup-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-section, .signup-info {
+                padding: 1.8rem;
+            }
+            
+            .signup-hero {
+                padding: 4rem 0 2.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">
-            <span class="ngaru">Ngaru</span>
-            <span class="anglican">Anglican</span>
-            <span class="church">Church</span>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+
+            <!-- Hamburger -->
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#ministries">Ministries</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="signup.html" class="btn-nav">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="auth-container">
-        <div class="glass-form">
-            <h2>Create an Account</h2>
-            <p class="form-subtitle">Join our church community</p>
-
-            <form>
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email Address" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Confirm Password" required>
-
-                <button type="submit" class="btn">Sign Up</button>
-            </form>
-
-            <p class="form-footer">
-                Already have an account?
-                <a href="login.html">Login</a>
-            </p>
+    <!-- Signup Hero Section -->
+    <section class="signup-hero">
+        <div class="container">
+            <h1>Join Our Church Family</h1>
+            <p>Become a member of Ngaru Anglican Church and grow together in faith, fellowship, and service.</p>
         </div>
-    </main>
+    </section>
 
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div id="successMessage" class="success-message">
+                <h3><i class="fas fa-check-circle"></i> Thank You for Your Registration!</h3>
+                <p>Your membership application has been submitted successfully. Our church secretary will contact you within 3-5 business days to welcome you and provide further information. May God bless you richly!</p>
+            </div>
+            
+            <div class="signup-container">
+                <div class="signup-form-container">
+                    <form id="membershipForm">
+                        <!-- Personal Information -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-user section-icon"></i> Personal Information</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name <span class="required">*</span></label>
+                                    <input type="text" id="firstName" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="lastName">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="lastName" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="email" class="form-control" required>
+                                    <span class="form-text">We'll never share your email with anyone else.</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="phone" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" id="dob" class="form-control">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" class="form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="address">Home Address</label>
+                                <textarea id="address" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Spiritual Information -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-pray section-icon"></i> Spiritual Information</h3>
+                            
+                            <div class="form-group">
+                                <label for="baptism">Have you been baptized? <span class="required">*</span></label>
+                                <select id="baptism" class="form-control" required>
+                                    <option value="">Select Option</option>
+                                    <option value="yes-anglican">Yes, in Anglican Church</option>
+                                    <option value="yes-other">Yes, in another denomination</option>
+                                    <option value="no">No, not yet baptized</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmation">Have you been confirmed? <span class="required">*</span></label>
+                                <select id="confirmation" class="form-control" required>
+                                    <option value="">Select Option</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="not-sure">Not sure</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="previousChurch">Previous Church (if any)</label>
+                                <input type="text" id="previousChurch" class="form-control">
+                                <span class="form-text">Please include denomination and location</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="membershipReason">Why do you want to join Ngaru Anglican Church?</label>
+                                <textarea id="membershipReason" class="form-control" rows="4" placeholder="Share your testimony or reason for joining..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Ministry Interests -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-hands-helping section-icon"></i> Ministry Interests</h3>
+                            <p>Which ministries are you interested in? (Select all that apply)</p>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryChildren" name="ministry" value="children">
+                                <label for="ministryChildren">Children & Sunday School Ministry</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryYouth" name="ministry" value="youth">
+                                <label for="ministryYouth">Youth and Young Adults Fellowship</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryWomen" name="ministry" value="women">
+                                <label for="ministryWomen">Women's Fellowship</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryMen" name="ministry" value="men">
+                                <label for="ministryMen">Men's Fellowship</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryChoir" name="ministry" value="choir">
+                                <label for="ministryChoir">Choir and Worship Ministry</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryOutreach" name="ministry" value="outreach">
+                                <label for="ministryOutreach">Community Outreach and Missions</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryBible" name="ministry" value="bible">
+                                <label for="ministryBible">Bible Study and Discipleship</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryPrayer" name="ministry" value="prayer">
+                                <label for="ministryPrayer">Prayer Ministry</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="ministryHospitality" name="ministry" value="hospitality">
+                                <label for="ministryHospitality">Hospitality and Welcome Team</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Agreement -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-file-signature section-icon"></i> Membership Agreement</h3>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="doctrine" required>
+                                <label for="doctrine">I affirm the basic doctrines of the Christian faith as expressed in the Apostles' and Nicene Creeds, and I accept the teachings of the Anglican Church.</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="commitment" required>
+                                <label for="commitment">I commit to regular participation in worship, fellowship, and service at Ngaru Anglican Church to the best of my ability.</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="support" required>
+                                <label for="support">I commit to supporting the ministry of Ngaru Anglican Church through prayer and financial giving as God enables me.</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="contact" required>
+                                <label for="contact">I agree to be contacted by church leaders regarding membership, events, and ministry opportunities.</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="privacy" required>
+                                <label for="privacy">I understand that my personal information will be kept confidential and used only for church purposes.</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-block">Submit Membership Application</button>
+                            <a href="index.html" class="btn btn-secondary btn-block">Back to Home</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="signup-info">
+                    <h3><i class="fas fa-info-circle info-icon"></i> Membership Benefits</h3>
+                    <ul>
+                        <li>Full participation in church sacraments</li>
+                        <li>Voting rights in church meetings</li>
+                        <li>Eligibility for leadership positions</li>
+                        <li>Pastoral care and support</li>
+                        <li>Regular church communications</li>
+                        <li>Access to member-only events</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-question-circle info-icon"></i> What to Expect</h3>
+                    <ul>
+                        <li>Your application will be reviewed by our membership committee</li>
+                        <li>You'll be contacted for a brief welcome interview</li>
+                        <li>New member orientation sessions are held monthly</li>
+                        <li>You'll be assigned a church family mentor</li>
+                        <li>Formal welcome during a Sunday service</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-church info-icon"></i> Membership Requirements</h3>
+                    <ul>
+                        <li>Profession of faith in Jesus Christ</li>
+                        <li>Baptism in any Christian denomination</li>
+                        <li>Regular attendance for at least 3 months</li>
+                        <li>Completion of new members' class</li>
+                        <li>Commitment to church's vision and values</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-clock info-icon"></i> Next Steps After Submission</h3>
+                    <p>After submitting this form, our membership secretary will contact you within one week to schedule a welcome interview. New members are formally received during our monthly communion services.</p>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background-color: rgba(212, 175, 55, 0.1); border-radius: 8px;">
+                        <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Questions?</h4>
+                        <p style="margin-bottom: 0.5rem;">Contact our membership coordinator:</p>
+                        <p style="margin-bottom: 0;"><i class="fas fa-envelope"></i> membership@ngaruchurch.ac.ke</p>
+                        <p style="margin-bottom: 0;"><i class="fas fa-phone"></i> +254 700 123 457</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+            
+            <p>Ngaru Parish • Anglican Church of Kenya</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ngaru Town, Kenya</p>
+            <p><i class="fas fa-phone"></i> +254 700 123 456</p>
+            <p><i class="fas fa-envelope"></i> info@ngaruchurch.ac.ke</p>
+            
+            <div class="footer-verse">
+                <p>“Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!”</p>
+                <p>— 2 Corinthians 5:17</p>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Script
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Form Submission
+        document.getElementById('membershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real application, you would send the form data to a server here
+            // For demonstration, we'll just show a success message
+            
+            // Scroll to top to show success message
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('show');
+            
+            // Clear form after submission (optional)
+            // this.reset();
+            
+            // In a real application, you might want to keep the form data
+            // or redirect to a thank you page instead
+            
+            console.log('Form submitted successfully!');
+            console.log('Form data would be sent to server here.');
+            
+            // Simulate sending data to server (remove in production)
+            setTimeout(() => {
+                alert('Thank you for your membership application! In a real implementation, this data would be sent to our church database. We will contact you soon.');
+            }, 500);
+        });
+
+        // Form validation enhancements
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && this.value.trim() === '') {
+                    this.style.borderColor = '#c0392b';
+                } else {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                this.style.borderColor = '#ddd';
+            });
+        });
+
+        // Set max date for date of birth (must be at least 5 years old)
+        const dobInput = document.getElementById('dob');
+        if (dobInput) {
+            const today = new Date();
+            const maxDate = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate());
+            dobInput.max = maxDate.toISOString().split('T')[0];
+        }
+    </script>
 </body>
-<script src="signup.js"></script>
 </html>
