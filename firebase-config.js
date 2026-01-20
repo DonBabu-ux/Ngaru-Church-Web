@@ -1,12 +1,12 @@
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyYOUR_API_KEY_HERE",
-    authDomain: "ngaru-anglican-church.firebaseapp.com",
-    projectId: "ngaru-anglican-church",
-    storageBucket: "ngaru-anglican-church.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+      apiKey: "AIzaSyA7Fx-54SHm02nIszZFSmkqo_S7VPS7W_Y",
+  authDomain: "ngaru-church.firebaseapp.com",
+  projectId: "ngaru-church",
+  storageBucket: "ngaru-church.firebasestorage.app",
+  messagingSenderId: "207707689742",
+  appId: "1:207707689742:web:954e317f69acc5959cbd5f",
+  measurementId: "G-WFBY03PEJH"
 };
 
 // Initialize Firebase
