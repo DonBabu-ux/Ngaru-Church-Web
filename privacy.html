@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Ngaru Anglican Church</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2c5c2c;
+            --secondary: #d4af37;
+            --accent: #8b4513;
+            --light: #f8f5f0;
+            --dark: #1a331a;
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+        }
+        
+        .logo .ngaru {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo .anglican {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .logo .church {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            left: 0;
+            bottom: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        
+        /* Hero Section */
+        .privacy-hero {
+            background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2011&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 0 4rem;
+        }
+        
+        .privacy-hero h1 {
+            color: white;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .privacy-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 4rem 0;
+        }
+        
+        .privacy-container {
+            background-color: white;
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+        
+        .privacy-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .privacy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-icon {
+            color: var(--secondary);
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+        }
+        
+        ul {
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+        
+        .highlight-box {
+            background-color: rgba(44, 92, 44, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .warning-box {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .update-date {
+            background-color: rgba(44, 92, 44, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .update-date p {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .data-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .data-type {
+            background-color: #f5f9f5;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .data-type h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .back-to-signup {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .footer-logo .anglican {
+            color: var(--secondary);
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-verse {
+            font-style: italic;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .privacy-hero h1 { font-size: 2.8rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 0;
+                transform: translateX(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            .nav-links.active {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            .nav-links li { margin: 1.5rem 0; }
+            .privacy-hero h1 { font-size: 2.2rem; }
+            .privacy-hero { padding: 5rem 0 3rem; }
+            .privacy-container { padding: 2rem; }
+            .data-types { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; }
+            .privacy-hero h1 { font-size: 1.8rem; }
+            .privacy-container { padding: 1.5rem; }
+            .privacy-hero { padding: 4rem 0 2.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#ministries">Ministries</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="privacy-hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            <p>Your Data Protection and Privacy Rights</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="privacy-container">
+                <!-- Last Updated -->
+                <div class="update-date">
+                    <p><i class="fas fa-calendar-alt"></i> Last Updated: January 15, 2024</p>
+                </div>
+                
+                <!-- Introduction -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-user-shield section-icon"></i> Introduction</h2>
+                    <p>At Ngaru Anglican Church, we are committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, store, and protect your data in accordance with Kenyan data protection laws and Christian ethical standards.</p>
+                    
+                    <div class="warning-box">
+                        <p><strong>Note:</strong> By using our services and becoming a member, you consent to the collection and use of your information as described in this policy.</p>
+                    </div>
+                </div>
+                
+                <!-- Data Collection -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-database section-icon"></i> Information We Collect</h2>
+                    
+                    <h3><i class="fas fa-user-circle"></i> 1. Personal Information</h3>
+                    <p>We collect information you provide directly:</p>
+                    <div class="data-types">
+                        <div class="data-type">
+                            <h4><i class="fas fa-id-card"></i> Identity Information</h4>
+                            <ul>
+                                <li>Full name and title</li>
+                                <li>Contact details (email, phone)</li>
+                                <li>Date of birth and gender</li>
+                                <li>Home address</li>
+                                <li>Photograph (optional)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-church"></i> Spiritual Information</h4>
+                            <ul>
+                                <li>Baptism and confirmation status</li>
+                                <li>Previous church affiliation</li>
+                                <li>Ministry interests</li>
+                                <li>Testimony and spiritual journey</li>
+                                <li>Prayer requests</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-users"></i> Family Information</h4>
+                            <ul>
+                                <li>Marital status</li>
+                                <li>Spouse and children details</li>
+                                <li>Emergency contacts</li>
+                                <li>Family member relationships</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3><i class="fas fa-cogs"></i> 2. Automatic Collection</h3>
+                    <ul>
+                        <li><strong>Usage Data:</strong> How you interact with our website and services</li>
+                        <li><strong>Technical Data:</strong> IP address, browser type, device information</li>
+                        <li><strong>Location Data:</strong> General location for service optimization</li>
+                        <li><strong>Cookies:</strong> For functionality and analytics (see Cookie Policy)</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-hand-holding-heart"></i> 3. Financial Information</h3>
+                    <ul>
+                        <li>Giving history and patterns</li>
+                        <li>Payment method (not stored by us)</li>
+                        <li>Tax receipt information</li>
+                        <li>Pledge commitments (if any)</li>
+                    </ul>
+                </div>
+                
+                <!-- How We Use Data -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-tasks section-icon"></i> How We Use Your Information</h2>
+                    
+                    <div class="data-types">
+                        <div class="data-type">
+                            <h4><i class="fas fa-hands-helping"></i> Pastoral Care</h4>
+                            <ul>
+                                <li>Provide spiritual guidance</li>
+                                <li>Visit sick and homebound</li>
+                                <li>Crisis intervention</li>
+                                <li>Prayer support</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-bullhorn"></i> Communication</h4>
+                            <ul>
+                                <li>Church announcements</li>
+                                <li>Event invitations</li>
+                                <li>Ministry updates</li>
+                                <li>Prayer chain alerts</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-chart-line"></i> Administration</h4>
+                            <ul>
+                                <li>Membership records</li>
+                                <li>Service planning</li>
+                                <li>Ministry coordination</li>
+                                <li>Resource allocation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3><i class="fas fa-shield-alt"></i> Legal Basis for Processing</h3>
+                    <ul>
+                        <li><strong>Consent:</strong> You have given explicit consent</li>
+                        <li><strong>Contract:</strong> Necessary for membership agreement</li>
+                        <li><strong>Legitimate Interest:</strong> Church administration and pastoral care</li>
+                        <li><strong>Legal Obligation:</strong> Compliance with Kenyan laws</li>
+                    </ul>
+                </div>
+                
+                <!-- Data Sharing -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-share-alt section-icon"></i> Data Sharing & Disclosure</h2>
+                    
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-lock"></i> We Never Sell Your Data</h3>
+                        <p>We do not and will never sell your personal information to third parties.</p>
+                    </div>
+                    
+                    <h3><i class="fas fa-users-cog"></i> 1. Internal Sharing</h3>
+                    <ul>
+                        <li><strong>Church Leadership:</strong> Pastors and elders for pastoral care</li>
+                        <li><strong>Ministry Leaders:</strong> For ministry coordination</li>
+                        <li><strong>Administration Team:</strong> For church operations</li>
+                        <li><strong>Directory:</strong> Limited info with other members (with consent)</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-external-link-alt"></i> 2. External Service Providers</h3>
+                    <ul>
+                        <li><strong>Firebase:</strong> Secure data storage and authentication</li>
+                        <li><strong>Email Service:</strong> For church communications</li>
+                        <li><strong>Payment Processors:</strong> For secure online giving</li>
+                        <li><strong>Analytics:</strong> Google Analytics (anonymous data)</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-gavel"></i> 3. Legal Requirements</h3>
+                    <ul>
+                        <li>Court orders or legal processes</li>
+                        <li>Government authorities (when required by law)</li>
+                        <li>Protection of rights and safety</li>
+                        <li>Investigation of potential violations</li>
+                    </ul>
+                </div>
+                
+                <!-- Data Security -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-lock section-icon"></i> Data Security</h2>
+                    
+                    <h3><i class="fas fa-shield-virus"></i> Security Measures</h3>
+                    <ul>
+                        <li><strong>Encryption:</strong> All data encrypted in transit and at rest</li>
+                        <li><strong>Access Controls:</strong> Role-based access to sensitive data</li>
+                        <li><strong>Firebase Security:</strong> Industry-standard security practices</li>
+                        <li><strong>Regular Audits:</strong> Security reviews and vulnerability testing</li>
+                        <li><strong>Staff Training:</strong> Data protection training for all staff</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-user-lock"></i> Your Responsibilities</h3>
+                    <ul>
+                        <li>Keep your login credentials secure</li>
+                        <li>Log out of shared devices</li>
+                        <li>Use strong, unique passwords</li>
+                        <li>Report suspicious activity immediately</li>
+                        <li>Update your information regularly</li>
+                    </ul>
+                </div>
+                
+                <!-- Your Rights -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-user-check section-icon"></i> Your Data Protection Rights</h2>
+                    
+                    <div class="data-types">
+                        <div class="data-type">
+                            <h4><i class="fas fa-eye"></i> Right to Access</h4>
+                            <p>Request copies of your personal data</p>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-edit"></i> Right to Rectification</h4>
+                            <p>Correct inaccurate or incomplete data</p>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-trash-alt"></i> Right to Erasure</h4>
+                            <p>Request deletion of your data</p>
+                        </div>
+                    </div>
+                    
+                    <div class="data-types">
+                        <div class="data-type">
+                            <h4><i class="fas fa-pause-circle"></i> Right to Restrict</h4>
+                            <p>Limit how we use your data</p>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-file-export"></i> Right to Portability</h4>
+                            <p>Receive your data in usable format</p>
+                        </div>
+                        
+                        <div class="data-type">
+                            <h4><i class="fas fa-ban"></i> Right to Object</h4>
+                            <p>Object to certain processing</p>
+                        </div>
+                    </div>
+                    
+                    <h3><i class="fas fa-cog"></i> How to Exercise Your Rights</h3>
+                    <ul>
+                        <li>Contact our Data Protection Officer</li>
+                        <li>Use the privacy settings in your member portal</li>
+                        <li>Submit a written request to the church office</li>
+                        <li>Allow 30 days for processing requests</li>
+                    </ul>
+                </div>
+                
+                <!-- Data Retention -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-history section-icon"></i> Data Retention</h2>
+                    
+                    <h3><i class="fas fa-clock"></i> Retention Periods</h3>
+                    <ul>
+                        <li><strong>Active Members:</strong> Data retained while active</li>
+                        <li><strong>Inactive Members:</strong> 7 years after last activity</li>
+                        <li><strong>Financial Records:</strong> 7 years for tax purposes</li>
+                        <li><strong>Sacramental Records:</strong> Permanent (baptism, marriage)</li>
+                        <li><strong>Prayer Requests:</strong> 1 year unless renewed</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-archive"></i> Data Deletion</h3>
+                    <ul>
+                        <li>Secure deletion when retention period ends</li>
+                        <li>Anonymization for statistical purposes</li>
+                        <li>Archival for historical church records</li>
+                        <li>Notification before significant deletion</li>
+                    </ul>
+                </div>
+                
+                <!-- Children's Privacy -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-child section-icon"></i> Children's Privacy</h2>
+                    
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Special Protection</h3>
+                        <p>We take extra precautions with children's data:</p>
+                    </div>
+                    
+                    <ul>
+                        <li>Parental consent required for children under 18</li>
+                        <li>Limited data collection for children</li>
+                        <li>Separate Sunday School database with restricted access</li>
+                        <li>No photos of children online without explicit consent</li>
+                        <li>Special training for children's ministry workers</li>
+                    </ul>
+                </div>
+                
+                <!-- International Transfers -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-globe section-icon"></i> International Data Transfers</h2>
+                    
+                    <h3><i class="fas fa-cloud"></i> Firebase Services</h3>
+                    <p>Firebase may process data outside Kenya. We ensure:</p>
+                    <ul>
+                        <li>Firebase complies with international standards</li>
+                        <li>Data remains encrypted during transfer</li>
+                        <li>Adequate safeguards are in place</li>
+                        <li>You are informed of any significant changes</li>
+                    </ul>
+                </div>
+                
+                <!-- Changes to Policy -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-sync-alt section-icon"></i> Changes to This Policy</h2>
+                    
+                    <ul>
+                        <li>Annual review and update of this policy</li>
+                        <li>Notification of significant changes via email</li>
+                        <li>Updated date displayed at top of policy</li>
+                        <li>Continued use implies acceptance of updates</li>
+                        <li>Archive of previous versions available on request</li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-headset section-icon"></i> Contact & Complaints</h2>
+                    
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-user-tie"></i> Data Protection Officer</h3>
+                        <p>For privacy concerns and data requests:</p>
+                        <ul>
+                            <li><strong>Name:</strong> Privacy Committee Chair</li>
+                            <li><strong>Email:</strong> privacy@ngaruchurch.org</li>
+                            <li><strong>Phone:</strong> +254 700 123 460</li>
+                            <li><strong>Address:</strong> Ngaru Anglican Church Office</li>
+                        </ul>
+                    </div>
+                    
+                    <h3><i class="fas fa-balance-scale"></i> Complaints</h3>
+                    <p>If unsatisfied with our response, you may contact:</p>
+                    <ul>
+                        <li><strong>Office of the Data Protection Commissioner Kenya</strong></li>
+                        <li><strong>Anglican Church of Kenya Headquarters</strong></li>
+                        <li><strong>Local Government Authorities</strong></li>
+                    </ul>
+                </div>
+                
+                <!-- Cookie Policy -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-cookie-bite section-icon"></i> Cookie Policy</h2>
+                    
+                    <h3><i class="fas fa-info-circle"></i> What Are Cookies?</h3>
+                    <p>Cookies are small text files stored on your device to improve your experience.</p>
+                    
+                    <h3><i class="fas fa-list"></i> Types We Use</h3>
+                    <ul>
+                        <li><strong>Essential:</strong> Required for site functionality</li>
+                        <li><strong>Preference:</strong> Remember your settings</li>
+                        <li><strong>Analytics:</strong> Anonymous usage statistics</li>
+                        <li><strong>Marketing:</strong> None - we don't use marketing cookies</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-cog"></i> Cookie Control</h3>
+                    <p>You can control cookies through your browser settings. However, disabling essential cookies may affect site functionality.</p>
+                </div>
+                
+                <!-- Back to Signup -->
+                <div class="back-to-signup">
+                    <a href="signup.html" class="btn">
+                        <i class="fas fa-arrow-left"></i> Back to Signup
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+            
+            <p>Ngaru Parish • Anglican Church of Kenya</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ngaru Town, Kenya</p>
+            <p><i class="fas fa-phone"></i> +254 700 123 456</p>
+            <p><i class="fas fa-envelope"></i> privacy@ngaruchurch.org</p>
+            
+            <div class="footer-verse">
+                <p>"Whatever you do, work at it with all your heart, as working for the Lord."</p>
+                <p>— Colossians 3:23</p>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> Ngaru Anglican Church. All Rights Reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    <a href="privacy-policy.html" style="color: var(--secondary); text-decoration: none; margin-right: 1rem;">
+                        <i class="fas fa-user-shield"></i> Privacy Policy
+                    </a>
+                    <a href="terms-conditions.html" style="color: var(--secondary); text-decoration: none;">
+                        <i class="fas fa-file-contract"></i> Terms & Conditions
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwYOUR_API_KEY_HERE",
+            authDomain: "ngaru-anglican-church.firebaseapp.com",
+            projectId: "ngaru-anglican-church",
+            storageBucket: "ngaru-anglican-church.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Mobile Menu
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+            const icon = menuToggle.querySelector('i');
+            if (navLinks.classList.contains("active")) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-times");
+            } else {
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove("active");
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            });
+        });
+
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Track privacy policy view
+        window.addEventListener('load', () => {
+            if (auth.currentUser) {
+                db.collection('privacy_logs').add({
+                    userId: auth.currentUser.uid,
+                    action: 'viewed_policy',
+                    timestamp: new Date().toISOString(),
+                    version: '2024-01-15'
+                });
+            }
+            
+            // Set cookie consent
+            if (!localStorage.getItem('cookie_consent')) {
+                showCookieConsent();
+            }
+        });
+        
+        // Cookie Consent Banner
+        function showCookieConsent() {
+            const cookieBanner = document.createElement('div');
+            cookieBanner.id = 'cookieConsent';
+            cookieBanner.innerHTML = `
+                <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--dark); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+                    <div class="container" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 style="color: var(--secondary); margin-bottom: 5px;">
+                                <i class="fas fa-cookie-bite"></i> Cookie Notice
+                            </h4>
+                            <p style="margin-bottom: 0; font-size: 0.9rem;">
+                                We use essential cookies for site functionality. By continuing to browse, you consent to our use of cookies as described in our <a href="privacy-policy.html#cookie" style="color: var(--secondary); text-decoration: underline;">Cookie Policy</a>.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="acceptCookies" style="background: var(--secondary); color: var(--dark); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                                Accept
+                            </button>
+                            <button id="rejectCookies" style="background: transparent; color: white; border: 1px solid white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                                Reject Non-Essential
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(cookieBanner);
+            
+            document.getElementById('acceptCookies').addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'accepted');
+                localStorage.setItem('cookie_date', new Date().toISOString());
+                cookieBanner.remove();
+                trackCookieConsent('accepted');
+            });
+            
+            document.getElementById('rejectCookies').addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'rejected_non_essential');
+                localStorage.setItem('cookie_date', new Date().toISOString());
+                cookieBanner.remove();
+                disableAnalyticsCookies();
+                trackCookieConsent('rejected_non_essential');
+            });
+        }
+        
+        function trackCookieConsent(decision) {
+            if (auth.currentUser) {
+                db.collection('cookie_consents').add({
+                    userId: auth.currentUser.uid,
+                    decision: decision,
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent
+                });
+            }
+        }
+        
+        function disableAnalyticsCookies() {
+            // Disable Google Analytics if implemented
+            if (window['ga-disable-UA-XXXXX-Y'] !== undefined) {
+                window['ga-disable-UA-XXXXX-Y'] = true;
+            }
+        }
+        
+        // Print functionality
+        const printBtn = document.createElement('button');
+        printBtn.innerHTML = '<i class="fas fa-print"></i> Print Policy';
+        printBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(printBtn);
+        
+        printBtn.addEventListener('mouseenter', () => {
+            printBtn.style.transform = 'translateY(-3px)';
+            printBtn.style.boxShadow = '0 7px 15px rgba(0,0,0,0.3)';
+        });
+        
+        printBtn.addEventListener('mouseleave', () => {
+            printBtn.style.transform = 'translateY(0)';
+            printBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        });
+        
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Add print styles
+        const printStyles = document.createElement('style');
+        printStyles.textContent = `
+            @media print {
+                .navbar, .menu-toggle, .footer, .back-to-signup,
+                button, #cookieConsent {
+                    display: none !important;
+                }
+                
+                .privacy-container {
+                    box-shadow: none !important;
+                    padding: 0 !important;
+                }
+                
+                body {
+                    background: white !important;
+                    color: black !important;
+                }
+                
+                h1, h2, h3 {
+                    color: black !important;
+                }
+                
+                .highlight-box, .warning-box {
+                    border: 1px solid #ddd !important;
+                    page-break-inside: avoid;
+                }
+                
+                a {
+                    color: black !important;
+                    text-decoration: none !important;
+                }
+                
+                .section-icon {
+                    display: none !important;
+                }
+                
+                .data-types {
+                    page-break-inside: avoid;
+                }
+            }
+        `;
+        document.head.appendChild(printStyles);
+        
+        // Data request form
+        const dataRequestBtn = document.createElement('button');
+        dataRequestBtn.innerHTML = '<i class="fas fa-file-download"></i> Data Request';
+        dataRequestBtn.style.cssText = `
+            position: fixed;
+            bottom: 90px;
+            left: 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(dataRequestBtn);
+        
+        dataRequestBtn.addEventListener('mouseenter', () => {
+            dataRequestBtn.style.transform = 'translateY(-3px)';
+            dataRequestBtn.style.boxShadow = '0 7px 15px rgba(0,0,0,0.3)';
+        });
+        
+        dataRequestBtn.addEventListener('mouseleave', () => {
+            dataRequestBtn.style.transform = 'translateY(0)';
+            dataRequestBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        });
+        
+        dataRequestBtn.addEventListener('click', () => {
+            showDataRequestForm();
+        });
+        
+        function showDataRequestForm() {
+            const modal = document.createElement('div');
+            modal.id = 'dataRequestModal';
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; display: flex; align-items: center; justify-content: center;">
+                    <div style="background: white; width: 90%; max-width: 500px; border-radius: 10px; padding: 30px; max-height: 90vh; overflow-y: auto;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="color: var(--primary); margin: 0;">
+                                <i class="fas fa-file-download"></i> Data Request Form
+                            </h3>
+                            <button id="closeModal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light);">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <form id="dataRequestForm">
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">
+                                    Request Type *
+                                </label>
+                                <select id="requestType" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;" required>
+                                    <option value="">Select request type</option>
+                                    <option value="access">Access my data</option>
+                                    <option value="correction">Correct my data</option>
+                                    <option value="deletion">Delete my data</option>
+                                    <option value="restriction">Restrict processing</option>
+                                    <option value="portability">Data portability</option>
+                                    <option value="objection">Object to processing</option>
+                                </select>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">
+                                    Email Address *
+                                </label>
+                                <input type="email" id="requestEmail" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;" required>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">
+                                    Description *
+                                </label>
+                                <textarea id="requestDescription" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;" placeholder="Please describe your request in detail..." required></textarea>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" required style="margin-top: 3px;">
+                                    <span style="font-size: 0.9rem; color: var(--text-light);">
+                                        I confirm that this request is made by me or on my behalf with proper authorization.
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" style="background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: 600; width: 100%; font-size: 1rem;">
+                                <i class="fas fa-paper-plane"></i> Submit Request
+                            </button>
+                        </form>
+                        
+                        <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 20px; text-align: center;">
+                            We'll respond within 30 days as required by law.
+                        </p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            document.getElementById('closeModal').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            document.getElementById('dataRequestForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const requestData = {
+                    type: document.getElementById('requestType').value,
+                    email: document.getElementById('requestEmail').value,
+                    description: document.getElementById('requestDescription').value,
+                    timestamp: new Date().toISOString(),
+                    userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
+                };
+                
+                try {
+                    await db.collection('data_requests').add(requestData);
+                    
+                    // Send email notification (in real implementation)
+                    alert('Request submitted successfully! We\'ll contact you within 30 days.');
+                    modal.remove();
+                    
+                } catch (error) {
+                    console.error('Error submitting request:', error);
+                    alert('Error submitting request. Please try again or contact us directly.');
+                }
+            });
+        }
+        
+        // Add animations
+        const animationStyles = document.createElement('style');
+        animationStyles.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .privacy-section {
+                animation: fadeIn 0.6s ease;
+            }
+            
+            .privacy-section:nth-child(2) { animation-delay: 0.1s; }
+            .privacy-section:nth-child(3) { animation-delay: 0.2s; }
+            .privacy-section:nth-child(4) { animation-delay: 0.3s; }
+            .privacy-section:nth-child(5) { animation-delay: 0.4s; }
+            .privacy-section:nth-child(6) { animation-delay: 0.5s; }
+            .privacy-section:nth-child(7) { animation-delay: 0.6s; }
+            .privacy-section:nth-child(8) { animation-delay: 0.7s; }
+            .privacy-section:nth-child(9) { animation-delay: 0.8s; }
+            .privacy-section:nth-child(10) { animation-delay: 0.9s; }
+            .privacy-section:nth-child(11) { animation-delay: 1.0s; }
+            
+            #dataRequestModal {
+                animation: fadeIn 0.3s ease;
+            }
+        `;
+        document.head.appendChild(animationStyles);
+        
+        // Accept policy tracking
+        if (window.location.search.includes('accepted=true')) {
+            const acceptedMsg = document.createElement('div');
+            acceptedMsg.innerHTML = `
+                <div style="position: fixed; top: 100px; right: 30px; background: var(--success); color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; animation: slideIn 0.5s ease;">
+                    <i class="fas fa-check-circle"></i> Privacy policy accepted!
+                </div>
+            `;
+            document.body.appendChild(acceptedMsg);
+            
+            setTimeout(() => {
+                acceptedMsg.remove();
+            }, 5000);
+            
+            // Track acceptance
+            if (auth.currentUser) {
+                db.collection('privacy_acceptances').add({
+                    userId: auth.currentUser.uid,
+                    accepted: true,
+                    timestamp: new Date().toISOString(),
+                    version: '2024-01-15'
+                });
+            }
+        }
+    </script>
+</body>
+</html>
