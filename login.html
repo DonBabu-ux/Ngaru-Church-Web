@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Ngaru Anglican Church Members Portal</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #2c5c2c; /* Deep green - faith, growth */
@@ -694,9 +702,41 @@
                 grid-template-columns: 1fr;
             }
         }
+    
+        /* Add theme animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--secondary); }
+            50% { box-shadow: 0 0 20px var(--secondary), 0 0 40px var(--secondary); }
+        }
+        
+        /* Theme-specific styles */
+        body.valentines .login-card {
+            animation: pulse 2s infinite, glow 3s infinite;
+        }
+        
+        body.christmas .quick-link-card {
+            border: 2px dashed var(--secondary);
+        }
+        
+        body.easter .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+        }
+        
+        body.lunar-horse .navbar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        body.harvest .login-hero h1 {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
-
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -728,7 +768,10 @@
     <section class="login-hero">
         <div class="container">
             <h1>Welcome Back to Ngaru Anglican Church</h1>
-            <p>Access your member portal, connect with your church family, and grow in faith together.</p>
+            <p id="theme-rhyme">Access your member portal, connect with your church family, and grow in faith together.</p>
+            <div id="theme-indicator" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin-top: 1rem;">
+                <i class="fas fa-palette"></i> <span id="current-theme">Default Theme</span>
+            </div>
         </div>
     </section>
 
@@ -746,18 +789,24 @@
                 <p id="errorText">Invalid email or password. Please try again.</p>
             </div>
             
+            <div id="loadingMessage" class="message message-warning" style="display: none;">
+                <h3><i class="fas fa-spinner fa-spin"></i> Processing...</h3>
+                <p>Please wait while we authenticate your credentials.</p>
+            </div>
+            
             <div class="login-container">
                 <div class="login-form-container">
                     <!-- Login Form -->
                     <div class="login-card">
-                        <h3>Member Login</h3>
+                        <h3><i class="fas fa-user-shield"></i> Secure Member Login</h3>
                         
                         <form id="loginForm">
                             <div class="form-group">
                                 <label for="email">Email Address <span class="required">*</span></label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-envelope"></i>
-                                    <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required>
+                                    <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required 
+                                           oninput="SecurityUtils.sanitizeInput(this.value)">
                                 </div>
                             </div>
                             
@@ -767,7 +816,7 @@
                                     <i class="fas fa-lock"></i>
                                     <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
                                 </div>
-                                <span class="form-text">Password must be at least 8 characters long</span>
+                                <span class="form-text">Password must be at least 8 characters with uppercase, lowercase, number, and special character</span>
                             </div>
                             
                             <div class="login-options">
@@ -776,20 +825,25 @@
                                     <label for="rememberMe">Remember me</label>
                                 </div>
                                 
-                                <a href="#" class="forgot-password">Forgot Password?</a>
+                                <a href="#" class="forgot-password" onclick="handleForgotPassword(event)">Forgot Password?</a>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block" id="loginButton">
+                                <span id="loginButtonText">Sign In</span>
+                                <span id="loginSpinner" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Signing In...
+                                </span>
+                            </button>
                             
                             <div class="divider">
                                 <span>Or continue with</span>
                             </div>
                             
                             <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                                <button type="button" class="btn btn-secondary" style="flex: 1;">
+                                <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="signInWithGoogle()">
                                     <i class="fab fa-google"></i> Google
                                 </button>
-                                <button type="button" class="btn btn-secondary" style="flex: 1;">
+                                <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="signInWithFacebook()">
                                     <i class="fab fa-facebook-f"></i> Facebook
                                 </button>
                             </div>
@@ -802,23 +856,20 @@
                     
                     <!-- Demo Credentials (for testing) -->
                     <div class="demo-credentials">
-                        <h4><i class="fas fa-info-circle"></i> Demo Login Credentials</h4>
-                        <p>For testing purposes, you can use these credentials:</p>
+                        <h4><i class="fas fa-info-circle"></i> Test Accounts</h4>
+                        <p>For demonstration purposes, you can use these test accounts:</p>
                         
                         <div class="credential">
-                            <span class="credential-label">Email:</span>
-                            <span class="credential-value">member@ngaruchurch.ac.ke</span>
+                            <span class="credential-label">Test User:</span>
+                            <span class="credential-value" onclick="autoFillTestAccount('test@ngaruchurch.org', 'Test123!')">test@ngaruchurch.org</span>
                         </div>
                         
                         <div class="credential">
-                            <span class="credential-label">Password:</span>
-                            <span class="credential-value">NgaruChurch2024</span>
+                            <span class="credential-label">Admin Demo:</span>
+                            <span class="credential-value" onclick="autoFillTestAccount('admin@ngaruchurch.org', 'Admin123!')">admin@ngaruchurch.org</span>
                         </div>
                         
-                        <div class="credential">
-                            <span class="credential-label">Or try:</span>
-                            <span class="credential-value">demo@ngaruchurch.ac.ke / Demo123!</span>
-                        </div>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;"><i class="fas fa-shield-alt"></i> All passwords: Test123! or Admin123!</p>
                     </div>
                     
                     <!-- Quick Links -->
@@ -829,7 +880,7 @@
                             </div>
                             <h4>Events Calendar</h4>
                             <p>View upcoming church events, services, and activities</p>
-                            <a href="#" class="btn btn-secondary" style="margin-top: 1rem; padding: 0.5rem 1.5rem; font-size: 1rem;">View Calendar</a>
+                            <button class="btn btn-secondary" onclick="checkAuthAndRedirect('calendar')" style="margin-top: 1rem; padding: 0.5rem 1.5rem; font-size: 1rem;">View Calendar</button>
                         </div>
                         
                         <div class="quick-link-card">
@@ -838,7 +889,7 @@
                             </div>
                             <h4>Online Giving</h4>
                             <p>Support the ministry through secure online donations</p>
-                            <a href="#" class="btn btn-secondary" style="margin-top: 1rem; padding: 0.5rem 1.5rem; font-size: 1rem;">Give Now</a>
+                            <button class="btn btn-secondary" onclick="checkAuthAndRedirect('giving')" style="margin-top: 1rem; padding: 0.5rem 1.5rem; font-size: 1rem;">Give Now</button>
                         </div>
                     </div>
                 </div>
@@ -857,11 +908,12 @@
                     
                     <h3><i class="fas fa-shield-alt info-icon"></i> Security & Privacy</h3>
                     <ul>
-                        <li>Your data is encrypted and securely stored</li>
+                        <li>Your data is encrypted and securely stored with Firebase</li>
                         <li>We never share your personal information with third parties</li>
                         <li>Two-factor authentication available for added security</li>
                         <li>Regular security audits and updates</li>
                         <li>You control what information is visible to other members</li>
+                        <li>All inputs are sanitized to prevent script injection</li>
                     </ul>
                     
                     <h3><i class="fas fa-question-circle info-icon"></i> Need Help?</h3>
@@ -869,7 +921,7 @@
                     
                     <div style="margin-top: 1.5rem; padding: 1.5rem; background-color: rgba(44, 92, 44, 0.1); border-radius: 8px;">
                         <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Technical Support</h4>
-                        <p style="margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> support@ngaruchurch.ac.ke</p>
+                        <p style="margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> support@ngaruchurch.org</p>
                         <p style="margin-bottom: 0.5rem;"><i class="fas fa-phone"></i> +254 700 123 458</p>
                         <p style="margin-bottom: 0;"><i class="fas fa-clock"></i> Monday-Friday: 9AM-5PM</p>
                     </div>
@@ -878,12 +930,12 @@
                     <p>Access the member portal on your mobile device for on-the-go connectivity with your church family.</p>
                     
                     <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <a href="#" style="flex: 1; text-align: center; padding: 0.8rem; background-color: var(--dark); color: white; border-radius: 8px; text-decoration: none;">
+                        <button class="btn" style="flex: 1; background-color: var(--dark);" onclick="downloadApp('ios')">
                             <i class="fab fa-apple"></i> App Store
-                        </a>
-                        <a href="#" style="flex: 1; text-align: center; padding: 0.8rem; background-color: var(--primary); color: white; border-radius: 8px; text-decoration: none;">
+                        </button>
+                        <button class="btn" style="flex: 1; background-color: var(--primary);" onclick="downloadApp('android')">
                             <i class="fab fa-google-play"></i> Play Store
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -902,7 +954,7 @@
             <p>Ngaru Parish • Anglican Church of Kenya</p>
             <p><i class="fas fa-map-marker-alt"></i> Ngaru Town, Kenya</p>
             <p><i class="fas fa-phone"></i> +254 700 123 456</p>
-            <p><i class="fas fa-envelope"></i> info@ngaruchurch.ac.ke</p>
+            <p><i class="fas fa-envelope"></i> info@ngaruchurch.org</p>
             
             <div class="footer-verse">
                 <p>"Come to me, all you who are weary and burdened, and I will give you rest."</p>
@@ -910,12 +962,29 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
+                <p>&copy; <span id="currentYear"></span> Ngaru Anglican Church. All Rights Reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    <i class="fas fa-shield-alt"></i> Secured with Firebase Authentication
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- Include the configuration and utility files -->
+    <script src="firebase-config.js"></script>
+    <script src="security-utils.js"></script>
+    <script src="theme-manager.js"></script>
+    
     <script>
+        // Initialize theme manager
+        const themeManager = new ThemeManager();
+        
+        // Update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Update theme indicator
+        document.getElementById('current-theme').textContent = themeManager.themes[themeManager.currentTheme].name;
+        
         // Mobile Menu Script
         const menuToggle = document.getElementById("menuToggle");
         const navLinks = document.getElementById("navLinks");
@@ -931,125 +1000,322 @@
             });
         });
 
-        // Form Submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Firebase Authentication Functions
+        function showLoading(show) {
+            const loginButton = document.getElementById('loginButton');
+            const loginButtonText = document.getElementById('loginButtonText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            const loadingMessage = document.getElementById('loadingMessage');
             
-            // Get form values
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            
-            // Hide any existing messages
+            if (show) {
+                loginButton.disabled = true;
+                loginButtonText.style.display = 'none';
+                loginSpinner.style.display = 'inline';
+                loadingMessage.style.display = 'block';
+            } else {
+                loginButton.disabled = false;
+                loginButtonText.style.display = 'inline';
+                loginSpinner.style.display = 'none';
+                loadingMessage.style.display = 'none';
+            }
+        }
+        
+        function showMessage(type, message) {
+            // Hide all messages first
             document.getElementById('successMessage').classList.remove('show');
             document.getElementById('errorMessage').classList.remove('show');
             
-            // Simple validation
-            if (!email || !password) {
-                showError('Please enter both email and password.');
-                return;
-            }
-            
-            if (password.length < 8) {
-                showError('Password must be at least 8 characters long.');
-                return;
-            }
-            
-            // Demo login logic - in a real app, this would be a server call
-            const demoCredentials = [
-                { email: 'member@ngaruchurch.ac.ke', password: 'NgaruChurch2024' },
-                { email: 'demo@ngaruchurch.ac.ke', password: 'Demo123!' }
-            ];
-            
-            // Check if credentials match demo accounts
-            const isValid = demoCredentials.some(cred => 
-                cred.email === email && cred.password === password
-            );
-            
-            if (isValid) {
-                // Show success message
+            // Show the appropriate message
+            if (type === 'success') {
                 document.getElementById('successMessage').classList.add('show');
-                
-             // Show success message
-document.getElementById('successMessage').querySelector('p').textContent = 'Login successful! Redirecting...';
-document.getElementById('successMessage').classList.add('show');
-
-// In a real application, you would redirect to dashboard here
-setTimeout(() => {
-    // Add fade out effect
-    document.body.style.opacity = '0.8';
-    document.body.style.transition = 'opacity 0.5s';
-    
-    setTimeout(() => {
-        window.location.href = 'dashboard.html';
-    }, 500);
-}, 2000);
-                // Clear form
-                this.reset();
-            } else {
-                showError('Invalid email or password. Please try again.');
+            } else if (type === 'error') {
+                document.getElementById('errorText').textContent = message;
+                document.getElementById('errorMessage').classList.add('show');
             }
-        });
-        
-        function showError(message) {
-            document.getElementById('errorText').textContent = message;
-            document.getElementById('errorMessage').classList.add('show');
             
-            // Scroll to error message
-            document.getElementById('errorMessage').scrollIntoView({
+            // Scroll to message
+            document.querySelector('.message.show')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
             });
         }
         
-        // Demo login buttons for quick testing
-        document.querySelectorAll('.demo-credentials .credential-value').forEach(element => {
-            element.style.cursor = 'pointer';
-            element.addEventListener('click', function() {
-                const text = this.textContent;
-                if (text.includes('@')) {
-                    // It's an email
-                    document.getElementById('email').value = text.split(' / ')[0];
-                } else if (text.includes('NgaruChurch') || text.includes('Demo123')) {
-                    // It's a password
-                    document.getElementById('password').value = text;
-                } else if (text.includes('demo@ngaruchurch.ac.ke / Demo123!')) {
-                    // Full credential set
-                    const [email, password] = text.split(' / ');
-                    document.getElementById('email').value = email;
-                    document.getElementById('password').value = password;
-                }
-            });
-        });
-        
-        // Forgot password functionality
-        document.querySelector('.forgot-password').addEventListener('click', function(e) {
+        // Form Submission with Firebase Authentication
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const email = prompt('Please enter your email address to reset your password:');
-            if (email) {
-                alert(`Password reset link has been sent to ${email}. In a real implementation, this would trigger an email to the user.`);
+            
+            // Get and sanitize form values
+            const email = SecurityUtils.sanitizeInput(document.getElementById('email').value.trim());
+            const password = SecurityUtils.sanitizeInput(document.getElementById('password').value.trim());
+            
+            // Validate inputs
+            if (!SecurityUtils.isValidEmail(email)) {
+                showMessage('error', 'Please enter a valid email address');
+                return;
             }
-        });
-        
-        // Social login buttons (demo functionality)
-        document.querySelectorAll('.btn-secondary').forEach(button => {
-            if (button.textContent.includes('Google') || button.textContent.includes('Facebook')) {
-                button.addEventListener('click', function() {
-                    alert('In a real implementation, this would redirect to Google/Facebook OAuth login. For now, please use the demo credentials above.');
+            
+            const passwordValidation = SecurityUtils.validatePassword(password);
+            if (!passwordValidation.valid) {
+                showMessage('error', passwordValidation.message);
+                return;
+            }
+            
+            // Show loading state
+            showLoading(true);
+            
+            try {
+                // Firebase authentication
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                // Update user's last login in Firestore
+                await firebase.firestore().collection('users').doc(user.uid).update({
+                    lastLogin: new Date().toISOString(),
+                    loginCount: firebase.firestore.FieldValue.increment(1)
                 });
+                
+                // Log analytics
+                firebase.analytics().logEvent('login', {
+                    method: 'email'
+                });
+                
+                showMessage('success', 'Login successful!');
+                
+                // Store authentication token in session storage
+                const token = await user.getIdToken();
+                sessionStorage.setItem('authToken', token);
+                sessionStorage.setItem('userId', user.uid);
+                
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Handle specific Firebase errors
+                let errorMessage = 'Login failed. Please try again.';
+                
+                switch(error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email address.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password. Please try again.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address format.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'This account has been disabled.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many failed login attempts. Please try again later.';
+                        break;
+                }
+                
+                showMessage('error', errorMessage);
+            } finally {
+                showLoading(false);
             }
         });
         
-        // Quick link buttons
-        document.querySelectorAll('.quick-link-card .btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                if (!this.getAttribute('href')) {
-                    e.preventDefault();
-                    alert('This feature would be available after logging in. Please login first.');
+        // Google Sign-In
+        async function signInWithGoogle() {
+            showLoading(true);
+            
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('email');
+                provider.addScope('profile');
+                
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+                
+                // Check if user exists in Firestore, create if not
+                const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    await firebase.firestore().collection('users').doc(user.uid).set({
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        createdAt: new Date().toISOString(),
+                        provider: 'google',
+                        role: 'member'
+                    });
                 }
-            });
+                
+                // Store auth token
+                const token = await user.getIdToken();
+                sessionStorage.setItem('authToken', token);
+                sessionStorage.setItem('userId', user.uid);
+                
+                showMessage('success', 'Google login successful!');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                showMessage('error', 'Google sign-in failed. Please try again.');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Facebook Sign-In
+        async function signInWithFacebook() {
+            showLoading(true);
+            
+            try {
+                const provider = new firebase.auth.FacebookAuthProvider();
+                provider.addScope('email');
+                provider.addScope('public_profile');
+                
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+                
+                // Check if user exists in Firestore, create if not
+                const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    await firebase.firestore().collection('users').doc(user.uid).set({
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        createdAt: new Date().toISOString(),
+                        provider: 'facebook',
+                        role: 'member'
+                    });
+                }
+                
+                // Store auth token
+                const token = await user.getIdToken();
+                sessionStorage.setItem('authToken', token);
+                sessionStorage.setItem('userId', user.uid);
+                
+                showMessage('success', 'Facebook login successful!');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Facebook sign-in error:', error);
+                showMessage('error', 'Facebook sign-in failed. Please try again.');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Forgot Password
+        async function handleForgotPassword(e) {
+            e.preventDefault();
+            
+            const email = prompt('Please enter your email address to reset your password:');
+            if (!email) return;
+            
+            if (!SecurityUtils.isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            try {
+                await firebase.auth().sendPasswordResetEmail(email);
+                alert(`Password reset link has been sent to ${SecurityUtils.escapeHTML(email)}. Please check your email.`);
+                
+                // Log analytics
+                firebase.analytics().logEvent('password_reset_requested', {
+                    email: email
+                });
+                
+            } catch (error) {
+                console.error('Password reset error:', error);
+                alert('Failed to send password reset email. Please try again.');
+            }
+        }
+        
+        // Auto-fill test accounts
+        function autoFillTestAccount(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            
+            // Show a brief notification
+            const notification = document.createElement('div');
+            notification.textContent = 'Test account credentials filled!';
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.background = 'var(--secondary)';
+            notification.style.color = 'var(--dark)';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '10000';
+            notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Check authentication before redirecting
+        function checkAuthAndRedirect(destination) {
+            const user = firebase.auth().currentUser;
+            
+            if (user) {
+                switch(destination) {
+                    case 'calendar':
+                        window.location.href = 'calendar.html';
+                        break;
+                    case 'giving':
+                        window.location.href = 'giving.html';
+                        break;
+                    default:
+                        window.location.href = 'dashboard.html';
+                }
+            } else {
+                alert('Please login first to access this feature.');
+            }
+        }
+        
+        // Mock app download function
+        function downloadApp(platform) {
+            alert(`In a real implementation, this would download the ${platform === 'ios' ? 'iOS' : 'Android'} app. For now, please use the web portal.`);
+        }
+        
+        // Initialize Firebase auth state listener
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                console.log('User is signed in:', user.email);
+            } else {
+                console.log('No user is signed in');
+            }
         });
+        
+        // Add theme toggle for testing (remove in production)
+        const themeToggle = document.createElement('div');
+        themeToggle.innerHTML = `
+            <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                <h4 style="margin: 0 0 10px 0;">Theme Tester</h4>
+                <select id="themeSelect" style="padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+                    ${Object.keys(themeManager.themes).map(theme => 
+                        `<option value="${theme}">${themeManager.themes[theme].name}</option>`
+                    ).join('')}
+                </select>
+                <button onclick="applySelectedTheme()" style="margin-left: 5px; padding: 5px 10px; background: var(--primary); color: white; border: none; border-radius: 5px;">Apply</button>
+            </div>
+        `;
+        document.body.appendChild(themeToggle);
+        
+        function applySelectedTheme() {
+            const selectedTheme = document.getElementById('themeSelect').value;
+            themeManager.applyTheme(selectedTheme);
+            document.getElementById('current-theme').textContent = themeManager.themes[selectedTheme].name;
+        }
     </script>
 </body>
 </html>
-
-
