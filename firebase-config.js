@@ -1,7 +1,8 @@
 // Firebase Configuration
 const firebaseConfig = {
-      apiKey: "AIzaSyA7Fx-54SHm02nIszZFSmkqo_S7VPS7W_Y",
+   apiKey: "AIzaSyA7Fx-54SHm02nIszZFSmkqo_S7VPS7W_Y",
   authDomain: "ngaru-church.firebaseapp.com",
+  databaseURL: "https://ngaru-church-default-rtdb.firebaseio.com",
   projectId: "ngaru-church",
   storageBucket: "ngaru-church.firebasestorage.app",
   messagingSenderId: "207707689742",
