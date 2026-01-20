@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Ngaru Anglican Church - Become a Member</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #2c5c2c; /* Deep green - faith, growth */
@@ -20,6 +28,51 @@
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
             --success: #3a7d34; /* Green for success messages */
+            --error: #c0392b; /* Red for errors */
+            --warning: #e67e22; /* Orange for warnings */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Theme-specific overrides */
+        body.valentines {
+            --primary: #c44569;
+            --secondary: #ff7979;
+            --accent: #eb4d4b;
+            --light: #ffebee;
+            --dark: #6d214f;
+        }
+        
+        body.easter {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #dfe6e9;
+            --dark: #2d3436;
+        }
+        
+        body.christmas {
+            --primary: #2d3436;
+            --secondary: #d63031;
+            --accent: #00b894;
+            --light: #dfe6e9;
+            --dark: #2d3436;
+        }
+        
+        body.lunar-horse {
+            --primary: #e17055;
+            --secondary: #fdcb6e;
+            --accent: #00cec9;
+            --light: #ffeaa7;
+            --dark: #e17055;
+        }
+        
+        body.harvest {
+            --primary: #e67e22;
+            --secondary: #f39c12;
+            --accent: #d35400;
+            --light: #fef9e7;
+            --dark: #784212;
         }
         
         * {
@@ -40,6 +93,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.8s ease;
         }
         
         h1, h2, h3, h4 {
@@ -93,6 +147,7 @@
             width: 100%;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
         }
         
         .nav-container {
@@ -170,6 +225,9 @@
             color: white;
             font-size: 1.8rem;
             cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
         }
         
         /* Signup Page Hero */
@@ -177,15 +235,18 @@
             background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95)), url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
             text-align: center;
             padding: 6rem 0 4rem;
+            transition: background 0.8s ease;
         }
         
         .signup-hero h1 {
             color: white;
             font-size: 3.2rem;
             margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .signup-hero h2:after {
@@ -226,6 +287,14 @@
             padding: 2.5rem;
             border-radius: 12px;
             box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .signup-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
         .signup-info h3 {
@@ -277,7 +346,7 @@
         }
         
         .required {
-            color: #c0392b;
+            color: var(--error);
         }
         
         .form-control {
@@ -336,6 +405,14 @@
             border-radius: 12px;
             box-shadow: var(--shadow);
             margin-bottom: 2.5rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+        }
+        
+        .form-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .form-section h3 {
@@ -379,21 +456,132 @@
             text-align: center;
         }
         
-        .btn-secondary {
+        .btn-primary {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
         }
         
-        .btn-secondary:hover {
+        .btn-primary:hover {
             background-color: transparent;
             color: var(--primary);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
         }
         
         .form-actions {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .message-success {
+            background-color: rgba(58, 125, 52, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+        
+        .message-error {
+            background-color: rgba(192, 57, 43, 0.1);
+            border-left: 4px solid var(--error);
+            color: var(--error);
+        }
+        
+        .message-warning {
+            background-color: rgba(230, 126, 34, 0.1);
+            border-left: 4px solid var(--warning);
+            color: var(--warning);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--secondary); }
+            50% { box-shadow: 0 0 20px var(--secondary), 0 0 40px var(--secondary); }
+        }
+        
+        /* Theme-specific animations */
+        body.valentines .btn-primary {
+            animation: pulse 2s infinite;
+        }
+        
+        body.easter .form-section {
+            border: 2px dashed var(--accent);
+        }
+        
+        body.christmas .signup-info {
+            animation: glow 3s infinite;
+        }
+        
+        body.lunar-horse .logo {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        body.harvest .signup-hero h1 {
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 5px;
+            border-radius: 3px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .strength-weak { background-color: var(--error); }
+        .strength-medium { background-color: var(--warning); }
+        .strength-strong { background-color: var(--success); }
+        
+        /* Holiday Effects */
+        .holiday-effect {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            font-size: 24px;
+            user-select: none;
         }
         
         /* Footer */
@@ -403,6 +591,7 @@
             padding: 4rem 0 2rem;
             text-align: center;
             margin-top: auto;
+            transition: background-color 0.8s ease;
         }
         
         .footer-container {
@@ -443,29 +632,19 @@
             color: rgba(255, 255, 255, 0.6);
         }
         
-        /* Success Message */
-        .success-message {
-            background-color: rgba(58, 125, 52, 0.1);
-            border-left: 4px solid var(--success);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            display: none;
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
         
-        .success-message.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .success-message h3 {
-            color: var(--success);
-            margin-bottom: 0.5rem;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* Responsive Design */
@@ -490,14 +669,16 @@
             
             .nav-links {
                 position: fixed;
-                top: 70px;
+                top: 0;
                 left: 0;
                 width: 100%;
+                height: 100vh;
                 background-color: var(--primary);
                 flex-direction: column;
                 align-items: center;
+                justify-content: center;
                 padding: 2rem 0;
-                transform: translateY(-100%);
+                transform: translateX(-100%);
                 opacity: 0;
                 transition: var(--transition);
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -505,12 +686,12 @@
             }
             
             .nav-links.active {
-                transform: translateY(0);
+                transform: translateX(0);
                 opacity: 1;
             }
             
             .nav-links li {
-                margin: 1rem 0;
+                margin: 1.5rem 0;
             }
             
             .signup-hero h1 {
@@ -576,9 +757,9 @@
             </a>
 
             <!-- Hamburger -->
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
@@ -596,21 +777,35 @@
     <section class="signup-hero">
         <div class="container">
             <h1>Join Our Church Family</h1>
-            <p>Become a member of Ngaru Anglican Church and grow together in faith, fellowship, and service.</p>
+            <p id="theme-rhyme">Become a member of Ngaru Anglican Church and grow together in faith, fellowship, and service.</p>
+            <div id="theme-indicator" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin-top: 1rem;">
+                <i class="fas fa-palette"></i> <span id="current-theme">Default Theme</span>
+            </div>
         </div>
     </section>
 
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
-            <div id="successMessage" class="success-message">
-                <h3><i class="fas fa-check-circle"></i> Thank You for Your Registration!</h3>
-                <p>Your membership application has been submitted successfully. Our church secretary will contact you within 3-5 business days to welcome you and provide further information. May God bless you richly!</p>
+            <!-- Messages -->
+            <div id="successMessage" class="message message-success">
+                <h3><i class="fas fa-check-circle"></i> Account Created Successfully!</h3>
+                <p>Welcome to Ngaru Anglican Church! Your account has been created. Please check your email for verification.</p>
+            </div>
+            
+            <div id="errorMessage" class="message message-error">
+                <h3><i class="fas fa-exclamation-circle"></i> Signup Failed</h3>
+                <p id="errorText">Please check your information and try again.</p>
+            </div>
+            
+            <div id="loadingMessage" class="message message-warning" style="display: none;">
+                <h3><i class="fas fa-spinner fa-spin"></i> Creating Your Account...</h3>
+                <p>Please wait while we set up your membership.</p>
             </div>
             
             <div class="signup-container">
                 <div class="signup-form-container">
-                    <form id="membershipForm">
+                    <form id="membershipForm" onsubmit="return handleSignup(event)">
                         <!-- Personal Information -->
                         <div class="form-section">
                             <h3><i class="fas fa-user section-icon"></i> Personal Information</h3>
@@ -618,32 +813,38 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="firstName">First Name <span class="required">*</span></label>
-                                    <input type="text" id="firstName" class="form-control" required>
+                                    <input type="text" id="firstName" class="form-control" required
+                                           oninput="SecurityUtils.sanitizeInput(this.value)">
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="lastName">Last Name <span class="required">*</span></label>
-                                    <input type="text" id="lastName" class="form-control" required>
+                                    <input type="text" id="lastName" class="form-control" required
+                                           oninput="SecurityUtils.sanitizeInput(this.value)">
                                 </div>
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">Email Address <span class="required">*</span></label>
-                                    <input type="email" id="email" class="form-control" required>
+                                    <input type="email" id="email" class="form-control" required
+                                           oninput="SecurityUtils.sanitizeInput(this.value)">
                                     <span class="form-text">We'll never share your email with anyone else.</span>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="phone">Phone Number <span class="required">*</span></label>
-                                    <input type="tel" id="phone" class="form-control" required>
+                                    <input type="tel" id="phone" class="form-control" required
+                                           oninput="SecurityUtils.sanitizeInput(this.value)" 
+                                           pattern="[0-9+\-\s()]{10,}"
+                                           title="Enter a valid phone number">
                                 </div>
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="dob">Date of Birth</label>
-                                    <input type="date" id="dob" class="form-control">
+                                    <input type="date" id="dob" class="form-control" max="">
                                 </div>
                                 
                                 <div class="form-group">
@@ -660,7 +861,41 @@
                             
                             <div class="form-group">
                                 <label for="address">Home Address</label>
-                                <textarea id="address" class="form-control" rows="3"></textarea>
+                                <textarea id="address" class="form-control" rows="3"
+                                          oninput="SecurityUtils.sanitizeInput(this.value)"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Account Creation -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-key section-icon"></i> Create Your Account</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="password">Password <span class="required">*</span></label>
+                                    <input type="password" id="password" class="form-control" required
+                                           oninput="checkPasswordStrength(this.value)">
+                                    <div class="password-strength">
+                                        <div class="strength-bar" id="passwordStrengthBar"></div>
+                                    </div>
+                                    <span class="form-text" id="passwordStrengthText">Password must be at least 8 characters with uppercase, lowercase, number, and special character</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                                    <input type="password" id="confirmPassword" class="form-control" required
+                                           oninput="checkPasswordMatch()">
+                                    <span class="form-text" id="passwordMatchText"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="username">Username (Optional)</label>
+                                    <input type="text" id="username" class="form-control"
+                                           oninput="SecurityUtils.sanitizeInput(this.value)">
+                                    <span class="form-text">Choose a unique username for your profile</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -690,13 +925,16 @@
                             
                             <div class="form-group">
                                 <label for="previousChurch">Previous Church (if any)</label>
-                                <input type="text" id="previousChurch" class="form-control">
+                                <input type="text" id="previousChurch" class="form-control"
+                                       oninput="SecurityUtils.sanitizeInput(this.value)">
                                 <span class="form-text">Please include denomination and location</span>
                             </div>
                             
                             <div class="form-group">
                                 <label for="membershipReason">Why do you want to join Ngaru Anglican Church?</label>
-                                <textarea id="membershipReason" class="form-control" rows="4" placeholder="Share your testimony or reason for joining..."></textarea>
+                                <textarea id="membershipReason" class="form-control" rows="4" 
+                                          placeholder="Share your testimony or reason for joining..."
+                                          oninput="SecurityUtils.sanitizeInput(this.value)"></textarea>
                             </div>
                         </div>
                         
@@ -779,12 +1017,36 @@
                                 <input type="checkbox" id="privacy" required>
                                 <label for="privacy">I understand that my personal information will be kept confidential and used only for church purposes.</label>
                             </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="terms" required>
+                                <label for="terms">I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>.</label>
+                            </div>
                         </div>
                         
                         <!-- Form Actions -->
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-block">Submit Membership Application</button>
-                            <a href="index.html" class="btn btn-secondary btn-block">Back to Home</a>
+                            <button type="submit" class="btn btn-primary btn-block" id="submitButton">
+                                <span id="submitButtonText">Create Account</span>
+                                <span id="submitSpinner" style="display: none;">
+                                    <span class="spinner"></span> Creating Account...
+                                </span>
+                            </button>
+                            <a href="login.html" class="btn btn-secondary btn-block">
+                                <i class="fas fa-sign-in-alt"></i> Already have an account? Login
+                            </a>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <p>Or sign up with:</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center;">
+                                <button type="button" class="btn" onclick="signInWithGoogle()" style="background-color: #DB4437; color: white;">
+                                    <i class="fab fa-google"></i> Google
+                                </button>
+                                <button type="button" class="btn" onclick="signInWithFacebook()" style="background-color: #4267B2; color: white;">
+                                    <i class="fab fa-facebook-f"></i> Facebook
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -798,6 +1060,7 @@
                         <li>Pastoral care and support</li>
                         <li>Regular church communications</li>
                         <li>Access to member-only events</li>
+                        <li>Secure online account with Firebase</li>
                     </ul>
                     
                     <h3><i class="fas fa-question-circle info-icon"></i> What to Expect</h3>
@@ -807,6 +1070,7 @@
                         <li>New member orientation sessions are held monthly</li>
                         <li>You'll be assigned a church family mentor</li>
                         <li>Formal welcome during a Sunday service</li>
+                        <li>Email verification for your account</li>
                     </ul>
                     
                     <h3><i class="fas fa-church info-icon"></i> Membership Requirements</h3>
@@ -818,13 +1082,20 @@
                         <li>Commitment to church's vision and values</li>
                     </ul>
                     
-                    <h3><i class="fas fa-clock info-icon"></i> Next Steps After Submission</h3>
-                    <p>After submitting this form, our membership secretary will contact you within one week to schedule a welcome interview. New members are formally received during our monthly communion services.</p>
+                    <h3><i class="fas fa-shield-alt info-icon"></i> Security Features</h3>
+                    <ul>
+                        <li>End-to-end encrypted data storage</li>
+                        <li>Secure Firebase authentication</li>
+                        <li>Automatic input sanitization</li>
+                        <li>Password strength validation</li>
+                        <li>Email verification required</li>
+                        <li>Regular security audits</li>
+                    </ul>
                     
                     <div style="margin-top: 2rem; padding: 1.5rem; background-color: rgba(212, 175, 55, 0.1); border-radius: 8px;">
                         <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Questions?</h4>
                         <p style="margin-bottom: 0.5rem;">Contact our membership coordinator:</p>
-                        <p style="margin-bottom: 0;"><i class="fas fa-envelope"></i> membership@ngaruchurch.ac.ke</p>
+                        <p style="margin-bottom: 0;"><i class="fas fa-envelope"></i> membership@ngaruchurch.org</p>
                         <p style="margin-bottom: 0;"><i class="fas fa-phone"></i> +254 700 123 457</p>
                     </div>
                 </div>
@@ -844,88 +1115,544 @@
             <p>Ngaru Parish • Anglican Church of Kenya</p>
             <p><i class="fas fa-map-marker-alt"></i> Ngaru Town, Kenya</p>
             <p><i class="fas fa-phone"></i> +254 700 123 456</p>
-            <p><i class="fas fa-envelope"></i> info@ngaruchurch.ac.ke</p>
+            <p><i class="fas fa-envelope"></i> info@ngaruchurch.org</p>
             
             <div class="footer-verse">
-                <p>“Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!”</p>
+                <p>"Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"</p>
                 <p>— 2 Corinthians 5:17</p>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2026 Ngaru Anglican Church. All Rights Reserved.</p>
+                <p>&copy; <span id="currentYear"></span> Ngaru Anglican Church. All Rights Reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    <i class="fas fa-shield-alt"></i> Secured with Firebase Authentication
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- Include security utilities and theme manager -->
+    <script src="https://cdn.jsdelivr.net/npm/validator@13.9.0/validator.min.js"></script>
+    
     <script>
+        // Security Utilities
+        class SecurityUtils {
+            static sanitizeInput(input) {
+                if (typeof input !== 'string') return input;
+                
+                // Remove script tags and other dangerous HTML
+                return input
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#x27;')
+                    .replace(/\//g, '&#x2F;')
+                    .replace(/javascript:/gi, '')
+                    .replace(/on\w+/gi, '')
+                    .trim();
+            }
+            
+            static validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            static validatePassword(password) {
+                const minLength = 8;
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumbers = /\d/.test(password);
+                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                
+                if (password.length < minLength) {
+                    return { valid: false, message: "Password must be at least 8 characters long", strength: "weak" };
+                }
+                if (!hasUpperCase) {
+                    return { valid: false, message: "Password must contain at least one uppercase letter", strength: "weak" };
+                }
+                if (!hasLowerCase) {
+                    return { valid: false, message: "Password must contain at least one lowercase letter", strength: "weak" };
+                }
+                if (!hasNumbers) {
+                    return { valid: false, message: "Password must contain at least one number", strength: "medium" };
+                }
+                if (!hasSpecialChar) {
+                    return { valid: false, message: "Password must contain at least one special character", strength: "medium" };
+                }
+                
+                // Calculate strength
+                let strength = "weak";
+                if (password.length >= 12 && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar) {
+                    strength = "strong";
+                } else if (password.length >= 10) {
+                    strength = "medium";
+                }
+                
+                return { valid: true, message: "Password is strong", strength: strength };
+            }
+        }
+        
+        // Theme Manager
+        class ThemeManager {
+            constructor() {
+                this.currentTheme = 'default';
+                this.themes = {
+                    'default': {
+                        name: 'Default Theme',
+                        primary: '#2c5c2c',
+                        secondary: '#d4af37',
+                        accent: '#8b4513',
+                        light: '#f8f5f0',
+                        dark: '#1a331a',
+                        background: 'linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95))',
+                        rhyme: 'Rooted in Christ, Serving in Love'
+                    },
+                    'valentines': {
+                        name: 'Valentine\'s Day',
+                        primary: '#c44569',
+                        secondary: '#ff7979',
+                        accent: '#eb4d4b',
+                        light: '#ffebee',
+                        dark: '#6d214f',
+                        background: 'linear-gradient(rgba(196, 69, 105, 0.9), rgba(109, 33, 79, 0.95))',
+                        rhyme: 'God\'s Love is Sweet, Our Hearts to Meet'
+                    },
+                    'easter': {
+                        name: 'Easter Celebration',
+                        primary: '#6c5ce7',
+                        secondary: '#a29bfe',
+                        accent: '#fd79a8',
+                        light: '#dfe6e9',
+                        dark: '#2d3436',
+                        background: 'linear-gradient(rgba(108, 92, 231, 0.9), rgba(45, 52, 54, 0.95))',
+                        rhyme: 'He is Risen, Death is Beaten'
+                    },
+                    'christmas': {
+                        name: 'Christmas Season',
+                        primary: '#2d3436',
+                        secondary: '#d63031',
+                        accent: '#00b894',
+                        light: '#dfe6e9',
+                        dark: '#2d3436',
+                        background: 'linear-gradient(rgba(45, 52, 54, 0.9), rgba(214, 48, 49, 0.95))',
+                        rhyme: 'Joy to the World, Our Savior\'s Birth'
+                    },
+                    'lunar-horse': {
+                        name: 'Lunar Horse Year',
+                        primary: '#e17055',
+                        secondary: '#fdcb6e',
+                        accent: '#00cec9',
+                        light: '#ffeaa7',
+                        dark: '#e17055',
+                        background: 'linear-gradient(rgba(225, 112, 85, 0.9), rgba(253, 203, 110, 0.95))',
+                        rhyme: 'Galloping Forward, God\'s Grace Aboard'
+                    },
+                    'harvest': {
+                        name: 'Harvest Festival',
+                        primary: '#e67e22',
+                        secondary: '#f39c12',
+                        accent: '#d35400',
+                        light: '#fef9e7',
+                        dark: '#784212',
+                        background: 'linear-gradient(rgba(230, 126, 34, 0.9), rgba(120, 66, 18, 0.95))',
+                        rhyme: 'Bountiful Blessings, Hearts Expressing'
+                    }
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.detectHoliday();
+                this.applyTheme(this.currentTheme);
+            }
+            
+            detectHoliday() {
+                const today = new Date();
+                const month = today.getMonth() + 1;
+                const date = today.getDate();
+                const year = today.getFullYear();
+                
+                if (month === 2 && date === 14) this.currentTheme = 'valentines';
+                else if (month === 4 && date >= 1 && date <= 30) this.currentTheme = 'easter';
+                else if (month === 12 && date >= 15) this.currentTheme = 'christmas';
+                else if ([2026, 2014, 2002, 1990].includes(year) && month === 1) this.currentTheme = 'lunar-horse';
+                else if (month >= 9 && month <= 11) this.currentTheme = 'harvest';
+                else this.currentTheme = 'default';
+            }
+            
+            applyTheme(themeName) {
+                const theme = this.themes[themeName];
+                if (!theme) return;
+                
+                // Apply CSS variables
+                document.documentElement.style.setProperty('--primary', theme.primary);
+                document.documentElement.style.setProperty('--secondary', theme.secondary);
+                document.documentElement.style.setProperty('--accent', theme.accent);
+                document.documentElement.style.setProperty('--light', theme.light);
+                document.documentElement.style.setProperty('--dark', theme.dark);
+                
+                // Update hero background
+                const heroSection = document.querySelector('.signup-hero');
+                if (heroSection) {
+                    heroSection.style.background = `${theme.background}, url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80')`;
+                    heroSection.style.backgroundSize = 'cover';
+                    heroSection.style.backgroundPosition = 'center';
+                    
+                    const rhymeElement = document.getElementById('theme-rhyme');
+                    if (rhymeElement) {
+                        rhymeElement.textContent = theme.rhyme;
+                    }
+                }
+                
+                // Update theme indicator
+                document.getElementById('current-theme').textContent = theme.name;
+                
+                // Add theme class to body
+                document.body.className = '';
+                document.body.classList.add(themeName);
+                
+                // Add holiday effects
+                this.addHolidayEffects(themeName);
+            }
+            
+            addHolidayEffects(themeName) {
+                // Remove existing effects
+                document.querySelectorAll('.holiday-effect').forEach(el => el.remove());
+                
+                if (themeName === 'valentines') this.createHearts();
+                else if (themeName === 'christmas') this.createSnowflakes();
+                else if (themeName === 'easter') this.createEggs();
+                else if (themeName === 'lunar-horse') this.createHorses();
+            }
+            
+            createHearts() {
+                for (let i = 0; i < 15; i++) {
+                    this.createEffect('❤️', 'heart', Math.random() * 20 + 15);
+                }
+            }
+            
+            createSnowflakes() {
+                for (let i = 0; i < 20; i++) {
+                    this.createEffect('❄️', 'snowflake', Math.random() * 15 + 10);
+                }
+            }
+            
+            createEggs() {
+                for (let i = 0; i < 10; i++) {
+                    this.createEffect('🥚', 'egg', Math.random() * 25 + 15);
+                }
+            }
+            
+            createHorses() {
+                for (let i = 0; i < 8; i++) {
+                    this.createEffect('🐎', 'horse', Math.random() * 30 + 20);
+                }
+            }
+            
+            createEffect(emoji, className, size) {
+                const effect = document.createElement('div');
+                effect.className = `holiday-effect ${className}`;
+                effect.innerHTML = emoji;
+                effect.style.cssText = `
+                    position: fixed;
+                    top: ${Math.random() * 100}vh;
+                    left: ${Math.random() * 100}vw;
+                    font-size: ${size}px;
+                    opacity: ${Math.random() * 0.5 + 0.3};
+                    z-index: 9999;
+                    pointer-events: none;
+                    animation: confetti ${Math.random() * 10 + 5}s linear infinite;
+                    animation-delay: ${Math.random() * 3}s;
+                `;
+                document.body.appendChild(effect);
+            }
+        }
+        
+        // Initialize theme manager
+        const themeManager = new ThemeManager();
+        
         // Mobile Menu Script
         const menuToggle = document.getElementById("menuToggle");
         const navLinks = document.getElementById("navLinks");
 
         menuToggle.addEventListener("click", () => {
             navLinks.classList.toggle("active");
+            const icon = menuToggle.querySelector('i');
+            if (navLinks.classList.contains("active")) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-times");
+            } else {
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            }
         });
 
-        // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+                navLinks.classList.remove("active");
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
             });
         });
 
-        // Form Submission
-        document.getElementById('membershipForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // In a real application, you would send the form data to a server here
-            // For demonstration, we'll just show a success message
-            
-            // Scroll to top to show success message
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Show success message
-            const successMessage = document.getElementById('successMessage');
-            successMessage.classList.add('show');
-            
-            // Clear form after submission (optional)
-            // this.reset();
-            
-            // In a real application, you might want to keep the form data
-            // or redirect to a thank you page instead
-            
-            console.log('Form submitted successfully!');
-            console.log('Form data would be sent to server here.');
-            
-            // Simulate sending data to server (remove in production)
-            setTimeout(() => {
-                alert('Thank you for your membership application! In a real implementation, this data would be sent to our church database. We will contact you soon.');
-            }, 500);
-        });
-
-        // Form validation enhancements
-        document.querySelectorAll('.form-control').forEach(input => {
-            input.addEventListener('blur', function() {
-                if (this.hasAttribute('required') && this.value.trim() === '') {
-                    this.style.borderColor = '#c0392b';
-                } else {
-                    this.style.borderColor = '#ddd';
-                }
-            });
-            
-            input.addEventListener('input', function() {
-                this.style.borderColor = '#ddd';
-            });
-        });
-
-        // Set max date for date of birth (must be at least 5 years old)
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Set max date for DOB (must be at least 5 years old)
         const dobInput = document.getElementById('dob');
         if (dobInput) {
             const today = new Date();
             const maxDate = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate());
             dobInput.max = maxDate.toISOString().split('T')[0];
+        }
+        
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            const validation = SecurityUtils.validatePassword(password);
+            
+            if (!validation.valid) {
+                strengthBar.style.width = '25%';
+                strengthBar.className = 'strength-bar strength-weak';
+                strengthText.textContent = validation.message;
+                strengthText.style.color = 'var(--error)';
+            } else {
+                if (validation.strength === 'weak') {
+                    strengthBar.style.width = '33%';
+                    strengthBar.className = 'strength-bar strength-weak';
+                    strengthText.textContent = 'Password strength: Weak';
+                    strengthText.style.color = 'var(--error)';
+                } else if (validation.strength === 'medium') {
+                    strengthBar.style.width = '66%';
+                    strengthBar.className = 'strength-bar strength-medium';
+                    strengthText.textContent = 'Password strength: Medium';
+                    strengthText.style.color = 'var(--warning)';
+                } else {
+                    strengthBar.style.width = '100%';
+                    strengthBar.className = 'strength-bar strength-strong';
+                    strengthText.textContent = 'Password strength: Strong';
+                    strengthText.style.color = 'var(--success)';
+                }
+            }
+        }
+        
+        // Password match checker
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchText = document.getElementById('passwordMatchText');
+            
+            if (!confirmPassword) {
+                matchText.textContent = '';
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                matchText.textContent = 'Passwords match ✓';
+                matchText.style.color = 'var(--success)';
+            } else {
+                matchText.textContent = 'Passwords do not match ✗';
+                matchText.style.color = 'var(--error)';
+            }
+        }
+        
+        // Show/hide loading state
+        function setLoading(loading) {
+            const submitButton = document.getElementById('submitButton');
+            const submitButtonText = document.getElementById('submitButtonText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            if (loading) {
+                submitButton.disabled = true;
+                submitButtonText.style.display = 'none';
+                submitSpinner.style.display = 'inline';
+                loadingMessage.style.display = 'block';
+            } else {
+                submitButton.disabled = false;
+                submitButtonText.style.display = 'inline';
+                submitSpinner.style.display = 'none';
+                loadingMessage.style.display = 'none';
+            }
+        }
+        
+        // Show message
+        function showMessage(type, message) {
+            document.getElementById('successMessage').classList.remove('show');
+            document.getElementById('errorMessage').classList.remove('show');
+            
+            if (type === 'success') {
+                document.getElementById('successMessage').classList.add('show');
+            } else if (type === 'error') {
+                document.getElementById('errorText').textContent = message;
+                document.getElementById('errorMessage').classList.add('show');
+            }
+            
+            document.querySelector('.message.show')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+        
+        // Main signup handler
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            // Get form values and sanitize
+            const formData = {
+                firstName: SecurityUtils.sanitizeInput(document.getElementById('firstName').value.trim()),
+                lastName: SecurityUtils.sanitizeInput(document.getElementById('lastName').value.trim()),
+                email: SecurityUtils.sanitizeInput(document.getElementById('email').value.trim()),
+                phone: SecurityUtils.sanitizeInput(document.getElementById('phone').value.trim()),
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                address: SecurityUtils.sanitizeInput(document.getElementById('address').value.trim()),
+                password: document.getElementById('password').value,
+                confirmPassword: document.getElementById('confirmPassword').value,
+                username: SecurityUtils.sanitizeInput(document.getElementById('username').value.trim()),
+                baptism: document.getElementById('baptism').value,
+                confirmation: document.getElementById('confirmation').value,
+                previousChurch: SecurityUtils.sanitizeInput(document.getElementById('previousChurch').value.trim()),
+                membershipReason: SecurityUtils.sanitizeInput(document.getElementById('membershipReason').value.trim()),
+                ministryInterests: Array.from(document.querySelectorAll('input[name="ministry"]:checked'))
+                    .map(cb => cb.value)
+            };
+            
+            // Validate required fields
+            if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
+                showMessage('error', 'Please fill in all required fields');
+                return false;
+            }
+            
+            // Validate email
+            if (!SecurityUtils.validateEmail(formData.email)) {
+                showMessage('error', 'Please enter a valid email address');
+                return false;
+            }
+            
+            // Validate password
+            const passwordValidation = SecurityUtils.validatePassword(formData.password);
+            if (!passwordValidation.valid) {
+                showMessage('error', passwordValidation.message);
+                return false;
+            }
+            
+            // Check password match
+            if (formData.password !== formData.confirmPassword) {
+                showMessage('error', 'Passwords do not match');
+                return false;
+            }
+            
+            // Check agreements
+            if (!document.getElementById('doctrine').checked ||
+                !document.getElementById('commitment').checked ||
+                !document.getElementById('support').checked ||
+                !document.getElementById('contact').checked ||
+                !document.getElementById('privacy').checked ||
+                !document.getElementById('terms').checked) {
+                showMessage('error', 'Please agree to all membership agreements');
+                return false;
+            }
+            
+            // Show loading state
+            setLoading(true);
+            
+            try {
+                // In a real implementation, you would use Firebase Authentication here
+                // For now, we'll simulate the process
+                
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Show success message
+                showMessage('success', 'Account created successfully! Please check your email for verification.');
+                
+                // Reset form
+                document.getElementById('membershipForm').reset();
+                
+                // Log to console (in production, send to server)
+                console.log('Signup data:', {
+                    ...formData,
+                    password: '[HIDDEN]',
+                    confirmPassword: '[HIDDEN]',
+                    timestamp: new Date().toISOString(),
+                    theme: themeManager.currentTheme
+                });
+                
+                // Show celebration animation
+                celebrateSignup();
+                
+            } catch (error) {
+                console.error('Signup error:', error);
+                showMessage('error', 'Failed to create account. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+            
+            return false;
+        }
+        
+        // Celebration animation
+        function celebrateSignup() {
+            const colors = ['var(--secondary)', 'var(--primary)', 'var(--accent)'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background-color: ${colors[Math.floor(Math.random() * colors.length)]};
+                    top: -10px;
+                    left: ${Math.random() * 100}vw;
+                    border-radius: 50%;
+                    z-index: 9998;
+                    pointer-events: none;
+                    animation: confetti ${Math.random() * 3 + 2}s ease-out forwards;
+                `;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+        
+        // Social sign-in functions
+        async function signInWithGoogle() {
+            alert('Google sign-up would be implemented with Firebase Authentication');
+            // In production:
+            // const provider = new firebase.auth.GoogleAuthProvider();
+            // const result = await firebase.auth().signInWithPopup(provider);
+        }
+        
+        async function signInWithFacebook() {
+            alert('Facebook sign-up would be implemented with Firebase Authentication');
+            // In production:
+            // const provider = new firebase.auth.FacebookAuthProvider();
+            // const result = await firebase.auth().signInWithPopup(provider);
+        }
+        
+        // Theme toggle for testing
+        const themeToggle = document.createElement('div');
+        themeToggle.innerHTML = `
+            <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                <h4 style="margin: 0 0 10px 0;">Theme Tester</h4>
+                <select id="themeSelect" style="padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+                    ${Object.keys(themeManager.themes).map(theme => 
+                        `<option value="${theme}">${themeManager.themes[theme].name}</option>`
+                    ).join('')}
+                </select>
+                <button onclick="applySelectedTheme()" style="margin-left: 5px; padding: 5px 10px; background: var(--primary); color: white; border: none; border-radius: 5px;">Apply</button>
+            </div>
+        `;
+        document.body.appendChild(themeToggle);
+        
+        function applySelectedTheme() {
+            const selectedTheme = document.getElementById('themeSelect').value;
+            themeManager.applyTheme(selectedTheme);
         }
     </script>
 </body>
