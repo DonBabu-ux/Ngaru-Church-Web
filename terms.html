@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Ngaru Anglican Church</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2c5c2c;
+            --secondary: #d4af37;
+            --accent: #8b4513;
+            --light: #f8f5f0;
+            --dark: #1a331a;
+            --text: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+        }
+        
+        .logo .ngaru {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo .anglican {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .logo .church {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            left: 0;
+            bottom: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        
+        /* Hero Section */
+        .terms-hero {
+            background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95)), url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 0 4rem;
+        }
+        
+        .terms-hero h1 {
+            color: white;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .terms-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 4rem 0;
+        }
+        
+        .terms-container {
+            background-color: white;
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+        
+        .terms-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .terms-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-icon {
+            color: var(--secondary);
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+        }
+        
+        ul {
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+        
+        .highlight-box {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .update-date {
+            background-color: rgba(44, 92, 44, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .update-date p {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .back-to-signup {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .footer-logo .anglican {
+            color: var(--secondary);
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-verse {
+            font-style: italic;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .terms-hero h1 { font-size: 2.8rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 0;
+                transform: translateX(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            .nav-links.active {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            .nav-links li { margin: 1.5rem 0; }
+            .terms-hero h1 { font-size: 2.2rem; }
+            .terms-hero { padding: 5rem 0 3rem; }
+            .terms-container { padding: 2rem; }
+        }
+        
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; }
+            .terms-hero h1 { font-size: 1.8rem; }
+            .terms-container { padding: 1.5rem; }
+            .terms-hero { padding: 4rem 0 2.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#ministries">Ministries</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="terms-hero">
+        <div class="container">
+            <h1>Terms & Conditions</h1>
+            <p>Membership Agreement and Church Policies</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="terms-container">
+                <!-- Last Updated -->
+                <div class="update-date">
+                    <p><i class="fas fa-calendar-alt"></i> Last Updated: January 15, 2024</p>
+                </div>
+                
+                <!-- Introduction -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-file-contract section-icon"></i> Introduction</h2>
+                    <p>Welcome to Ngaru Anglican Church. These Terms and Conditions govern your membership and use of our church services, both physical and digital. By becoming a member, you agree to abide by these terms.</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Important:</strong> These terms are legally binding. Please read them carefully before agreeing. If you have any questions, contact our church administration.</p>
+                    </div>
+                </div>
+                
+                <!-- Membership Terms -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-users section-icon"></i> Membership Terms</h2>
+                    
+                    <h3><i class="fas fa-check-circle"></i> 1. Eligibility Requirements</h3>
+                    <ul>
+                        <li>Profession of faith in Jesus Christ as Lord and Savior</li>
+                        <li>Baptism in any recognized Christian denomination</li>
+                        <li>Completion of new members' orientation class</li>
+                        <li>Regular attendance for at least 3 months</li>
+                        <li>Commitment to Anglican doctrine and practices</li>
+                        <li>Agreement to support the church through prayer and giving</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-handshake"></i> 2. Membership Rights</h3>
+                    <ul>
+                        <li>Full participation in Holy Communion</li>
+                        <li>Voting rights in congregational meetings</li>
+                        <li>Eligibility for leadership positions</li>
+                        <li>Access to pastoral care and counseling</li>
+                        <li>Participation in church sacraments (baptism, confirmation, marriage)</li>
+                        <li>Access to church facilities for approved events</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-ban"></i> 3. Membership Responsibilities</h3>
+                    <ul>
+                        <li>Regular Sunday worship attendance</li>
+                        <li>Financial support through tithes and offerings</li>
+                        <li>Participation in at least one ministry or service group</li>
+                        <li>Maintenance of Christian conduct and witness</li>
+                        <li>Respect for church leadership and fellow members</li>
+                        <li>Regular prayer for the church and its ministries</li>
+                    </ul>
+                </div>
+                
+                <!-- Code of Conduct -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-user-shield section-icon"></i> Code of Conduct</h2>
+                    
+                    <h3><i class="fas fa-heart"></i> 1. Christian Behavior</h3>
+                    <p>All members are expected to conduct themselves in a manner consistent with Christian values, showing love, respect, and integrity in all interactions.</p>
+                    
+                    <h3><i class="fas fa-church"></i> 2. Church Property & Facilities</h3>
+                    <ul>
+                        <li>Treat all church property with respect and care</li>
+                        <li>Follow facility use guidelines and booking procedures</li>
+                        <li>Report any damages or maintenance needs immediately</li>
+                        <li>Clean up after using any church facilities</li>
+                        <li>No smoking, alcohol, or illegal substances on premises</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-comments"></i> 3. Communication & Conflict Resolution</h3>
+                    <ul>
+                        <li>Respectful communication at all times</li>
+                        <li>Follow Matthew 18:15-17 for conflict resolution</li>
+                        <li>No gossip, slander, or divisive speech</li>
+                        <li>Bring concerns to appropriate church leadership</li>
+                        <li>Maintain confidentiality when required</li>
+                    </ul>
+                </div>
+                
+                <!-- Digital Services -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-laptop section-icon"></i> Digital Services & Online Conduct</h2>
+                    
+                    <h3><i class="fas fa-user-circle"></i> 1. Member Portal Usage</h3>
+                    <ul>
+                        <li>Keep login credentials secure and confidential</li>
+                        <li>No sharing of accounts with others</li>
+                        <li>Report suspicious activity immediately</li>
+                        <li>Use only for church-related activities</li>
+                        <li>Respect others' privacy in the directory</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-shield-alt"></i> 2. Data Protection</h3>
+                    <ul>
+                        <li>We use Firebase for secure data storage</li>
+                        <li>Your personal information is encrypted</li>
+                        <li>We never sell or share your data with third parties</li>
+                        <li>You control what information is visible to others</li>
+                        <li>Regular security audits are conducted</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-camera"></i> 3. Media & Photography</h3>
+                    <ul>
+                        <li>By attending events, you consent to photography</li>
+                        <li>Photos may be used for church publications and website</li>
+                        <li>Opt-out available for those who prefer not to be photographed</li>
+                        <li>No unauthorized recording of services</li>
+                        <li>Respect others' privacy when sharing photos online</li>
+                    </ul>
+                </div>
+                
+                <!-- Financial Terms -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-donate section-icon"></i> Financial Terms</h2>
+                    
+                    <h3><i class="fas fa-hand-holding-usd"></i> 1. Giving & Contributions</h3>
+                    <ul>
+                        <li>Giving is voluntary but encouraged as spiritual discipline</li>
+                        <li>All contributions are tax-deductible (receipts provided)</li>
+                        <li>Online giving through secure payment gateways</li>
+                        <li>No pressure or obligation to give specific amounts</li>
+                        <li>Financial transparency through annual reports</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-file-invoice-dollar"></i> 2. Financial Accountability</h3>
+                    <ul>
+                        <li>All funds managed by elected finance committee</li>
+                        <li>Regular financial audits by independent auditors</li>
+                        <li>Budget approval by congregational vote</li>
+                        <li>Transparent reporting of all income and expenses</li>
+                        <li>Strict adherence to financial policies and procedures</li>
+                    </ul>
+                </div>
+                
+                <!-- Termination & Discipline -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-gavel section-icon"></i> Discipline & Termination</h2>
+                    
+                    <h3><i class="fas fa-exclamation-triangle"></i> 1. Grounds for Discipline</h3>
+                    <ul>
+                        <li>Persistent unrepentant sin</li>
+                        <li>False teaching or heresy</li>
+                        <li>Division or strife within the congregation</li>
+                        <li>Criminal activity</li>
+                        <li>Abuse of church position or resources</li>
+                        <li>Violation of these terms and conditions</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-balance-scale"></i> 2. Disciplinary Process</h3>
+                    <ul>
+                        <li>Private counsel and warning (Matthew 18:15-17)</li>
+                        <li>Involvement of church leadership if unresolved</li>
+                        <li>Temporary suspension of membership privileges</li>
+                        <li>Restoration process for repentant members</li>
+                        <li>Formal removal only after all steps exhausted</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-door-open"></i> 3. Voluntary Withdrawal</h3>
+                    <ul>
+                        <li>Members may withdraw membership at any time</li>
+                        <li>Written notice requested but not required</li>
+                        <li>Exit interview available upon request</li>
+                        <li>Transfer letter provided for other churches</li>
+                        <li>No refund of contributions upon withdrawal</li>
+                    </ul>
+                </div>
+                
+                <!-- Legal Terms -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-balance-scale-left section-icon"></i> Legal Terms</h2>
+                    
+                    <h3><i class="fas fa-landmark"></i> 1. Governing Law</h3>
+                    <p>These terms are governed by the laws of Kenya. Any disputes shall be resolved through Christian mediation before legal action.</p>
+                    
+                    <h3><i class="fas fa-exclamation-circle"></i> 2. Disclaimer of Liability</h3>
+                    <ul>
+                        <li>Church not liable for personal injury on premises (except negligence)</li>
+                        <li>Not responsible for lost or stolen personal property</li>
+                        <li>Online services provided "as is" without warranties</li>
+                        <li>No guarantee of specific spiritual outcomes</li>
+                        <li>Members participate in activities at their own risk</li>
+                    </ul>
+                    
+                    <h3><i class="fas fa-edit"></i> 3. Amendments</h3>
+                    <ul>
+                        <li>Terms may be updated annually</li>
+                        <li>Members notified of significant changes</li>
+                        <li>Continued membership implies acceptance of updates</li>
+                        <li>Major changes subject to congregational vote</li>
+                        <li>Previous versions archived for reference</li>
+                    </ul>
+                </div>
+                
+                <!-- Contact & Questions -->
+                <div class="terms-section">
+                    <h2><i class="fas fa-question-circle section-icon"></i> Questions & Contact</h2>
+                    
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                        <p>For questions about these terms:</p>
+                        <ul>
+                            <li><strong>Email:</strong> legal@ngaruchurch.org</li>
+                            <li><strong>Phone:</strong> +254 700 123 459</li>
+                            <li><strong>Address:</strong> Ngaru Anglican Church, Ngaru Town, Kenya</li>
+                            <li><strong>Office Hours:</strong> Monday-Friday, 9:00 AM - 5:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Agreement -->
+                <div class="highlight-box" style="background-color: rgba(44, 92, 44, 0.1); border-left-color: var(--primary);">
+                    <h3><i class="fas fa-file-signature"></i> Your Agreement</h3>
+                    <p>By checking the agreement box during signup, you confirm that:</p>
+                    <ul>
+                        <li>You have read and understand these terms</li>
+                        <li>You agree to abide by them as a church member</li>
+                        <li>You accept the spiritual authority of church leadership</li>
+                        <li>You commit to the values and mission of Ngaru Anglican Church</li>
+                    </ul>
+                </div>
+                
+                <!-- Back to Signup -->
+                <div class="back-to-signup">
+                    <a href="signup.html" class="btn">
+                        <i class="fas fa-arrow-left"></i> Back to Signup
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">
+                <span class="ngaru">Ngaru</span>
+                <span class="anglican">Anglican</span>
+                <span class="church">Church</span>
+            </a>
+            
+            <p>Ngaru Parish • Anglican Church of Kenya</p>
+            <p><i class="fas fa-map-marker-alt"></i> Ngaru Town, Kenya</p>
+            <p><i class="fas fa-phone"></i> +254 700 123 456</p>
+            <p><i class="fas fa-envelope"></i> legal@ngaruchurch.org</p>
+            
+            <div class="footer-verse">
+                <p>"Let everything be done decently and in order."</p>
+                <p>— 1 Corinthians 14:40</p>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> Ngaru Anglican Church. All Rights Reserved.</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    <a href="privacy-policy.html" style="color: var(--secondary); text-decoration: none; margin-right: 1rem;">
+                        <i class="fas fa-user-shield"></i> Privacy Policy
+                    </a>
+                    <a href="terms-conditions.html" style="color: var(--secondary); text-decoration: none;">
+                        <i class="fas fa-file-contract"></i> Terms & Conditions
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwYOUR_API_KEY_HERE",
+            authDomain: "ngaru-anglican-church.firebaseapp.com",
+            projectId: "ngaru-anglican-church",
+            storageBucket: "ngaru-anglican-church.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Mobile Menu
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+            const icon = menuToggle.querySelector('i');
+            if (navLinks.classList.contains("active")) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-times");
+            } else {
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove("active");
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove("fa-times");
+                icon.classList.add("fa-bars");
+            });
+        });
+
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Track page view
+        window.addEventListener('load', () => {
+            if (auth.currentUser) {
+                db.collection('analytics').add({
+                    userId: auth.currentUser.uid,
+                    page: 'terms-conditions',
+                    timestamp: new Date().toISOString(),
+                    action: 'view'
+                });
+            }
+        });
+        
+        // Scroll to top button
+        const scrollBtn = document.createElement('button');
+        scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        scrollBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(scrollBtn);
+        
+        scrollBtn.addEventListener('mouseenter', () => {
+            scrollBtn.style.backgroundColor = 'var(--secondary)';
+            scrollBtn.style.color = 'var(--dark)';
+            scrollBtn.style.transform = 'scale(1.1)';
+        });
+        
+        scrollBtn.addEventListener('mouseleave', () => {
+            scrollBtn.style.backgroundColor = 'var(--primary)';
+            scrollBtn.style.color = 'white';
+            scrollBtn.style.transform = 'scale(1)';
+        });
+        
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = 'flex';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+        
+        // Table of Contents
+        const toc = document.createElement('div');
+        toc.innerHTML = `
+            <div style="position: fixed; left: 30px; top: 50%; transform: translateY(-50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 250px; z-index: 99; display: none;">
+                <h4 style="color: var(--primary); margin-bottom: 15px; font-size: 1.1rem;">
+                    <i class="fas fa-list"></i> Quick Navigation
+                </h4>
+                <div id="tocLinks" style="max-height: 400px; overflow-y: auto; font-size: 0.9rem;"></div>
+            </div>
+        `;
+        document.body.appendChild(toc);
+        
+        const tocContainer = toc.querySelector('#tocLinks');
+        const sections = document.querySelectorAll('.terms-section h2');
+        
+        sections.forEach((section, index) => {
+            const link = document.createElement('a');
+            link.href = `#section${index}`;
+            link.id = `toc${index}`;
+            section.id = `section${index}`;
+            link.textContent = section.textContent.replace('', '').trim();
+            link.style.cssText = `
+                display: block;
+                padding: 8px 0;
+                color: var(--text-light);
+                text-decoration: none;
+                border-left: 3px solid transparent;
+                padding-left: 10px;
+                transition: all 0.3s ease;
+            `;
+            
+            link.addEventListener('mouseenter', () => {
+                link.style.color = 'var(--primary)';
+                link.style.borderLeftColor = 'var(--secondary)';
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                if (!link.classList.contains('active')) {
+                    link.style.color = 'var(--text-light)';
+                    link.style.borderLeftColor = 'transparent';
+                }
+            });
+            
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            tocContainer.appendChild(link);
+        });
+        
+        // Show/hide TOC on scroll
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth > 1200 && window.scrollY > 500) {
+                toc.style.display = 'block';
+                
+                // Update active TOC link
+                sections.forEach((section, index) => {
+                    const link = document.getElementById(`toc${index}`);
+                    const rect = section.getBoundingClientRect();
+                    
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        link.classList.add('active');
+                        link.style.color = 'var(--primary)';
+                        link.style.borderLeftColor = 'var(--secondary)';
+                        link.style.fontWeight = '600';
+                    } else {
+                        link.classList.remove('active');
+                        link.style.color = 'var(--text-light)';
+                        link.style.borderLeftColor = 'transparent';
+                        link.style.fontWeight = 'normal';
+                    }
+                });
+            } else {
+                toc.style.display = 'none';
+            }
+        });
+        
+        // Print functionality
+        const printBtn = document.createElement('button');
+        printBtn.innerHTML = '<i class="fas fa-print"></i> Print Terms';
+        printBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(printBtn);
+        
+        printBtn.addEventListener('mouseenter', () => {
+            printBtn.style.transform = 'translateY(-3px)';
+            printBtn.style.boxShadow = '0 7px 15px rgba(0,0,0,0.3)';
+        });
+        
+        printBtn.addEventListener('mouseleave', () => {
+            printBtn.style.transform = 'translateY(0)';
+            printBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        });
+        
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Add print styles
+        const printStyles = document.createElement('style');
+        printStyles.textContent = `
+            @media print {
+                .navbar, .menu-toggle, .footer, .back-to-signup,
+                button, .toc-container, .print-btn {
+                    display: none !important;
+                }
+                
+                .terms-container {
+                    box-shadow: none !important;
+                    padding: 0 !important;
+                }
+                
+                body {
+                    background: white !important;
+                    color: black !important;
+                }
+                
+                h1, h2, h3 {
+                    color: black !important;
+                }
+                
+                .highlight-box {
+                    border: 1px solid #ddd !important;
+                    page-break-inside: avoid;
+                }
+                
+                a {
+                    color: black !important;
+                    text-decoration: none !important;
+                }
+                
+                .section-icon {
+                    display: none !important;
+                }
+            }
+        `;
+        document.head.appendChild(printStyles);
+        
+        // Accept terms tracking
+        if (window.location.search.includes('accepted=true')) {
+            const acceptedMsg = document.createElement('div');
+            acceptedMsg.innerHTML = `
+                <div style="position: fixed; top: 100px; right: 30px; background: var(--success); color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; animation: slideIn 0.5s ease;">
+                    <i class="fas fa-check-circle"></i> Terms accepted successfully!
+                </div>
+            `;
+            document.body.appendChild(acceptedMsg);
+            
+            setTimeout(() => {
+                acceptedMsg.remove();
+            }, 5000);
+            
+            // Track acceptance
+            if (auth.currentUser) {
+                db.collection('user_terms').add({
+                    userId: auth.currentUser.uid,
+                    accepted: true,
+                    timestamp: new Date().toISOString(),
+                    version: '2024-01-15'
+                });
+            }
+        }
+        
+        // Add animation keyframes
+        const animationStyles = document.createElement('style');
+        animationStyles.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .terms-section {
+                animation: fadeIn 0.6s ease;
+            }
+            
+            .terms-section:nth-child(2) { animation-delay: 0.1s; }
+            .terms-section:nth-child(3) { animation-delay: 0.2s; }
+            .terms-section:nth-child(4) { animation-delay: 0.3s; }
+            .terms-section:nth-child(5) { animation-delay: 0.4s; }
+            .terms-section:nth-child(6) { animation-delay: 0.5s; }
+            .terms-section:nth-child(7) { animation-delay: 0.6s; }
+        `;
+        document.head.appendChild(animationStyles);
+    </script>
+</body>
+</html>
