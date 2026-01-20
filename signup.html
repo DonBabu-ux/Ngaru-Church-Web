@@ -18,23 +18,22 @@
     
     <style>
         :root {
-            --primary: #2c5c2c; /* Deep green - faith, growth */
-            --secondary: #d4af37; /* Gold - divinity, value */
-            --accent: #8b4513; /* Saddle brown - earthiness, stability */
-            --light: #f8f5f0; /* Off-white - purity, peace */
-            --dark: #1a331a; /* Dark green - depth, tradition */
+            --primary: #2c5c2c;
+            --secondary: #d4af37;
+            --accent: #8b4513;
+            --light: #f8f5f0;
+            --dark: #1a331a;
             --text: #333333;
             --text-light: #666666;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
-            --success: #3a7d34; /* Green for success messages */
-            --error: #c0392b; /* Red for errors */
-            --warning: #e67e22; /* Orange for warnings */
+            --success: #3a7d34;
+            --error: #c0392b;
+            --warning: #e67e22;
             --glass-bg: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
         }
         
-        /* Theme-specific overrides */
         body.valentines {
             --primary: #c44569;
             --secondary: #ff7979;
@@ -138,7 +137,6 @@
             padding: 0 20px;
         }
         
-        /* Navigation */
         .navbar {
             background-color: var(--primary);
             padding: 1rem 0;
@@ -230,7 +228,6 @@
             z-index: 1001;
         }
         
-        /* Signup Page Hero */
         .signup-hero {
             background: linear-gradient(rgba(44, 92, 44, 0.9), rgba(26, 51, 26, 0.95)), url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');
             background-size: cover;
@@ -262,7 +259,6 @@
             font-size: 1.3rem;
         }
         
-        /* Main Content */
         .main-content {
             flex: 1;
             padding: 4rem 0;
@@ -322,7 +318,6 @@
             margin-right: 0.5rem;
         }
         
-        /* Form Styling */
         .form-group {
             margin-bottom: 1.8rem;
         }
@@ -484,7 +479,6 @@
             flex-wrap: wrap;
         }
         
-        /* Messages */
         .message {
             padding: 1.5rem;
             border-radius: 8px;
@@ -535,7 +529,16 @@
             50% { box-shadow: 0 0 20px var(--secondary), 0 0 40px var(--secondary); }
         }
         
-        /* Theme-specific animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         body.valentines .btn-primary {
             animation: pulse 2s infinite;
         }
@@ -556,7 +559,6 @@
             text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
         }
         
-        /* Password strength indicator */
         .password-strength {
             margin-top: 0.5rem;
             height: 5px;
@@ -575,7 +577,6 @@
         .strength-medium { background-color: var(--warning); }
         .strength-strong { background-color: var(--success); }
         
-        /* Holiday Effects */
         .holiday-effect {
             position: fixed;
             z-index: 9999;
@@ -584,7 +585,6 @@
             user-select: none;
         }
         
-        /* Footer */
         .footer {
             background-color: var(--dark);
             color: white;
@@ -632,7 +632,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
         
-        /* Loading Spinner */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -643,30 +642,122 @@
             animation: spin 1s ease-in-out infinite;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .form-control.error {
+            border-color: var(--error);
+            background-color: rgba(192, 57, 43, 0.05);
         }
         
-        /* Responsive Design */
+        .form-control.success {
+            border-color: var(--success);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .form-group.required label:after {
+            content: ' *';
+            color: var(--error);
+        }
+        
+        .signup-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .signup-progress:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+        }
+        
+        .progress-step.active {
+            border-color: var(--primary);
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .progress-step.completed {
+            border-color: var(--success);
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .two-factor-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .two-factor-section.show {
+            display: block;
+        }
+        
+        .verification-code {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .verification-code input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .verification-code input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 92, 44, 0.1);
+        }
+        
+        .verification-code input.filled {
+            border-color: var(--success);
+            background-color: rgba(58, 125, 52, 0.1);
+        }
+        
         @media (max-width: 992px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .signup-hero h1 {
-                font-size: 2.8rem;
-            }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .signup-hero h1 { font-size: 2.8rem; }
         }
         
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
+            .menu-toggle { display: block; }
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -684,64 +775,25 @@
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
                 z-index: 999;
             }
-            
             .nav-links.active {
                 transform: translateX(0);
                 opacity: 1;
             }
-            
-            .nav-links li {
-                margin: 1.5rem 0;
-            }
-            
-            .signup-hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .signup-hero {
-                padding: 5rem 0 3rem;
-            }
-            
-            .signup-container {
-                flex-direction: column;
-                gap: 3rem;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
+            .nav-links li { margin: 1.5rem 0; }
+            .signup-hero h1 { font-size: 2.2rem; }
+            .signup-hero { padding: 5rem 0 3rem; }
+            .signup-container { flex-direction: column; gap: 3rem; }
+            .form-row { flex-direction: column; gap: 0; }
+            .form-actions { flex-direction: column; }
+            .btn { width: 100%; margin-bottom: 1rem; }
         }
         
         @media (max-width: 576px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.7rem;
-            }
-            
-            .signup-hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .form-section, .signup-info {
-                padding: 1.8rem;
-            }
-            
-            .signup-hero {
-                padding: 4rem 0 2.5rem;
-            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; }
+            .signup-hero h1 { font-size: 1.8rem; }
+            .form-section, .signup-info { padding: 1.8rem; }
+            .signup-hero { padding: 4rem 0 2.5rem; }
         }
     </style>
 </head>
@@ -756,7 +808,6 @@
                 <span class="church">Church</span>
             </a>
 
-            <!-- Hamburger -->
             <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </button>
@@ -805,39 +856,37 @@
             
             <div class="signup-container">
                 <div class="signup-form-container">
-                    <form id="membershipForm" onsubmit="return handleSignup(event)">
+                    <form id="membershipForm">
                         <!-- Personal Information -->
                         <div class="form-section">
                             <h3><i class="fas fa-user section-icon"></i> Personal Information</h3>
                             
                             <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">First Name <span class="required">*</span></label>
-                                    <input type="text" id="firstName" class="form-control" required
-                                           oninput="SecurityUtils.sanitizeInput(this.value)">
+                                <div class="form-group required">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="form-control" required>
+                                    <div class="error-message" id="firstNameError"></div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="lastName">Last Name <span class="required">*</span></label>
-                                    <input type="text" id="lastName" class="form-control" required
-                                           oninput="SecurityUtils.sanitizeInput(this.value)">
+                                <div class="form-group required">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="form-control" required>
+                                    <div class="error-message" id="lastNameError"></div>
                                 </div>
                             </div>
                             
                             <div class="form-row">
-                                <div class="form-group">
-                                    <label for="email">Email Address <span class="required">*</span></label>
-                                    <input type="email" id="email" class="form-control" required
-                                           oninput="SecurityUtils.sanitizeInput(this.value)">
+                                <div class="form-group required">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" class="form-control" required>
                                     <span class="form-text">We'll never share your email with anyone else.</span>
+                                    <div class="error-message" id="emailError"></div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="phone">Phone Number <span class="required">*</span></label>
-                                    <input type="tel" id="phone" class="form-control" required
-                                           oninput="SecurityUtils.sanitizeInput(this.value)" 
-                                           pattern="[0-9+\-\s()]{10,}"
-                                           title="Enter a valid phone number">
+                                <div class="form-group required">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control" required pattern="[0-9+\-\s()]{10,}" title="Enter a valid phone number">
+                                    <div class="error-message" id="phoneError"></div>
                                 </div>
                             </div>
                             
@@ -861,8 +910,7 @@
                             
                             <div class="form-group">
                                 <label for="address">Home Address</label>
-                                <textarea id="address" class="form-control" rows="3"
-                                          oninput="SecurityUtils.sanitizeInput(this.value)"></textarea>
+                                <textarea id="address" class="form-control" rows="3"></textarea>
                             </div>
                         </div>
                         
@@ -871,29 +919,28 @@
                             <h3><i class="fas fa-key section-icon"></i> Create Your Account</h3>
                             
                             <div class="form-row">
-                                <div class="form-group">
-                                    <label for="password">Password <span class="required">*</span></label>
-                                    <input type="password" id="password" class="form-control" required
-                                           oninput="checkPasswordStrength(this.value)">
+                                <div class="form-group required">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" class="form-control" required>
                                     <div class="password-strength">
                                         <div class="strength-bar" id="passwordStrengthBar"></div>
                                     </div>
                                     <span class="form-text" id="passwordStrengthText">Password must be at least 8 characters with uppercase, lowercase, number, and special character</span>
+                                    <div class="error-message" id="passwordError"></div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
-                                    <input type="password" id="confirmPassword" class="form-control" required
-                                           oninput="checkPasswordMatch()">
+                                <div class="form-group required">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" id="confirmPassword" class="form-control" required>
                                     <span class="form-text" id="passwordMatchText"></span>
+                                    <div class="error-message" id="confirmPasswordError"></div>
                                 </div>
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="username">Username (Optional)</label>
-                                    <input type="text" id="username" class="form-control"
-                                           oninput="SecurityUtils.sanitizeInput(this.value)">
+                                    <input type="text" id="username" class="form-control">
                                     <span class="form-text">Choose a unique username for your profile</span>
                                 </div>
                             </div>
@@ -903,38 +950,37 @@
                         <div class="form-section">
                             <h3><i class="fas fa-pray section-icon"></i> Spiritual Information</h3>
                             
-                            <div class="form-group">
-                                <label for="baptism">Have you been baptized? <span class="required">*</span></label>
+                            <div class="form-group required">
+                                <label for="baptism">Have you been baptized?</label>
                                 <select id="baptism" class="form-control" required>
                                     <option value="">Select Option</option>
                                     <option value="yes-anglican">Yes, in Anglican Church</option>
                                     <option value="yes-other">Yes, in another denomination</option>
                                     <option value="no">No, not yet baptized</option>
                                 </select>
+                                <div class="error-message" id="baptismError"></div>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="confirmation">Have you been confirmed? <span class="required">*</span></label>
+                            <div class="form-group required">
+                                <label for="confirmation">Have you been confirmed?</label>
                                 <select id="confirmation" class="form-control" required>
                                     <option value="">Select Option</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                     <option value="not-sure">Not sure</option>
                                 </select>
+                                <div class="error-message" id="confirmationError"></div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="previousChurch">Previous Church (if any)</label>
-                                <input type="text" id="previousChurch" class="form-control"
-                                       oninput="SecurityUtils.sanitizeInput(this.value)">
+                                <input type="text" id="previousChurch" class="form-control">
                                 <span class="form-text">Please include denomination and location</span>
                             </div>
                             
                             <div class="form-group">
                                 <label for="membershipReason">Why do you want to join Ngaru Anglican Church?</label>
-                                <textarea id="membershipReason" class="form-control" rows="4" 
-                                          placeholder="Share your testimony or reason for joining..."
-                                          oninput="SecurityUtils.sanitizeInput(this.value)"></textarea>
+                                <textarea id="membershipReason" class="form-control" rows="4" placeholder="Share your testimony or reason for joining..."></textarea>
                             </div>
                         </div>
                         
@@ -993,34 +1039,40 @@
                         <div class="form-section">
                             <h3><i class="fas fa-file-signature section-icon"></i> Membership Agreement</h3>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="doctrine" required>
                                 <label for="doctrine">I affirm the basic doctrines of the Christian faith as expressed in the Apostles' and Nicene Creeds, and I accept the teachings of the Anglican Church.</label>
+                                <div class="error-message" id="doctrineError"></div>
                             </div>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="commitment" required>
                                 <label for="commitment">I commit to regular participation in worship, fellowship, and service at Ngaru Anglican Church to the best of my ability.</label>
+                                <div class="error-message" id="commitmentError"></div>
                             </div>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="support" required>
                                 <label for="support">I commit to supporting the ministry of Ngaru Anglican Church through prayer and financial giving as God enables me.</label>
+                                <div class="error-message" id="supportError"></div>
                             </div>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="contact" required>
                                 <label for="contact">I agree to be contacted by church leaders regarding membership, events, and ministry opportunities.</label>
+                                <div class="error-message" id="contactError"></div>
                             </div>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="privacy" required>
                                 <label for="privacy">I understand that my personal information will be kept confidential and used only for church purposes.</label>
+                                <div class="error-message" id="privacyError"></div>
                             </div>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group required">
                                 <input type="checkbox" id="terms" required>
                                 <label for="terms">I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>.</label>
+                                <div class="error-message" id="termsError"></div>
                             </div>
                         </div>
                         
@@ -1131,16 +1183,28 @@
         </div>
     </footer>
 
-    <!-- Include security utilities and theme manager -->
-    <script src="https://cdn.jsdelivr.net/npm/validator@13.9.0/validator.min.js"></script>
-    
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwYOUR_API_KEY_HERE",
+            authDomain: "ngaru-anglican-church.firebaseapp.com",
+            projectId: "ngaru-anglican-church",
+            storageBucket: "ngaru-anglican-church.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456",
+            measurementId: "G-ABCDEF1234"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+        
         // Security Utilities
         class SecurityUtils {
             static sanitizeInput(input) {
                 if (typeof input !== 'string') return input;
-                
-                // Remove script tags and other dangerous HTML
                 return input
                     .replace(/</g, '&lt;')
                     .replace(/>/g, '&gt;')
@@ -1180,7 +1244,6 @@
                     return { valid: false, message: "Password must contain at least one special character", strength: "medium" };
                 }
                 
-                // Calculate strength
                 let strength = "weak";
                 if (password.length >= 12 && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar) {
                     strength = "strong";
@@ -1189,6 +1252,12 @@
                 }
                 
                 return { valid: true, message: "Password is strong", strength: strength };
+            }
+            
+            static escapeHTML(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
             }
         }
         
@@ -1285,14 +1354,12 @@
                 const theme = this.themes[themeName];
                 if (!theme) return;
                 
-                // Apply CSS variables
                 document.documentElement.style.setProperty('--primary', theme.primary);
                 document.documentElement.style.setProperty('--secondary', theme.secondary);
                 document.documentElement.style.setProperty('--accent', theme.accent);
                 document.documentElement.style.setProperty('--light', theme.light);
                 document.documentElement.style.setProperty('--dark', theme.dark);
                 
-                // Update hero background
                 const heroSection = document.querySelector('.signup-hero');
                 if (heroSection) {
                     heroSection.style.background = `${theme.background}, url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80')`;
@@ -1305,19 +1372,13 @@
                     }
                 }
                 
-                // Update theme indicator
                 document.getElementById('current-theme').textContent = theme.name;
-                
-                // Add theme class to body
                 document.body.className = '';
                 document.body.classList.add(themeName);
-                
-                // Add holiday effects
                 this.addHolidayEffects(themeName);
             }
             
             addHolidayEffects(themeName) {
-                // Remove existing effects
                 document.querySelectorAll('.holiday-effect').forEach(el => el.remove());
                 
                 if (themeName === 'valentines') this.createHearts();
@@ -1372,7 +1433,7 @@
         // Initialize theme manager
         const themeManager = new ThemeManager();
         
-        // Mobile Menu Script
+        // Mobile Menu
         const menuToggle = document.getElementById("menuToggle");
         const navLinks = document.getElementById("navLinks");
 
@@ -1397,10 +1458,10 @@
             });
         });
 
-        // Set current year in footer
+        // Set current year
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Set max date for DOB (must be at least 5 years old)
+        // Set DOB max date
         const dobInput = document.getElementById('dob');
         if (dobInput) {
             const today = new Date();
@@ -1408,7 +1469,7 @@
             dobInput.max = maxDate.toISOString().split('T')[0];
         }
         
-        // Password strength checker
+        // Password strength
         function checkPasswordStrength(password) {
             const strengthBar = document.getElementById('passwordStrengthBar');
             const strengthText = document.getElementById('passwordStrengthText');
@@ -1440,7 +1501,7 @@
             }
         }
         
-        // Password match checker
+        // Password match
         function checkPasswordMatch() {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -1460,7 +1521,7 @@
             }
         }
         
-        // Show/hide loading state
+        // Loading state
         function setLoading(loading) {
             const submitButton = document.getElementById('submitButton');
             const submitButtonText = document.getElementById('submitButtonText');
@@ -1486,6 +1547,7 @@
             document.getElementById('errorMessage').classList.remove('show');
             
             if (type === 'success') {
+                document.getElementById('successMessage').innerHTML = message;
                 document.getElementById('successMessage').classList.add('show');
             } else if (type === 'error') {
                 document.getElementById('errorText').textContent = message;
@@ -1498,11 +1560,39 @@
             });
         }
         
+        // Show error on field
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(fieldId + 'Error');
+            
+            if (field) {
+                field.classList.add('error');
+                field.classList.remove('success');
+            }
+            
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+        
+        // Clear field errors
+        function clearFieldErrors() {
+            document.querySelectorAll('.form-control').forEach(field => {
+                field.classList.remove('error', 'success');
+            });
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+                error.textContent = '';
+            });
+        }
+        
         // Main signup handler
         async function handleSignup(event) {
             event.preventDefault();
+            clearFieldErrors();
             
-            // Get form values and sanitize
+            // Get form values
             const formData = {
                 firstName: SecurityUtils.sanitizeInput(document.getElementById('firstName').value.trim()),
                 lastName: SecurityUtils.sanitizeInput(document.getElementById('lastName').value.trim()),
@@ -1518,77 +1608,171 @@
                 confirmation: document.getElementById('confirmation').value,
                 previousChurch: SecurityUtils.sanitizeInput(document.getElementById('previousChurch').value.trim()),
                 membershipReason: SecurityUtils.sanitizeInput(document.getElementById('membershipReason').value.trim()),
-                ministryInterests: Array.from(document.querySelectorAll('input[name="ministry"]:checked'))
-                    .map(cb => cb.value)
+                ministryInterests: Array.from(document.querySelectorAll('input[name="ministry"]:checked')).map(cb => cb.value)
             };
             
-            // Validate required fields
-            if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
-                showMessage('error', 'Please fill in all required fields');
-                return false;
+            // Validate
+            let isValid = true;
+            if (!formData.firstName) { showFieldError('firstName', 'First name is required'); isValid = false; }
+            if (!formData.lastName) { showFieldError('lastName', 'Last name is required'); isValid = false; }
+            if (!formData.email) { showFieldError('email', 'Email is required'); isValid = false; }
+            else if (!SecurityUtils.validateEmail(formData.email)) { showFieldError('email', 'Invalid email format'); isValid = false; }
+            if (!formData.phone) { showFieldError('phone', 'Phone number is required'); isValid = false; }
+            if (!formData.password) { showFieldError('password', 'Password is required'); isValid = false; }
+            else {
+                const passwordValidation = SecurityUtils.validatePassword(formData.password);
+                if (!passwordValidation.valid) { showFieldError('password', passwordValidation.message); isValid = false; }
             }
+            if (!formData.confirmPassword) { showFieldError('confirmPassword', 'Please confirm your password'); isValid = false; }
+            else if (formData.password !== formData.confirmPassword) { showFieldError('confirmPassword', 'Passwords do not match'); isValid = false; }
+            if (!formData.baptism) { showFieldError('baptism', 'Please select baptism status'); isValid = false; }
+            if (!formData.confirmation) { showFieldError('confirmation', 'Please select confirmation status'); isValid = false; }
+            if (!document.getElementById('doctrine').checked) { showFieldError('doctrine', 'This agreement is required'); isValid = false; }
+            if (!document.getElementById('commitment').checked) { showFieldError('commitment', 'This agreement is required'); isValid = false; }
+            if (!document.getElementById('support').checked) { showFieldError('support', 'This agreement is required'); isValid = false; }
+            if (!document.getElementById('contact').checked) { showFieldError('contact', 'This agreement is required'); isValid = false; }
+            if (!document.getElementById('privacy').checked) { showFieldError('privacy', 'This agreement is required'); isValid = false; }
+            if (!document.getElementById('terms').checked) { showFieldError('terms', 'This agreement is required'); isValid = false; }
             
-            // Validate email
-            if (!SecurityUtils.validateEmail(formData.email)) {
-                showMessage('error', 'Please enter a valid email address');
-                return false;
-            }
+            if (!isValid) return false;
             
-            // Validate password
-            const passwordValidation = SecurityUtils.validatePassword(formData.password);
-            if (!passwordValidation.valid) {
-                showMessage('error', passwordValidation.message);
-                return false;
-            }
-            
-            // Check password match
-            if (formData.password !== formData.confirmPassword) {
-                showMessage('error', 'Passwords do not match');
-                return false;
-            }
-            
-            // Check agreements
-            if (!document.getElementById('doctrine').checked ||
-                !document.getElementById('commitment').checked ||
-                !document.getElementById('support').checked ||
-                !document.getElementById('contact').checked ||
-                !document.getElementById('privacy').checked ||
-                !document.getElementById('terms').checked) {
-                showMessage('error', 'Please agree to all membership agreements');
-                return false;
-            }
-            
-            // Show loading state
             setLoading(true);
             
             try {
-                // In a real implementation, you would use Firebase Authentication here
-                // For now, we'll simulate the process
+                // Create user with Firebase
+                const userCredential = await auth.createUserWithEmailAndPassword(formData.email, formData.password);
+                const user = userCredential.user;
                 
-                // Simulate API call delay
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Send email verification
+                await user.sendEmailVerification({
+                    url: window.location.origin + '/login.html',
+                    handleCodeInApp: true
+                });
                 
-                // Show success message
-                showMessage('success', 'Account created successfully! Please check your email for verification.');
+                // Create user profile in Firestore
+                await db.collection('users').doc(user.uid).set({
+                    uid: user.uid,
+                    email: formData.email,
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    phone: formData.phone,
+                    profile: {
+                        dob: formData.dob || null,
+                        gender: formData.gender || '',
+                        address: formData.address || '',
+                        username: formData.username || '',
+                        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.firstName + ' ' + formData.lastName)}&background=2c5c2c&color=fff`
+                    },
+                    spiritual: {
+                        baptism: formData.baptism || '',
+                        confirmation: formData.confirmation || '',
+                        previousChurch: formData.previousChurch || '',
+                        membershipReason: formData.membershipReason || '',
+                        membershipDate: firebase.firestore.FieldValue.serverTimestamp(),
+                        status: 'pending'
+                    },
+                    ministries: formData.ministryInterests || [],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    emailVerified: false,
+                    role: 'member',
+                    lastLogin: null,
+                    loginCount: 0,
+                    themePreference: themeManager.currentTheme,
+                    settings: {
+                        notifications: true,
+                        emailUpdates: true,
+                        visibleInDirectory: false,
+                        twoFactorEnabled: false
+                    }
+                });
+                
+                // Create giving record
+                await db.collection('giving').doc(user.uid).set({
+                    totalGiven: 0,
+                    transactions: [],
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Create event registrations
+                await db.collection('eventRegistrations').doc(user.uid).set({
+                    upcomingEvents: [],
+                    pastEvents: [],
+                    volunteerRoles: []
+                });
+                
+                // Send welcome notification
+                await db.collection('notifications').add({
+                    userId: user.uid,
+                    type: 'welcome',
+                    title: 'Welcome to Ngaru Anglican Church!',
+                    message: `Welcome ${formData.firstName}! Your account has been created. Please verify your email.`,
+                    read: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    actionUrl: '/dashboard.html',
+                    icon: 'fas fa-church'
+                });
+                
+                // Log analytics
+                analytics.logEvent('sign_up', { method: 'email' });
+                
+                // Sign out for email verification
+                await auth.signOut();
+                
+                // Show success
+                showMessage('success', `
+                    <h4><i class="fas fa-check-circle"></i> Account Created Successfully!</h4>
+                    <p>Welcome to Ngaru Anglican Church, ${SecurityUtils.escapeHTML(formData.firstName)}!</p>
+                    <p>We've sent a verification email to <strong>${SecurityUtils.escapeHTML(formData.email)}</strong>.</p>
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <h5><i class="fas fa-envelope"></i> Next Steps:</h5>
+                        <ol style="margin-left: 20px;">
+                            <li>Check your email and click the verification link</li>
+                            <li>Login with your new credentials</li>
+                            <li>Complete your profile setup</li>
+                            <li>Attend a new member orientation</li>
+                        </ol>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i> Didn't receive the email? 
+                            <a href="#" onclick="resendVerificationEmail('${SecurityUtils.escapeHTML(formData.email)}')" style="color: var(--primary); font-weight: 600;">Resend verification</a>
+                        </p>
+                    </div>
+                `);
                 
                 // Reset form
                 document.getElementById('membershipForm').reset();
-                
-                // Log to console (in production, send to server)
-                console.log('Signup data:', {
-                    ...formData,
-                    password: '[HIDDEN]',
-                    confirmPassword: '[HIDDEN]',
-                    timestamp: new Date().toISOString(),
-                    theme: themeManager.currentTheme
-                });
-                
-                // Show celebration animation
                 celebrateSignup();
                 
             } catch (error) {
-                console.error('Signup error:', error);
-                showMessage('error', 'Failed to create account. Please try again.');
+                console.error('Firebase signup error:', error);
+                
+                let errorMessage = 'Failed to create account. Please try again.';
+                
+                switch(error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'This email is already registered. Please use a different email or <a href="login.html" style="color: var(--primary); font-weight: 600;">login here</a>.';
+                        showFieldError('email', 'Email already registered');
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address format.';
+                        showFieldError('email', 'Invalid email format');
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMessage = 'Email/password accounts are not enabled. Please contact support.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'Password is too weak. Please use a stronger password.';
+                        showFieldError('password', 'Password too weak');
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Network error. Please check your internet connection.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many attempts. Please try again later.';
+                        break;
+                }
+                
+                showMessage('error', errorMessage);
             } finally {
                 setLoading(false);
             }
@@ -1596,10 +1780,24 @@
             return false;
         }
         
+        // Resend verification
+        async function resendVerificationEmail(email) {
+            try {
+                const user = auth.currentUser;
+                if (user && user.email === email) {
+                    await user.sendEmailVerification();
+                    alert('Verification email has been resent! Please check your inbox.');
+                }
+                analytics.logEvent('resend_verification', { email: email });
+            } catch (error) {
+                console.error('Resend verification error:', error);
+                alert('Failed to resend verification email. Please try again later.');
+            }
+        }
+        
         // Celebration animation
         function celebrateSignup() {
             const colors = ['var(--secondary)', 'var(--primary)', 'var(--accent)'];
-            
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.cssText = `
@@ -1615,24 +1813,74 @@
                     animation: confetti ${Math.random() * 3 + 2}s ease-out forwards;
                 `;
                 document.body.appendChild(confetti);
-                
                 setTimeout(() => confetti.remove(), 3000);
             }
         }
         
-        // Social sign-in functions
+        // Social sign-in
         async function signInWithGoogle() {
-            alert('Google sign-up would be implemented with Firebase Authentication');
-            // In production:
-            // const provider = new firebase.auth.GoogleAuthProvider();
-            // const result = await firebase.auth().signInWithPopup(provider);
+            try {
+                setLoading(true);
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('email');
+                provider.addScope('profile');
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (!userDoc.exists) {
+                    await db.collection('users').doc(user.uid).set({
+                        uid: user.uid,
+                        email: user.email,
+                        firstName: user.displayName?.split(' ')[0] || '',
+                        lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
+                        profile: { avatar: user.photoURL },
+                        spiritual: { status: 'pending' },
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        provider: 'google',
+                        role: 'member',
+                        emailVerified: user.emailVerified
+                    });
+                }
+                
+                window.location.href = userDoc.exists && userDoc.data().spiritual?.baptism ? 'dashboard.html' : 'complete-profile.html';
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                showMessage('error', 'Google sign-in failed. Please try again.');
+                setLoading(false);
+            }
         }
         
         async function signInWithFacebook() {
-            alert('Facebook sign-up would be implemented with Firebase Authentication');
-            // In production:
-            // const provider = new firebase.auth.FacebookAuthProvider();
-            // const result = await firebase.auth().signInWithPopup(provider);
+            try {
+                setLoading(true);
+                const provider = new firebase.auth.FacebookAuthProvider();
+                provider.addScope('email');
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (!userDoc.exists) {
+                    await db.collection('users').doc(user.uid).set({
+                        uid: user.uid,
+                        email: user.email,
+                        firstName: user.displayName?.split(' ')[0] || '',
+                        lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
+                        profile: { avatar: user.photoURL },
+                        spiritual: { status: 'pending' },
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        provider: 'facebook',
+                        role: 'member',
+                        emailVerified: user.emailVerified
+                    });
+                }
+                
+                window.location.href = userDoc.exists && userDoc.data().spiritual?.baptism ? 'dashboard.html' : 'complete-profile.html';
+            } catch (error) {
+                console.error('Facebook sign-in error:', error);
+                showMessage('error', 'Facebook sign-in failed. Please try again.');
+                setLoading(false);
+            }
         }
         
         // Theme toggle for testing
@@ -1654,6 +1902,79 @@
             const selectedTheme = document.getElementById('themeSelect').value;
             themeManager.applyTheme(selectedTheme);
         }
+        
+        // Attach event listeners
+        document.getElementById('password').addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+        });
+        
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            checkPasswordMatch();
+        });
+        
+        document.getElementById('membershipForm').addEventListener('submit', handleSignup);
+        
+        // Handle email verification callback
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.location.search.includes('mode=verifyEmail')) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const actionCode = urlParams.get('oobCode');
+                if (actionCode) {
+                    handleEmailVerification(actionCode);
+                }
+            }
+        });
+        
+        async function handleEmailVerification(actionCode) {
+            try {
+                setLoading(true);
+                await auth.applyActionCode(actionCode);
+                const user = auth.currentUser;
+                if (user) {
+                    await user.reload();
+                    await db.collection('users').doc(user.uid).update({
+                        'emailVerified': true,
+                        'updatedAt': firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showMessage('success', `
+                        <h4><i class="fas fa-check-circle"></i> Email Verified!</h4>
+                        <p>Your email has been successfully verified.</p>
+                        <a href="login.html" class="btn btn-primary" style="margin-top: 10px;">Login Now</a>
+                    `);
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            } catch (error) {
+                console.error('Email verification error:', error);
+                showMessage('error', 'Email verification failed. The link may be expired or invalid.');
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        // Real-time email check
+        let emailCheckTimeout;
+        document.getElementById('email').addEventListener('blur', function() {
+            clearTimeout(emailCheckTimeout);
+            const email = this.value.trim();
+            if (email && SecurityUtils.validateEmail(email)) {
+                emailCheckTimeout = setTimeout(async () => {
+                    try {
+                        // Try to sign in with dummy password to check if email exists
+                        await auth.signInWithEmailAndPassword(email, 'dummyPassword123!');
+                        // If successful, email exists
+                        showFieldError('email', 'This email is already registered. Please <a href="login.html" style="color: var(--primary); font-weight: 600;">login instead</a>.');
+                    } catch (error) {
+                        if (error.code === 'auth/user-not-found') {
+                            // Email doesn't exist - good for signup
+                            document.getElementById('email').classList.remove('error');
+                            document.getElementById('email').classList.add('success');
+                            document.getElementById('emailError').classList.remove('show');
+                        }
+                        // Ignore other errors (like wrong password)
+                    }
+                }, 500);
+            }
+        });
     </script>
 </body>
 </html>
