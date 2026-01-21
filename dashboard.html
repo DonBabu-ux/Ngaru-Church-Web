@@ -538,12 +538,36 @@
             z-index: 1002;
             display: none;
             flex-direction: column;
-            padding: 1rem 0;
+            padding: 0;
         }
         
         .hamburger-menu-content.active {
             display: flex;
             animation: slideDown 0.3s ease;
+        }
+        
+        .hamburger-cancel-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--error);
+            color: white;
+            border: none;
+            text-align: left;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .hamburger-cancel-btn:hover {
+            background-color: #b02a2a;
+        }
+        
+        .hamburger-cancel-btn i {
+            margin-right: 0.5rem;
         }
         
         .hamburger-item {
@@ -553,6 +577,7 @@
             color: var(--text);
             text-decoration: none;
             transition: var(--transition);
+            border-bottom: 1px solid #eee;
         }
         
         .hamburger-item:hover {
@@ -564,6 +589,11 @@
             margin-right: 1rem;
             width: 20px;
             text-align: center;
+        }
+        
+        .hamburger-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 12px 12px;
         }
         
         /* Content Area */
@@ -1582,6 +1612,9 @@
                             <i class="fas fa-church"></i>
                         </button>
                         <div class="hamburger-menu-content" id="hamburgerMenu">
+                            <button class="hamburger-cancel-btn" id="hamburgerCancelBtn">
+                                <i class="fas fa-times"></i> Close Menu
+                            </button>
                             <a href="#" class="hamburger-item" data-tab="events">
                                 <i class="fas fa-calendar-check"></i> Church Calendar
                             </a>
@@ -2823,10 +2856,17 @@
             // Hamburger Menu Toggle
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const hamburgerCancelBtn = document.getElementById('hamburgerCancelBtn');
             
             hamburgerBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 hamburgerMenu.classList.toggle('active');
+            });
+            
+            // Cancel button closes hamburger menu
+            hamburgerCancelBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hamburgerMenu.classList.remove('active');
             });
             
             // Close hamburger menu when clicking outside
@@ -2860,7 +2900,7 @@
                     const tabName = document.querySelector(`[data-tab="${tabId}"] span`).textContent;
                     document.querySelector('.page-title h1').textContent = tabName;
                     
-                    // Close hamburger menu
+                    // Close hamburger menu after clicking an item
                     hamburgerMenu.classList.remove('active');
                 });
             });
@@ -2995,6 +3035,18 @@
                 document.querySelector('.user-info h4').textContent = fullName;
             });
             
+            // Join Ministry Button
+            document.querySelector('#profile .btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const ministry = document.getElementById('newMinistry').value;
+                if (ministry) {
+                    showMessage('success', 'Ministry join request submitted!');
+                    document.getElementById('newMinistry').value = '';
+                } else {
+                    showMessage('error', 'Please select a ministry first');
+                }
+            });
+            
             // Create Group Form
             document.getElementById('createGroupForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -3037,6 +3089,8 @@
                     feed.prepend(postDiv);
                     showMessage('success', 'Post published successfully!');
                     this.reset();
+                } else {
+                    showMessage('error', 'Please enter some content for your post');
                 }
             });
             
@@ -3046,6 +3100,16 @@
                 const amount = document.getElementById('givingAmount').value;
                 const type = document.getElementById('givingType').value;
                 const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+                
+                if (!amount || amount < 100) {
+                    showMessage('error', 'Please enter a valid amount (minimum Ksh 100)');
+                    return;
+                }
+                
+                if (!type) {
+                    showMessage('error', 'Please select a giving type');
+                    return;
+                }
                 
                 if (method === 'mpesa') {
                     showMpesaStk(amount);
@@ -3120,6 +3184,70 @@
                         window.location.href = 'login.html';
                     }, 1500);
                 }
+            });
+            
+            // Play buttons in entertainment section
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.play-btn')) {
+                    const card = e.target.closest('.entertainment-card');
+                    const title = card.querySelector('h4').textContent;
+                    const info = card.querySelector('p').textContent;
+                    showMessage('info', `Now playing: ${title} (${info})`);
+                }
+            });
+            
+            // Card payment button
+            document.querySelector('.payment-option .btn-primary').addEventListener('click', function(e) {
+                if (this.textContent.includes('Card')) {
+                    showMessage('info', 'Redirecting to secure payment gateway...');
+                }
+            });
+            
+            // Event RSVP buttons
+            document.querySelectorAll('#events .btn-small').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const eventName = this.closest('.event-item').querySelector('h4').textContent;
+                    if (this.textContent === 'RSVP' || this.textContent === 'Register') {
+                        showMessage('success', `You have successfully registered for: ${eventName}`);
+                    }
+                });
+            });
+            
+            // Admin buttons
+            document.querySelectorAll('#admin .btn-primary').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.querySelector('i').className;
+                    if (action.includes('user-plus')) {
+                        showMessage('info', 'Opening add member form...');
+                    } else if (action.includes('calendar-plus')) {
+                        showMessage('info', 'Opening event creation form...');
+                    } else if (action.includes('bullhorn')) {
+                        showMessage('info', 'Opening announcement form...');
+                    } else if (action.includes('chart-bar')) {
+                        showMessage('info', 'Loading reports...');
+                    }
+                });
+            });
+            
+            // Settings buttons
+            document.querySelectorAll('#account .btn-small').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const action = this.textContent;
+                    if (action === 'Change') {
+                        const newPass = prompt('Enter new password:');
+                        if (newPass) {
+                            showMessage('success', 'Password changed successfully!');
+                        }
+                    } else if (action === 'Edit') {
+                        const field = this.closest('.setting-item').querySelector('h4').textContent;
+                        showMessage('info', `Editing ${field}...`);
+                    } else if (action === 'Delete') {
+                        if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+                            showMessage('info', 'Account deletion requested. Admin will contact you.');
+                        }
+                    }
+                });
             });
             
             // Initialize with sample data
@@ -3326,7 +3454,7 @@
                 // Scroll to bottom
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 
-                // Simulate a reply after a delay (like in WhatsApp)
+                // Simulate a reply after a delay
                 setTimeout(() => {
                     const replyDiv = document.createElement('div');
                     replyDiv.className = 'chat-message received';
